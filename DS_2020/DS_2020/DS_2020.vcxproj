@@ -115,6 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="article.h" />
+    <ClInclude Include="error.h" />
+    <ClInclude Include="xmlhelper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="article.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="xmlhelper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
