@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="article.h" />
+    <ClInclude Include="BPTrees.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="xmlhelper.h" />
