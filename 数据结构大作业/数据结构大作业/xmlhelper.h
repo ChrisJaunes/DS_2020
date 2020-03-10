@@ -1,15 +1,12 @@
 #pragma once
-#include <iostream>
-#include <xmllite.h>
-#include <shlwapi.h>
-#include <windows.h> 
-#include <winerror.h>
-#include <comdef.h>
+#include "pch.h"
 #include "error.h"
 #include "article.h"
 
-#pragma comment(lib,"Shlwapi.lib")
+#include <xmllite.h>
+#include <shlwapi.h>
 #pragma comment (lib, "xmllite.lib") 
+#pragma comment(lib,"Shlwapi.lib")
 
 /*
 打开文件
@@ -22,8 +19,8 @@ protected:
 	XmlNodeType nodeType;
 public:
 	std::vector<Article*> members;
-	OPRESULT OpenFile(LPCSTR);
-	OPRESULT ParseArticles();
-
+	OPRESULT OpenFile(LPCWSTR);
+	OPRESULT ParseArticlesToVector();
+	OPRESULT ParseAll();
 
 };

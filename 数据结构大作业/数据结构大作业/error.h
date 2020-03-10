@@ -1,5 +1,5 @@
 #pragma once
-#define DEBUG 1
+#define DEBUG 0
 
 /*
 很多检测error code的逻辑在代码中没有实现
