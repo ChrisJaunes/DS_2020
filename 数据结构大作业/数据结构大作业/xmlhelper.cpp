@@ -30,8 +30,8 @@ OPRESULT XMLParser::ParseArticlesToVector()
 		pReader->GetLocalName(&szValue, NULL);
 		if (nodeType == XmlNodeType_Element) {
 			if (!lstrcmpW(szValue, L"article")) {
-				//debug:
-				if (DEBUG && members.size()>0) {
+				// debug:
+				if (GDEBUG && members.size()>0) {
 					bstr_t tmp;
 					members.at(members.size() - 1)->Gettitle(&tmp);
 					std::wcout << tmp << std::endl;
