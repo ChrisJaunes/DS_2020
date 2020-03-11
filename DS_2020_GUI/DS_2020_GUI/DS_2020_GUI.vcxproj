@@ -83,6 +83,7 @@
     <QtRcc Include="DS_2020_GUI.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="Article_Detail_Widget.ui" />
     <QtUic Include="Author_Article_Widget.ui" />
     <QtUic Include="MainWindow.ui" />
   </ItemGroup>
@@ -90,12 +91,16 @@
     <QtMoc Include="MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Article_Detail_Widget.cpp" />
     <ClCompile Include="Author_Article_Widget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Author_Article_Widget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Article_Detail_Widget.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -36,12 +36,18 @@
     <QtUic Include="Author_Article_Widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="Article_Detail_Widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MainWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Author_Article_Widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Article_Detail_Widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -53,6 +59,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Author_Article_Widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Article_Detail_Widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

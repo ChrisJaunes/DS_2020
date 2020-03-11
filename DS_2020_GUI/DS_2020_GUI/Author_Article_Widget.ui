@@ -1,23 +1,30 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>Author_Article_Widget</class>
- <widget class="QWidget" name="Author_Article_Widget" >
-  <property name="objectName" >
-   <string notr="true">Author_Article_Widget</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QWidget" name="Author_Article_Widget">
+  <property name="geometry">
    <rect>
-	<x>0</x>
-	<y>0</y>
-	<width>400</width>
-	<height>300</height>
+    <x>0</x>
+    <y>0</y>
+    <width>852</width>
+    <height>625</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Author_Article_Widget</string>
   </property>
+  <widget class="QListView" name="listView">
+   <property name="geometry">
+    <rect>
+     <x>85</x>
+     <y>171</y>
+     <width>701</width>
+     <height>401</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
-</UI>
+</ui>

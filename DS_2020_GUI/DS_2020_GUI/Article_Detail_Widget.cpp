@@ -8,4 +8,5 @@ Article_Detail_Widget::Article_Detail_Widget(QWidget *parent)
 
 Article_Detail_Widget::~Article_Detail_Widget()
 {
+
 }
