@@ -20,8 +20,8 @@ TODO: 将分类加在xmlparser中
 int _tmain()
 {
 
-	BPTree<Article, bstr_t> Article_BPtree;
-	BPTree<Article, bstr_t> Author_BPtree;
+	//BPTree<Article, bstr_t> Article_BPtree;
+	//BPTree<Article, bstr_t> Author_BPtree;
 	system("pause");
 	return 0;
 }

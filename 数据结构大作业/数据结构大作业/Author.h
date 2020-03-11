@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "article.h"
+#include "Article.h"
 #ifndef AUTHOR_H
 #define AUTHOR_H
 /*

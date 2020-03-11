@@ -1,9 +1,10 @@
+#include "pch.h"
 #include "Author.h"
 #include "Article.h"
 #include "BPTrees.h"
 #include <queue>
 
-extern BPTree<Article, bstr_t> Article_BPtree;
+//extern BPTree<Article, bstr_t> Article_BPtree;
 
 Author::Author() {
 	this->name = "";
@@ -64,7 +65,7 @@ std::pair<OPRESULT, std::vector<bstr_t> > Author::GetCollaborator() {
 }
 
 //todo
-std::pair<OPRESULT, std::vector<bstr_t> > Author::GetTopNOfNumOfArticle(int lim = 100) {
+std::pair<OPRESULT, std::vector<bstr_t> > Author::GetTopNOfNumOfArticle(int lim) {
 	Author *author_begin;//从BPtree中获得
 	Author *author_end;  //从BPtree中获得
 	std::priority_queue<Author*> q;
@@ -78,3 +79,4 @@ std::pair<OPRESULT, std::vector<bstr_t> > Author::GetTopNOfNumOfArticle(int lim 
 	}
 	return make_pair(true, res);
 }
+
