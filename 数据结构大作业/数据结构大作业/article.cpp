@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "article.h"
+#include "Article.h"
 
 Article::Article()
 {

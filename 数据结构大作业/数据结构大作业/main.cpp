@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "xmlhelper.h"
 #include "FrequencyRanking.h"
+#include "Article.h"
+#include "Author.h"
+#include "BPTrees.h"
 /*
 项目demo, 单线程, 非常慢, 具体加载要多久我不想去测了...
 
@@ -17,7 +20,8 @@ TODO: 将分类加在xmlparser中
 int _tmain()
 {
 
-
+	BPTree<Article, bstr_t> Article_BPtree;
+	BPTree<Article, bstr_t> Author_BPtree;
 	system("pause");
 	return 0;
 }

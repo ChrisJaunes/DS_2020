@@ -18,4 +18,4 @@ typedef int OPRESULT;
 
 // ∂®“Âerror code
 #define E_InvalidParameter 0x80000000
-
+#define E_UnknownException 0x40000000
