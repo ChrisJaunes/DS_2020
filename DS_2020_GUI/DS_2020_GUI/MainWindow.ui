@@ -151,6 +151,29 @@
      <string>F2_TOP</string>
     </property>
    </widget>
+   <widget class="QTextEdit" name="tet_loadfile">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>351</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_loadfile">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>10</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Load File</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -165,5 +188,25 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_loadfile</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_btn_loadfile_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>390</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>376</x>
+     <y>83</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>on_btn_loadfile_clicked()</slot>
+ </slots>
 </ui>

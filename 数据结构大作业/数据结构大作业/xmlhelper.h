@@ -49,9 +49,10 @@ public:
 #ifndef IMPORTDATA
 #define IMPORTDATA
 struct _ImportData {
+	// 标识是否完成了解析, 这个在GUI中使用功能前具体判断
 	bool isDone;
-	// 添加数据结构...
 
+	// 添加数据结构... 对了, 不要忘记加注释哦
 
 };
 #endif
@@ -59,3 +60,4 @@ extern _ImportData ImportData;
 
 
 DWORD WINAPI ImportDataWrapper(LPCWSTR filename);
+wchar_t* charToWChar(const char* text);

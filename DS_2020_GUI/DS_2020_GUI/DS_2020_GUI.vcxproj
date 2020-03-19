@@ -67,7 +67,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
@@ -124,6 +124,9 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
     <QtMoc Include="Author_Article_Widget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ds_2020_gui_zh.ts" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

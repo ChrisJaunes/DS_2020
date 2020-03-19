@@ -14,7 +14,7 @@ public:
 
 private slots:
 	void on_btn_search_clicked();
-
+	void on_btn_loadfile_clicked();
 private:
 	Ui::MainWindow* ui;
 };
