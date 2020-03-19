@@ -9,11 +9,13 @@
 OPRESULT XMLParser::OpenFile(LPCWSTR filename) 
 {
 	IStream* pFileStream = NULL;
-	SHCreateStreamOnFile(
+	OPRESULT hr = SHCreateStreamOnFile(
 		filename,
 		STGM_READ,
 		&pFileStream);
-	CreateXmlReader(__uuidof(IXmlReader), (void**)&pReader, NULL);
+	if (FAILED(hr))return hr;
+	hr = CreateXmlReader(__uuidof(IXmlReader), (void**)&pReader, NULL);
+	if (FAILED(hr))return hr;
 	pReader->SetInput(pFileStream);
 	pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
 	return 0;
@@ -202,9 +204,18 @@ OPRESULT XMLParser::ParseAll () {
 
 DWORD WINAPI ImportDataWrapper(LPCWSTR filename) {
 	XMLParser parser;
-	parser.OpenFile(filename);
+	OPRESULT hr = parser.OpenFile(filename);
+	if (FAILED(hr)) { ImportData.isDone = false; return 0; }
 	// 这里将写入到ImportData中
 	parser.ParseAll();
 	ImportData.isDone = true;
 	return 0;
+}
+
+wchar_t* charToWChar(const char* text)
+{
+	size_t size = strlen(text) + 1;
+	wchar_t* wa = new wchar_t[size];
+	mbstowcs(wa, text, size);
+	return wa;
 }

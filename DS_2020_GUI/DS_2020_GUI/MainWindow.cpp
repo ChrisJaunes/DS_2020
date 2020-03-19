@@ -4,7 +4,7 @@
 #include "Article_Detail_Widget.h"
 #include <xmlhelper.h>
 #include <QProgressDialog>
-
+#include <QMessageBox>
 _ImportData ImportData;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -14,14 +14,21 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	ui->rbn_F1_Author->setChecked(true);
 	connect(ui->tet_inputParameter, SIGNAL(returnPressed()), ui->btn_search, SIGNAL(clicked()), Qt::UniqueConnection);
-	CreateThread(0,0,(LPTHREAD_START_ROUTINE)ImportDataWrapper, L"D:\\Code\\ds_hw\\dblp.xml",0,0);
+}
+
+void MainWindow::on_btn_loadfile_clicked() {
+	ImportData.isDone = false;
+	QString filepath =ui->tet_loadfile->toPlainText();
+	LPCWSTR rfilepath = charToWChar(filepath.toLatin1());
+	// D:\Code\ds_hw\dblp.xml
+	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)rfilepath, 0, 0);
 }
 
 void MainWindow::on_btn_search_clicked() {
 	qDebug() << "on_btn_search_clicked" << '\n';
 	if (!ImportData.isDone) {
-		// 没有完成xml解析工作, 计划弹出一个processbar
-
+		// 没有完成xml解析工作, 弹出提示框
+		QMessageBox::information(this, "Error", "XML not loaded");
 		return;
 	}
 	else {
