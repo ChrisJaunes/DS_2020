@@ -198,3 +198,13 @@ OPRESULT XMLParser::ParseAll () {
 	}
 	return 0;
 }
+
+
+DWORD WINAPI ImportDataWrapper(LPCWSTR filename) {
+	XMLParser parser;
+	parser.OpenFile(filename);
+	// 这里将写入到ImportData中
+	parser.ParseAll();
+	ImportData.isDone = true;
+	return 0;
+}

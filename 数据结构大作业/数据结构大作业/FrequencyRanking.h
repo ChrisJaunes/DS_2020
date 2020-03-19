@@ -33,6 +33,7 @@ public:
 			ignores.push_back(ignore.at(i).copy());
 		}
 	}
+	// 构造方法考虑了存在忽略某些单词的情况
 	FrequencyRanking(bstr_t ignore) {
 		ignores.clear();
 		if (!ignore) { return; }
@@ -41,8 +42,9 @@ public:
 	FrequencyRanking() {
 		ignores.clear();
 	}
+	// 插入一个对象, 对其进行分析
 	OPRESULT Insert(Article *);
-	// 返回一个复制, 避免uaf
+	// 返回某一年单词top10的复制, 避免uaf, 这里没有计算个数了
 	std::vector<bstr_t> Get(bstr_t);
 private:
 	std::vector<PAIR>* _SortTop10(bstr_t);
