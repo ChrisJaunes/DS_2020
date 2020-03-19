@@ -91,6 +91,10 @@
     <QtMoc Include="MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Article.cpp" />
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp" />
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.cpp" />
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp" />
     <ClCompile Include="Article_Detail_Widget.cpp" />
     <ClCompile Include="Author_Article_Widget.cpp" />
     <ClCompile Include="main.cpp" />
@@ -101,6 +105,15 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Article_Detail_Widget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Article.h" />
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Author.h" />
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\BPTrees.h" />
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\error.h" />
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.h" />
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h" />
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

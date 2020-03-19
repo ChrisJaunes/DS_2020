@@ -30,10 +30,10 @@
     <ClInclude Include="BPTrees.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="FrequencyRanking.h">
+    <ClInclude Include="Author.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Author.h">
+    <ClInclude Include="FrequencyRanking.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,19 +50,11 @@
     <ClCompile Include="article.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="FrequencyRanking.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Author.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
+    <ClCompile Include="FrequencyRanking.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="MainWindow.ui">
-      <Filter>源文件</Filter>
-    </None>
   </ItemGroup>
 </Project>

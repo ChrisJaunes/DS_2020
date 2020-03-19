@@ -122,6 +122,7 @@ public:
 	bool search(std::vector<E>* &, KEY);
 	BPLeaf<E, KEY>* begin();//第一个BPLeaf
 	BPLeaf<E, KEY>* end();//最后一个BPLeaf
+	BPLeaf<E, KEY>* next();
 };
 
 #endif
@@ -358,4 +359,9 @@ BPLeaf<E, KEY>* BPTree<E, KEY>::end()
 		curr = curr->pointer->at(curr->num);
 	}
 	return (BPLeaf<E, KEY>*)curr;
+}
+template<typename E, typename KEY>
+BPLeaf<E, KEY>* BPTree<E, KEY>::next()
+{
+	return nullptr;
 }
