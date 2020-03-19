@@ -49,4 +49,6 @@ public:
 	OPRESULT Setauthors(std::vector<bstr_t>);
 
 	OPRESULT Addauthors(bstr_t);
+
+	static Article getArticles(bstr_t p) {}
 };

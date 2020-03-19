@@ -44,10 +44,10 @@
     <QtMoc Include="MainWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Author_Article_Widget.h">
+    <QtMoc Include="Article_Detail_Widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Article_Detail_Widget.h">
+    <QtMoc Include="Author_Article_Widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -56,9 +56,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Author_Article_Widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Article_Detail_Widget.cpp">
@@ -74,6 +71,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Author_Article_Widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -97,6 +100,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
