@@ -2,13 +2,13 @@
 #include "article.h"
 #include "xmlhelper.h"
 #include "error.h"
-
+_ImportData ImportData;
 /*
 打开xml, 设置权限
 */
 OPRESULT XMLParser::OpenFile(LPCWSTR filename) 
 {
-	IStream* pFileStream = NULL;
+	pFileStream = NULL;
 	OPRESULT hr = SHCreateStreamOnFile(
 		filename,
 		STGM_READ,
@@ -114,19 +114,24 @@ OPRESULT XMLParser::ParseArticlesToVector()
 }
 
 /// 解决所有的问题的代码都在这里
+
 OPRESULT XMLParser::ParseAll () {
 	HRESULT hr;
 	LPCWSTR szValue = NULL;
 	
 	Article *temp=NULL;
+
+	FrequencyRanking *fr=new FrequencyRanking;
+
 	while (S_OK == (hr = pReader->Read(&nodeType))) {
 		pReader->GetLocalName(&szValue, NULL);
 		if (nodeType == XmlNodeType_Element) {
 			if (!lstrcmpW(szValue, L"article")) {
 				if (temp) {
-					/// 这个地方获得了一个完整的Article指针temp, 接下来可以把这个对象插入到各种数据结构.
+					/// 这个地方获得了一个完整的Article指针变量 temp, 接下来可以把这个对象插入到各种数据结构.
 
-
+					// F3
+					fr->Insert(temp);
 
 				}
 				temp = new Article;
@@ -198,6 +203,16 @@ OPRESULT XMLParser::ParseAll () {
 			}
 		}
 	}
+
+	/// 这里完成了xml的分析
+
+	//写入到f3的全局struct
+	ImportData.f3_pFrequencyRanking = fr;
+	
+	// 清理内存
+	pReader->Release();
+	pFileStream->Release();
+
 	return 0;
 }
 
@@ -219,3 +234,4 @@ wchar_t* charToWChar(const char* text)
 	mbstowcs(wa, text, size);
 	return wa;
 }
+

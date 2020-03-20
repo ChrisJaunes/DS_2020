@@ -8,6 +8,10 @@
 #pragma comment (lib, "xmllite.lib") 
 #pragma comment(lib,"Shlwapi.lib")
 
+// 解决具体问题需要的文件头
+#include <FrequencyRanking.h>
+
+
 /*
 打开文件
 
@@ -25,6 +29,7 @@ Example:
 
 class XMLParser {
 protected:
+	IStream* pFileStream;
 	IXmlReader* pReader;
 	XmlNodeType nodeType;
 public:
@@ -40,8 +45,6 @@ public:
 
 直接在所需要用到的文件下
 	#include<xmlhelper.h>
-	_ImportData ImportData;
-
 	ImportData.isDone = 1;
 可以类似这样直接访问变量
 
@@ -52,7 +55,10 @@ struct _ImportData {
 	// 标识是否完成了解析, 这个在GUI中使用功能前具体判断
 	bool isDone;
 
-	// 添加数据结构... 对了, 不要忘记加注释哦
+	/// 添加数据结构... 对了, 不要忘记加注释哦
+
+	// F3获取top10的
+	FrequencyRanking* f3_pFrequencyRanking;
 
 };
 #endif
