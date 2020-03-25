@@ -133,6 +133,7 @@ OPRESULT XMLParser::ParseAll () {
 					// F3
 					fr->Insert(temp);
 
+					//delete temp;
 				}
 				temp = new Article;
 				pReader->MoveToFirstAttribute();
