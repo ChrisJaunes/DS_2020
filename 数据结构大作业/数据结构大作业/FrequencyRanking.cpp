@@ -56,11 +56,12 @@ OPRESULT FrequencyRanking::Insert(Article *inobj) {
 
 		if (all.at(year).count(left)) { all.at(year).at(left) += 1; }
 		else { all.at(year)[left] = 1; }
-		if (top10.size() < 10) {
-			if (!top10.count(year)) {
-				std::map<bstr_t, uint64_t> *tmp = new std::map<bstr_t, uint64_t>;
-				top10[year] = *tmp;
-			}
+
+		if (!top10.count(year)) {
+			std::map<bstr_t, uint64_t>* tmp = new std::map<bstr_t, uint64_t>;
+			top10[year] = *tmp;
+		}
+		if (top10.at(year).size() < 10) {
 			top10.at(year)[left] = all.at(year)[left];
 		}
 		else {
