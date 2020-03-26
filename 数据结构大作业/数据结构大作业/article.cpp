@@ -3,7 +3,7 @@
 
 Article::Article()
 {
-	mdate = key = title = journal 
+	mdate = key = title = journal = cdrom
 		= volume = month = year = ee = "";
 	this->authors = new std::vector<bstr_t>;
 }
@@ -27,18 +27,10 @@ Article::Article(const Article& src) {
 
 Article::~Article() 
 {
-	SysFreeString(this->mdate.Detach());
-	SysFreeString(this->key.Detach());
-	SysFreeString(this->title.Detach());
-	SysFreeString(this->journal.Detach());
-	SysFreeString(this->volume.Detach());
-	SysFreeString(this->month.Detach());
-	SysFreeString(this->year.Detach());
-	SysFreeString(this->cdrom.Detach());
-	SysFreeString(this->ee.Detach());
-	for (int i = 0; i < authors->size(); i++) {
-		SysFreeString(authors->at(i).Detach());
-	}
+	// 传入和传出都是用copy的, 也就是内部空间是独立的, 所以析构的时候直接调用析构函数
+	// 不需要考虑内部数据析构
+
+	// vector会自动析构内部对象
 	delete authors;
 }
 
