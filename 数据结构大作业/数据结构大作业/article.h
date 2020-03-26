@@ -25,6 +25,7 @@ public:
 		bstr_t, bstr_t, bstr_t, bstr_t, 
 		bstr_t, std::vector<bstr_t>
 	);
+	Article(const Article&);
 	~Article();
 	OPRESULT Getmdate(bstr_t*);
 	OPRESULT Getkey(bstr_t*);

@@ -8,8 +8,37 @@ Article::Article()
 	this->authors = new std::vector<bstr_t>;
 }
 
+Article::Article(const Article& src) {
+	this->mdate = src.mdate.copy();
+	this->key = src.key.copy();
+	this->title = src.title.copy();
+	this->journal = src.journal.copy();
+	this->volume = src.volume.copy();
+	this->month = src.month.copy();
+	this->year = src.year.copy();
+	this->cdrom = src.cdrom.copy();
+	this->ee = src.ee.copy();
+
+	this->authors = new std::vector<bstr_t>;
+	for (int i = 0; i < src.authors->size(); i++) {
+		this->authors->push_back(src.authors->at(i).copy());
+	}
+}
+
 Article::~Article() 
 {
+	SysFreeString(this->mdate.Detach());
+	SysFreeString(this->key.Detach());
+	SysFreeString(this->title.Detach());
+	SysFreeString(this->journal.Detach());
+	SysFreeString(this->volume.Detach());
+	SysFreeString(this->month.Detach());
+	SysFreeString(this->year.Detach());
+	SysFreeString(this->cdrom.Detach());
+	SysFreeString(this->ee.Detach());
+	for (int i = 0; i < authors->size(); i++) {
+		SysFreeString(authors->at(i).Detach());
+	}
 	delete authors;
 }
 
