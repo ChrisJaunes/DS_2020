@@ -2,7 +2,7 @@
 #include "pch.h"
 #include "error.h"
 #include "article.h"
-typedef std::pair<bstr_t, uint64_t> PAIR;
+typedef std::pair<bstr_t, ULONG64> PAIR;
 
 /*
 F3: 热点分析功能。分析每一年发表的文章中，题目所包含的单词中，出现频率排名前10的关键词。
@@ -57,4 +57,41 @@ private:
 	// map<year,min_in_top10>
 	std::map<bstr_t, uint64_t> minCountInTop10;
 	std::vector<bstr_t> ignores;
+};
+
+/// 重构代码
+
+class FrequencyRanking2Data {
+private:
+	bstr_t word;
+	ULONG64 cb;
+public:
+	FrequencyRanking2Data();
+	FrequencyRanking2Data(bstr_t,ULONG64);
+	FrequencyRanking2Data(const FrequencyRanking2Data&);
+	ULONG64& size();
+	bstr_t& content();
+};
+bool CompFrequencyRanking2Data(FrequencyRanking2Data&, FrequencyRanking2Data&);
+
+class FrequencyRanking2 {
+public:
+	FrequencyRanking2();
+	FrequencyRanking2(std::vector<bstr_t> ignore);
+	FrequencyRanking2(const FrequencyRanking2&);
+	~FrequencyRanking2();
+
+	OPRESULT Insert(Article*);
+	std::vector<FrequencyRanking2Data> Get(bstr_t year);
+protected:
+	// stl指针为浅复制, 假如有复制构造函数, 则为深复制
+	// 对象为深复制,字符串对象bstr_t是浅复制, 但是有引用计数增加
+
+	// insert后插入这里, 不进行排序, 只分词
+	std::map<bstr_t,std::map<bstr_t,ULONG64> >* bakup;
+
+	//忽略的单词
+	std::vector<bstr_t> *ignores;
+
+	bool CheckIfIgnore(bstr_t);
 };
