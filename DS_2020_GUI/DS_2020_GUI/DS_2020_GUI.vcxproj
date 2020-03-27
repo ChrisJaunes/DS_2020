@@ -20,6 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v142</PlatformToolset>
+    <SpectreMitigation>false</SpectreMitigation>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -39,7 +40,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;D:\Code\ds_hw\new\DS_2020\数据结构大作业\数据结构大作业;$(IncludePath)</IncludePath>
     <ReferencePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业\x64;$(ReferencePath)</ReferencePath>
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
   </PropertyGroup>
@@ -52,7 +53,7 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QtInstall>msvc2017_64</QtInstall>
+    <QtInstall>Qt5.12.2</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

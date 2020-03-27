@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "error.h"
-#include "article.h"
+#include "Info.h"
 
 #include <xmllite.h>
 #include <shlwapi.h>
@@ -29,16 +29,14 @@ Example:
 
 class XMLParser {
 protected:
-	IStream* pFileStream;
-	IXmlReader* pReader;
-	XmlNodeType nodeType;
+	CComPtr<IStream> pFileStream;
+	CComPtr<IXmlReader> pReader;
 public:
-	std::vector<Article*> members;
 	OPRESULT OpenFile(LPCWSTR);
-	OPRESULT ParseArticlesToVector();
 	OPRESULT ParseAll();
 
 };
+
 
 /* 这个struct存放各种数据结构相关的全局变量, 全部都放在这个位置
 	比如说所有从xml分析完毕后建立的b+树呀, vector呀, 之类的东西, 全部都放到这个位置.
@@ -54,8 +52,6 @@ public:
 struct _ImportData {
 	// 标识是否完成了解析, 这个在GUI中使用功能前具体判断
 	bool isDone;
-
-	/// 添加数据结构... 对了, 不要忘记加注释哦
 
 	// F3获取top10的
 	FrequencyRanking* f3_pFrequencyRanking;

@@ -5,7 +5,6 @@
 #include <xmlhelper.h>
 #include <QProgressDialog>
 #include <QMessageBox>
-_ImportData ImportData;
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
@@ -14,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	ui->rbn_F1_Author->setChecked(true);
 	connect(ui->tet_inputParameter, SIGNAL(returnPressed()), ui->btn_search, SIGNAL(clicked()), Qt::UniqueConnection);
+	ImportData.isDone = false;
+	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)L"D:\\Code\\ds_hw\\dblp.xml", 0, 0);
 }
 
 void MainWindow::on_btn_loadfile_clicked() {
@@ -21,7 +22,7 @@ void MainWindow::on_btn_loadfile_clicked() {
 	QString filepath =ui->tet_loadfile->toPlainText();
 	LPCWSTR rfilepath = charToWChar(filepath.toLatin1());
 	// D:\Code\ds_hw\dblp.xml
-	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)rfilepath, 0, 0);
+	//CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)rfilepath, 0, 0);
 }
 
 void MainWindow::on_btn_search_clicked() {

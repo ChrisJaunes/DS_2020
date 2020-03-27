@@ -3,14 +3,15 @@
 
 
 
-OPRESULT FrequencyRanking::Insert(Article *inobj) {
+OPRESULT FrequencyRanking::Insert(Info inobj) {
 	// 分析单词
 	bstr_t title;
 	bstr_t left;
 	bstr_t year;
 
-	inobj->Getyear(&year);
-	inobj->Gettitle(&title);
+	year = inobj.GetProperty(STR(L"year")).at(0);
+	title = inobj.GetProperty(STR(L"title")).at(0);
+
 	CString t(title.GetBSTR());
 	int idx= t.Find(_T(" "));
 
@@ -180,13 +181,14 @@ bool FrequencyRanking2::CheckIfIgnore(bstr_t key) {
 }
 
 // 只完成存储的过程
-OPRESULT FrequencyRanking2::Insert(Article* inobj) {
+OPRESULT FrequencyRanking2::Insert(Info inobj) {
 	bstr_t title;
 	bstr_t left;
 	bstr_t year;
 
-	inobj->Getyear(&year);
-	inobj->Gettitle(&title);
+	year=inobj.GetProperty(STR(L"year")).at(0);
+	title = inobj.GetProperty(STR(L"title")).at(0);
+
 	CString t(title.GetBSTR());
 	int idx = t.Find(L" ");
 

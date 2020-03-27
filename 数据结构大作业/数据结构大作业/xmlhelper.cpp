@@ -1,222 +1,81 @@
 #include "pch.h"
-#include "article.h"
 #include "xmlhelper.h"
 #include "error.h"
 _ImportData ImportData;
+
 /*
 打开xml, 设置权限
 */
-OPRESULT XMLParser::OpenFile(LPCWSTR filename) 
+OPRESULT XMLParser::OpenFile(LPCWSTR filename)
 {
 	pFileStream = NULL;
-	OPRESULT hr = SHCreateStreamOnFile(
+	SHCreateStreamOnFile(
 		filename,
 		STGM_READ,
 		&pFileStream);
-	if (FAILED(hr))return hr;
-	hr = CreateXmlReader(__uuidof(IXmlReader), (void**)&pReader, NULL);
-	if (FAILED(hr))return hr;
+	CreateXmlReader(__uuidof(IXmlReader), (void**)&pReader, NULL);
 	pReader->SetInput(pFileStream);
 	pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
 	return 0;
 }
 
-/*
-分析dtd, 加入到vector, 这个地方可以选择加入b+树
-*/
-OPRESULT XMLParser::ParseArticlesToVector() 
-{
+OPRESULT XMLParser::ParseAll() {
 	HRESULT hr;
-	LPCWSTR szValue = NULL;
-	while (S_OK == (hr = pReader->Read(&nodeType))) {
-		pReader->GetLocalName(&szValue, NULL);
-		if (nodeType == XmlNodeType_Element) {
-			if (!lstrcmpW(szValue, L"article")) {
-				// debug:
-				if (GDEBUG && members.size()>0) {
-					bstr_t tmp;
-					members.at(members.size() - 1)->Gettitle(&tmp);
-					std::wcout << tmp << std::endl;
-					system("pause");
-				}
+	LPCWSTR szValue = NULL, curSection = NULL, localName = NULL;
+	XmlNodeType nodeType;
 
-				members.push_back(new Article);
-				pReader->MoveToFirstAttribute();
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Setmdate(szValue);
+	// 初始化结构
+	ImportData.f3_pFrequencyRanking = new FrequencyRanking;
 
-				pReader->MoveToNextAttribute();
-				pReader->GetValue(&szValue, NULL); 
-				members.at(members.size() - 1)->Setkey(szValue);
-
-				// 从属性回到元素
-				pReader->MoveToElement();
-			}
-			else if (!lstrcmpW(szValue, L"author")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Addauthors(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"title")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Settitle(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"journal")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Setjournal(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"volume")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Setvolume(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"month")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Setmonth(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"year")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Setyear(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"cdrom")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Setcdrom(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"ee")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				members.at(members.size() - 1)->Setee(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"book")) {
-				// 跳过book
-				do {
-					pReader->Read(&nodeType);
-					pReader->GetLocalName(&szValue, NULL);
-				} while (nodeType != XmlNodeType_EndElement || lstrcmpW(szValue, L"book"));
-			}
-		}
+	while (lstrcmpW(L"dblp", localName) || nodeType != XmlNodeType_Element) {
+		pReader->Read(&nodeType);
+		pReader->GetLocalName(&localName, NULL);
 	}
 
-	return 0;
-}
-
-/// 解决所有的问题的代码都在这里
-
-OPRESULT XMLParser::ParseAll () {
-	HRESULT hr;
-	LPCWSTR szValue = NULL;
-	
-	Article *temp=NULL;
-
-	FrequencyRanking *fr=new FrequencyRanking;
-
 	while (S_OK == (hr = pReader->Read(&nodeType))) {
-		pReader->GetLocalName(&szValue, NULL);
 		if (nodeType == XmlNodeType_Element) {
-			if (!lstrcmpW(szValue, L"article")) {
-				if (temp) {
-					/// 这个地方获得了一个完整的Article指针变量 temp, 接下来可以把这个对象插入到各种数据结构.
+			pReader->GetLocalName(&localName, NULL);
 
-					// F3
-					fr->Insert(temp);
+			// 只解析article
+			if (lstrcmpW(L"article", localName)) continue;  // 154.829s
 
-					//delete temp;
+			// 看成是进入一个section
+			curSection = localName;
+			Info temp;
+			temp.SetClsid(STR(curSection));
+
+			pReader->MoveToFirstAttribute();
+			pReader->GetLocalName(&localName, NULL);
+			pReader->GetValue(&szValue, NULL);
+			temp.AddProperty(STR(localName), STR(szValue));
+			while (S_OK == (hr = pReader->MoveToNextAttribute())) {
+				pReader->GetLocalName(&localName, NULL);
+				pReader->GetValue(&szValue, NULL);
+				temp.AddProperty(STR(localName), STR(szValue));
+			}
+			pReader->MoveToElement();
+
+			while (lstrcmpW(localName, curSection) || nodeType != XmlNodeType_EndElement) {
+				pReader->Read(&nodeType);
+				if (nodeType == XmlNodeType_Element) {
+					pReader->GetLocalName(&localName, NULL);
+					while (nodeType != XmlNodeType_Text) {
+						pReader->Read(&nodeType);
+					}
+					pReader->GetValue(&szValue, NULL);
+					temp.AddProperty(STR(localName), STR(szValue));
+					while (nodeType != XmlNodeType_EndElement) {
+						pReader->Read(&nodeType);
+					}
 				}
-				temp = new Article;
-				pReader->MoveToFirstAttribute();
-				pReader->GetValue(&szValue, NULL);
-				temp->Setmdate(szValue);
+			}
 
-				pReader->MoveToNextAttribute();
-				pReader->GetValue(&szValue, NULL);
-				temp->Setkey(szValue);
-
-				// 从属性回到元素
-				pReader->MoveToElement();
-			}
-			else if (!lstrcmpW(szValue, L"author")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				temp->Addauthors(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"title")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				temp->Settitle(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"journal")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				temp->Setjournal(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"volume")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				temp->Setvolume(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"month")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				temp->Setmonth(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"year")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				temp->Setyear(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"cdrom")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				temp->Setcdrom(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"ee")) {
-				pReader->Read(&nodeType);
-				pReader->GetValue(&szValue, NULL);
-				temp->Setee(szValue);
-				pReader->Read(&nodeType);
-			}
-			else if (!lstrcmpW(szValue, L"book")) {
-				// 跳过book
-				do {
-					pReader->Read(&nodeType);
-					pReader->GetLocalName(&szValue, NULL);
-				} while (nodeType != XmlNodeType_EndElement || lstrcmpW(szValue, L"book"));
-			}
+			// TODO: 使用temp
+			ImportData.f3_pFrequencyRanking->Insert(temp);
 		}
 	}
-
-	/// 这里完成了xml的分析
-
-	//写入到f3的全局struct
-	ImportData.f3_pFrequencyRanking = fr;
-	
-	// 清理内存
-	pReader->Release();
-	pFileStream->Release();
-
 	return 0;
 }
-
 
 DWORD WINAPI ImportDataWrapper(LPCWSTR filename) {
 	XMLParser parser;

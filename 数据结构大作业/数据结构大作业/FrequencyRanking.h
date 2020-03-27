@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "error.h"
-#include "article.h"
+#include "Info.h"
 typedef std::pair<bstr_t, ULONG64> PAIR;
 
 /*
@@ -23,6 +23,11 @@ Example:
 	for (int i = 0; i < ad.size(); i++) {
 		wprintf(L"%s\n", ad[i].GetBSTR());
 	}
+
+
+
+	// The run time is : 468.563s! version2
+	// The run time is : 1297.31s! version1
 */
 
 class FrequencyRanking {
@@ -43,7 +48,7 @@ public:
 		ignores.clear();
 	}
 	// 插入一个对象, 对其进行分析
-	OPRESULT Insert(Article *);
+	OPRESULT Insert(Info);
 	// 返回某一年单词top10的复制, 避免uaf, 这里没有计算个数了
 	std::vector<bstr_t> Get(bstr_t);
 private:
@@ -81,7 +86,7 @@ public:
 	FrequencyRanking2(const FrequencyRanking2&);
 	~FrequencyRanking2();
 
-	OPRESULT Insert(Article*);
+	OPRESULT Insert(Info);
 	std::vector<FrequencyRanking2Data> Get(bstr_t year);
 protected:
 	// stl指针为浅复制, 假如有复制构造函数, 则为深复制
