@@ -1,16 +1,34 @@
 #include "pch.h"
 #include "FrequencyRanking.h"
 
-
-
 OPRESULT FrequencyRanking::Insert(Info inobj) {
 	// 分析单词
 	bstr_t title;
 	bstr_t left;
 	bstr_t year;
 
-	year = inobj.GetProperty(STR(L"year")).at(0);
-	title = inobj.GetProperty(STR(L"title")).at(0);
+	if (inobj.GetProperty(STR(L"year")).empty()) {
+		if (inobj.GetProperty(STR(L"mdate")).empty()) {
+			// fail
+			return 1;
+		}
+		else {
+			year = inobj.GetProperty(STR(L"mdate")).at(0);
+			CString trans((wchar_t*)year);
+			year = trans.Left(4);
+		}
+	}
+	else {
+		year = inobj.GetProperty(STR(L"year")).at(0);
+	}
+
+	if (inobj.GetProperty(STR(L"title")).empty()) {
+		//fail
+		return 1;
+	}
+	else {
+		title = inobj.GetProperty(STR(L"title")).at(0);
+	}
 
 	CString t(title.GetBSTR());
 	int idx= t.Find(_T(" "));
@@ -39,9 +57,9 @@ OPRESULT FrequencyRanking::Insert(Info inobj) {
 			top10.at(year)[left] = all.at(year)[left];
 		}
 		else {
-			std::vector<PAIR>* pPair=_SortTop10(year);
-			if (pPair->at(pPair->size() - 1).second < all.at(year)[left]) {
-				top10.at(year).erase(pPair->at(pPair->size() - 1).first);
+			std::vector<PAIR> pPair=_SortTop10(year);
+			if (pPair.at(pPair.size() - 1).second < all.at(year)[left]) {
+				top10.at(year).erase(pPair.at(pPair.size() - 1).first);
 				top10.at(year)[left] = all.at(year)[left];
 			}
 		}
@@ -66,9 +84,9 @@ OPRESULT FrequencyRanking::Insert(Info inobj) {
 			top10.at(year)[left] = all.at(year)[left];
 		}
 		else {
-			std::vector<PAIR>* pPair = _SortTop10(year);
-			if (pPair->at(pPair->size() - 1).second < all.at(year)[left]) {
-				top10.at(year).erase(pPair->at(pPair->size() - 1).first);
+			std::vector<PAIR> pPair = _SortTop10(year);
+			if (pPair.at(pPair.size() - 1).second < all.at(year)[left]) {
+				top10.at(year).erase(pPair.at(pPair.size() - 1).first);
 				top10.at(year)[left] = all.at(year)[left];
 			}
 		}
@@ -81,21 +99,27 @@ bool cmp_by_value(const PAIR& lhs, const PAIR& rhs) {
 }
 
 // 返回名字
-std::vector<bstr_t> FrequencyRanking::Get(bstr_t year) {
-	std::vector<bstr_t> *ret = new std::vector<bstr_t>;
-	if (!top10.count(year)) { return *ret; }
+std::vector<PAIR> FrequencyRanking::Get(bstr_t year) {
+	if (!top10.count(year)) { return std::vector<PAIR>(); }
 
-	std::vector<PAIR> *name_score_vec = _SortTop10(year);
-	for (int i = 0; i != name_score_vec->size(); ++i) {
-		ret->push_back((*name_score_vec)[i].first);
-	}
-	return *ret;
+	std::vector<bstr_t> ret;
+	std::vector<PAIR> name_score_vec = _SortTop10(year);
+	return name_score_vec;
 }
 
-std::vector<PAIR>* FrequencyRanking::_SortTop10(bstr_t year) {
+std::vector<bstr_t> FrequencyRanking::GetYears()
+{
+	std::vector<bstr_t> result;
+	for (auto i : top10) {
+		result.push_back(i.first);
+	}
+	return std::vector<bstr_t>(result);
+}
+
+std::vector<PAIR> FrequencyRanking::_SortTop10(bstr_t year) {
 	std::map<bstr_t, uint64_t> sm = top10.at(year);
-	std::vector<PAIR> *name_score_vec=new std::vector<PAIR>(sm.begin(), sm.end());
-	sort(name_score_vec->begin(), name_score_vec->end(), cmp_by_value);
+	std::vector<PAIR> name_score_vec=std::vector<PAIR>(sm.begin(), sm.end());
+	sort(name_score_vec.begin(), name_score_vec.end(), cmp_by_value);
 	return name_score_vec;
 }
 
@@ -136,6 +160,7 @@ FrequencyRanking2Data::FrequencyRanking2Data(const FrequencyRanking2Data& src) {
 bool CompFrequencyRanking2Data( FrequencyRanking2Data& l,  FrequencyRanking2Data& r) {
 	return l.size() > r.size();
 }
+
 
 //新版比较类实现
 FrequencyRanking2::FrequencyRanking2() {
@@ -230,4 +255,39 @@ std::vector<FrequencyRanking2Data> FrequencyRanking2::Get(bstr_t year) {
 		result.push_back(FrequencyRanking2Data(mid[i].first, mid[i].second));
 	}
 	return result;
+}
+
+std::vector<STR> ignoresWords()
+{
+	std::vector<STR> ignores;
+	ignores.push_back(STR(L"of"));
+	ignores.push_back(STR(L"and"));
+	ignores.push_back(STR(L"for"));
+	ignores.push_back(STR(L"a"));
+	ignores.push_back(STR(L""));
+	ignores.push_back(STR(L" "));
+	ignores.push_back(STR(L"The"));
+	ignores.push_back(STR(L"on"));
+	ignores.push_back(STR(L"the"));
+	ignores.push_back(STR(L"to"));
+	ignores.push_back(STR(L"A"));
+	ignores.push_back(STR(L"On"));
+	ignores.push_back(STR(L"in"));
+	ignores.push_back(STR(L"an"));
+	ignores.push_back(STR(L"An"));
+	ignores.push_back(STR(L"-"));
+	ignores.push_back(STR(L"some"));
+	ignores.push_back(STR(L"with"));
+	ignores.push_back(STR(L"using"));
+	ignores.push_back(STR(L"Using"));
+	ignores.push_back(STR(L"based"));
+	ignores.push_back(STR(L"by"));
+	ignores.push_back(STR(L"Based"));
+	ignores.push_back(STR(L"from"));
+	ignores.push_back(STR(L"With"));
+	ignores.push_back(STR(L"How"));
+	//ignores.push_back(STR(L"analysis"));
+	//ignores.push_back(STR(L"Analysis"));
+
+	return std::vector<STR>(ignores);
 }

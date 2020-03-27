@@ -1,6 +1,4 @@
 #pragma once
-#include "pch.h"
-
 #define STR bstr_t
 
 class Info {

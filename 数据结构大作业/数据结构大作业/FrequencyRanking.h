@@ -50,9 +50,12 @@ public:
 	// 插入一个对象, 对其进行分析
 	OPRESULT Insert(Info);
 	// 返回某一年单词top10的复制, 避免uaf, 这里没有计算个数了
-	std::vector<bstr_t> Get(bstr_t);
+	std::vector<PAIR> Get(bstr_t);
+
+	std::vector<bstr_t> GetYears();
+
 private:
-	std::vector<PAIR>* _SortTop10(bstr_t);
+	std::vector<PAIR> _SortTop10(bstr_t);
 	bool CheckIfIgnore(bstr_t);
 
 	// map<year,<word,count>>
@@ -100,3 +103,5 @@ protected:
 
 	bool CheckIfIgnore(bstr_t);
 };
+
+std::vector<STR> ignoresWords();

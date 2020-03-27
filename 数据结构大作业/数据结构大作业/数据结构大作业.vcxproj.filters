@@ -36,6 +36,12 @@
     <ClInclude Include="Info.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CommUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Solver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -54,6 +60,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Info.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommUtils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Solver.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

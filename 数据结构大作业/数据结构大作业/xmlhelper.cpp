@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "xmlhelper.h"
 #include "error.h"
-_ImportData ImportData;
-
+#include "CommUtils.h"
 /*
 打开xml, 设置权限
 */
@@ -25,7 +24,8 @@ OPRESULT XMLParser::ParseAll() {
 	XmlNodeType nodeType;
 
 	// 初始化结构
-	ImportData.f3_pFrequencyRanking = new FrequencyRanking;
+
+	ImportData.f3_pFrequencyRanking = new FrequencyRanking(ignoresWords());
 
 	while (lstrcmpW(L"dblp", localName) || nodeType != XmlNodeType_Element) {
 		pReader->Read(&nodeType);
@@ -57,8 +57,10 @@ OPRESULT XMLParser::ParseAll() {
 
 			while (lstrcmpW(localName, curSection) || nodeType != XmlNodeType_EndElement) {
 				pReader->Read(&nodeType);
+				pReader->GetLocalName(&localName, NULL);
 				if (nodeType == XmlNodeType_Element) {
-					pReader->GetLocalName(&localName, NULL);
+					if (!lstrcmpW(localName, curSection))
+						break;
 					while (nodeType != XmlNodeType_Text) {
 						pReader->Read(&nodeType);
 					}
@@ -85,13 +87,5 @@ DWORD WINAPI ImportDataWrapper(LPCWSTR filename) {
 	parser.ParseAll();
 	ImportData.isDone = true;
 	return 0;
-}
-
-wchar_t* charToWChar(const char* text)
-{
-	size_t size = strlen(text) + 1;
-	wchar_t* wa = new wchar_t[size];
-	mbstowcs(wa, text, size);
-	return wa;
 }
 
