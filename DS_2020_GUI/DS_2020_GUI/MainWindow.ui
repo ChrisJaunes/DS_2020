@@ -46,7 +46,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QRadioButton" name="rbn_F1_Article">
+    <widget class="QRadioButton" name="rbn_F1_Info">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -181,7 +181,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

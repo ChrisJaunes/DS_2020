@@ -128,7 +128,7 @@ void Hotspot_Analysis_Widget::initData(const QString& parameter)
 
     hotspot_model = new QStandardItemModel(data.size(), 1);
     for (int i = 0; i < data.size(); i++) {
-        hotspot_model->setData(hotspot_model->index(i, 0), QVariant::fromValue(data[i]), Qt::UserRole + 1); //整体存取
+        hotspot_model->setData(hotspot_model->index(i, 0), QVariant::fromValue(data[i]), Qt::UserRole); //整体存取
     }
 }
 

@@ -1,10 +1,12 @@
 #pragma once
+#include "pch.h"
 #define STR bstr_t
 
 class Info {
 protected:
 	// 标识当前大类属性
 	STR clsid;
+	STR title;
 	std::map<STR, std::vector<STR>>* properties;
 public:
 	Info();

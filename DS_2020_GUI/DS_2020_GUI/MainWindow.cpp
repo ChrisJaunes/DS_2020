@@ -1,7 +1,8 @@
 #include <qdebug.h>
 #include "MainWindow.h"
+#include "Info_Detail_Widget.h"
 #include "Author_Article_Widget.h"
-#include "Article_Detail_Widget.h"
+
 #include "Hotspot_Analysis_Widget.h"
 //#include <xmlhelper.h>
 #include <QProgressDialog>
@@ -12,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 	  ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	ui->rbn_F1_Author->setChecked(true);
+	ui->rbn_F1_Info->setChecked(true);
 	connect(ui->tet_inputParameter, SIGNAL(returnPressed()), ui->btn_search, SIGNAL(clicked()), Qt::UniqueConnection);
 	//ImportData.isDone = false;
 	//CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)L"D:\\Code\\ds_hw\\dblp.xml", 0, 0);
@@ -37,16 +38,14 @@ void MainWindow::on_btn_search_clicked() {
 		qDebug() << "parse done" << '\n';
 	}
 	*/
-	static Hotspot_Analysis_Widget* tmp = nullptr;
 	QString parameter = ui->tet_inputParameter->toPlainText();
-	if (ui->rbn_F1_Author->isChecked()) {
+	if (ui->rbn_F1_Info->isChecked()) {
+		(new Info_Detail_Widget(parameter))->show();
+	}else if (ui->rbn_F1_Author->isChecked()) {
 		(new Author_Article_Widget(parameter))->show();
-		tmp->initData(parameter);
 	}
 	else if (ui->rbn_F3) {
-		tmp = new Hotspot_Analysis_Widget(parameter);
-		tmp->show();
-		tmp->initData(parameter);
+		(new Hotspot_Analysis_Widget(parameter))->show();
 	}
 }
 

@@ -46,8 +46,8 @@ void ArticleDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
         QRectF rect;
         rect.setX(option.rect.x());
         rect.setY(option.rect.y());
-        rect.setWidth(option.rect.width() - 1);
-        rect.setHeight(option.rect.height() - 1);
+        rect.setWidth(option.rect.width() - 1.0);
+        rect.setHeight(option.rect.height() - 1.0);
 
         //QPainterPath»­Ô²½Ç¾ØÐÎ
         const qreal radius = 7;

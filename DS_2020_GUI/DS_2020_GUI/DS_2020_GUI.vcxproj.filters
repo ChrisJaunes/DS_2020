@@ -41,18 +41,15 @@
     <QtUic Include="Author_Article_Widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="Article_Detail_Widget.ui">
+    <QtUic Include="Hotspot_Analysis_Widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="Hotspot_Analysis_Widget.ui">
+    <QtUic Include="Info_Detail_Widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MainWindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Article_Detail_Widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Author_Article_Widget.h">
@@ -61,15 +58,15 @@
     <QtMoc Include="Hotspot_Analysis_Widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Info_Detail_Widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Article_Detail_Widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp">
@@ -100,6 +97,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Info_Detail_Widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

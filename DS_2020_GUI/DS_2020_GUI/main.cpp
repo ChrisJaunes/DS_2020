@@ -1,8 +1,7 @@
-#include "MainWindow.h"
 #include <QtWidgets/QApplication>
-#include "Article.h"
-
 #include "pch.h"
+#include "MainWindow.h"
+#include "Article.h"
 #include "test.h"
 #include <Solver.h>
 #include <CommUtils.h>

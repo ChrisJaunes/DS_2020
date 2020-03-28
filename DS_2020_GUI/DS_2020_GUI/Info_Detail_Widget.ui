@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Article_Detail_Widget</class>
- <widget class="QWidget" name="Article_Detail_Widget">
+ <class>Info_Detail_Widget</class>
+ <widget class="QWidget" name="Info_Detail_Widget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Article_Detail_Widget</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="title">
    <property name="geometry">
     <rect>
      <x>130</x>
