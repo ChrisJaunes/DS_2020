@@ -87,6 +87,21 @@
     <ClCompile Include="Hotspot_Analysis_Widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\CommUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Author.h">
@@ -105,6 +120,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\CommUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Solver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
