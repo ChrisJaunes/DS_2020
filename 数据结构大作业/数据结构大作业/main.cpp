@@ -7,7 +7,8 @@
 int _tmain()
 {
     CalcTime timer;
-	F3Solver f3solver(L"D:\\Code\\ds_hw\\dblp.xml");
+	F3Solver f3solver(L"D:\\Code\\ds_hw\\dblp.xml", article | book );
 	f3solver.ExportToFile(L"f3_out.txt");
+
 	return 0;
 }

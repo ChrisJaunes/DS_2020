@@ -7,8 +7,13 @@
 
 F3Solver::F3Solver(const TCHAR* xmlfile)
 {
-    ImportDataWrapper(xmlfile);
+    // Ä¬ÈÏÖ»½âÎöarticle
+    ImportDataWrapper(xmlfile, this);
+}
 
+F3Solver::F3Solver(const TCHAR* xmlfile, DWORD parseInfo)
+{
+    ImportDataWrapperEx(xmlfile, this, parseInfo);
 }
 
 void F3Solver::ExportToFile(const TCHAR* filename)
@@ -28,3 +33,13 @@ void F3Solver::ExportToFile(const TCHAR* filename)
 
     ofs.close();
 }
+
+void F3Solver::InitMemory() {
+    ImportData.f3_pFrequencyRanking = new FrequencyRanking(ignoresWords());
+}
+
+void F3Solver::InsertObject(Info temp)
+{
+    ImportData.f3_pFrequencyRanking->Insert(temp);
+}
+
