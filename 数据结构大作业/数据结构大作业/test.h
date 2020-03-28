@@ -2,6 +2,7 @@
 //本文件用于测试
 #ifndef TEST_H
 #define TEST_H
+#define TEST_DEBUG
 #include "Author.h"
 #include "Article.h"
 #include <qstring.h>

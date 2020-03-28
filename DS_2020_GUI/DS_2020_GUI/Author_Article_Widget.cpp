@@ -114,7 +114,7 @@ Author_Article_Widget::~Author_Article_Widget()
 }
 
 void Author_Article_Widget::initData(QString& parameter) {
-#ifdef ONLINE
+#ifndef TEST_DEBUG
     author = Author::getAuthorByName(bstr_t(parameter.toStdWString().c_str()));
 #else
     author = *FST::AUTHORS[rand() % FST::AUTHORSN];
@@ -129,7 +129,7 @@ void Author_Article_Widget::initData(QString& parameter) {
     article_model = new QStandardItemModel(articles.size(), 1);
     for (int i = 0; i < articles.size(); i++) {
         Author_Article_Item article_item;
-#ifdef ONLINE
+#ifndef TEST_DEBUG
         article_item(Article::getArticles(articles[i]));
 #else
         article_item = Author_Article_Item(FST::ARTICLES[rand() % FST::ARTICLESN]);

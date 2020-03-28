@@ -2,7 +2,7 @@
 #include "MainWindow.h"
 #include "Author_Article_Widget.h"
 #include "Article_Detail_Widget.h"
-#include <xmlhelper.h>
+//#include <xmlhelper.h>
 #include <QProgressDialog>
 #include <QMessageBox>
 
@@ -13,21 +13,21 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->setupUi(this);
 	ui->rbn_F1_Author->setChecked(true);
 	connect(ui->tet_inputParameter, SIGNAL(returnPressed()), ui->btn_search, SIGNAL(clicked()), Qt::UniqueConnection);
-	ImportData.isDone = false;
-	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)L"D:\\Code\\ds_hw\\dblp.xml", 0, 0);
+	//ImportData.isDone = false;
+	//CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)L"D:\\Code\\ds_hw\\dblp.xml", 0, 0);
 }
 
 void MainWindow::on_btn_loadfile_clicked() {
-	ImportData.isDone = false;
-	QString filepath =ui->tet_loadfile->toPlainText();
-	LPCWSTR rfilepath = charToWChar(filepath.toLatin1());
+	//ImportData.isDone = false;
+	//QString filepath =ui->tet_loadfile->toPlainText();
+	//LPCWSTR rfilepath = charToWChar(filepath.toLatin1());
 	// D:\Code\ds_hw\dblp.xml
 	//CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)rfilepath, 0, 0);
 }
 
 void MainWindow::on_btn_search_clicked() {
 	qDebug() << "on_btn_search_clicked" << '\n';
-	if (!ImportData.isDone) {
+	/*if (!ImportData.isDone) {
 		// 没有完成xml解析工作, 弹出提示框
 		QMessageBox::information(this, "Error", "XML not loaded");
 		return;
@@ -35,7 +35,7 @@ void MainWindow::on_btn_search_clicked() {
 	else {
 		qDebug() << "parse done" << '\n';
 	}
-
+	*/
 	QString parameter = ui->tet_inputParameter->toPlainText();
 	if (ui->rbn_F1_Author->isChecked()) {
 		(new Author_Article_Widget(parameter))->show();
