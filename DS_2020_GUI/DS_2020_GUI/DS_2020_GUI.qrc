@@ -1,4 +1,7 @@
 <RCC>
-    <qresource prefix="DS_2020_GUI">
+    <qresource prefix="/DS_2020_GUI">
+        <file>html/Hotspot_Analysis_Web.html</file>
+        <file>html/js/d3.js</file>
+        <file>html/js/d3.min.js</file>
     </qresource>
 </RCC>

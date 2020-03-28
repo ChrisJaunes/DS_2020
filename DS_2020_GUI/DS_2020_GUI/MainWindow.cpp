@@ -2,6 +2,7 @@
 #include "MainWindow.h"
 #include "Author_Article_Widget.h"
 #include "Article_Detail_Widget.h"
+#include "Hotspot_Analysis_Widget.h"
 //#include <xmlhelper.h>
 #include <QProgressDialog>
 #include <QMessageBox>
@@ -36,11 +37,17 @@ void MainWindow::on_btn_search_clicked() {
 		qDebug() << "parse done" << '\n';
 	}
 	*/
+	static Hotspot_Analysis_Widget* tmp = nullptr;
 	QString parameter = ui->tet_inputParameter->toPlainText();
 	if (ui->rbn_F1_Author->isChecked()) {
 		(new Author_Article_Widget(parameter))->show();
+		tmp->initData(parameter);
 	}
-	else;
+	else if (ui->rbn_F3) {
+		tmp = new Hotspot_Analysis_Widget(parameter);
+		tmp->show();
+		tmp->initData(parameter);
+	}
 }
 
 void MainWindow::show_ArticleOfAuthor(QString parameter) {

@@ -41,19 +41,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
-    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;D:\Code\ds_hw\new\new1\DS_2020\数据结构大作业\数据结构大作业;$(IncludePath)</IncludePath>
-    <ReferencePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;$(ReferencePath)</ReferencePath>
+    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
     <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;$(IncludePath)</IncludePath>
-    <ReferencePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QtInstall>Qt5.12.2</QtInstall>
+    <QtInstall>msvc2017_64</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -96,6 +94,7 @@
   <ItemGroup>
     <QtUic Include="Article_Detail_Widget.ui" />
     <QtUic Include="Author_Article_Widget.ui" />
+    <QtUic Include="Hotspot_Analysis_Widget.ui" />
     <QtUic Include="MainWindow.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +105,7 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp" />
     <ClCompile Include="Article_Detail_Widget.cpp" />
     <ClCompile Include="Author_Article_Widget.cpp" />
+    <ClCompile Include="Hotspot_Analysis_Widget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="test.cpp" />
@@ -120,6 +120,7 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\error.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h" />
+    <QtMoc Include="Hotspot_Analysis_Widget.h" />
     <QtMoc Include="Author_Article_Widget.h" />
   </ItemGroup>
   <ItemGroup>
