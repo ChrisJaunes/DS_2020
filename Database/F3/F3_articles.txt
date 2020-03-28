@@ -1,0 +1,1018 @@
+1936
+Calculus	2
+Logic.	2
+Addendum	1
+Article	1
+Constructibility	1
+Correction	1
+Criterion	1
+Existence.	1
+Finite	1
+Foundations	1
+---
+1937
+Logic.	3
+Theory	2
+Classes	1
+Deducibility	1
+Impossible	1
+Modification	1
+Necessary	1
+Neumann's	1
+Respect	1
+System	1
+---
+1938
+Association	1
+Corrections	1
+Formal	1
+Foundation	1
+Logic.	1
+Meeting	1
+Metamathematics.	1
+New	1
+Symbolic	1
+Third	1
+---
+1939
+Logic.	4
+Association	2
+Calculus	2
+Independence	2
+Meeting	2
+New	2
+Note	2
+Propositions.	2
+Quine's	2
+System	2
+---
+1940
+Calculus	2
+Langford's	2
+Lewis	2
+Calculi	1
+Einkleidung	1
+Mathematik	1
+Matrices	1
+Note	1
+Property	1
+Propositions.	1
+---
+1941
+Quine's	3
+Axioms	2
+Logic.	2
+Theory	2
+*101.	1
+Closure	1
+Decision	1
+Element	1
+Lewis	1
+Number.	1
+---
+1942
+Logic.	6
+Set	3
+Axiomatic	2
+Church's	2
+Combinatory	2
+Conditions	2
+Formal	2
+Symbolic	2
+System	2
+Theory.	1
+---
+1943
+System	3
+Set	2
+Axiomatic	1
+Completely	1
+Formal	1
+Homogeneous	1
+Ideas.	1
+Logic.	1
+Part	1
+Simplicity	1
+---
+1944
+Logic.	2
+Axioms	1
+Calculi.	1
+Complete	1
+Number	1
+Ordinal	1
+Representations	1
+Restricted	1
+Set	1
+---
+1945
+Syntactical	2
+Classes.	1
+Confirmation.	1
+Construction	1
+Definition	1
+Degree	1
+Finite	1
+Note	1
+Probability	1
+Sequences	1
+---
+1946
+des	16
+de	12
+et	9
+la	7
+dans	6
+en	5
+les	5
+du	4
+ondes	4
+prdictions	1
+---
+1947
+Logic.	2
+Problem	2
+Recursive	2
+Absolute	1
+Calculus	1
+Functional	1
+Identity	1
+Individuals	1
+Order.	1
+Properties	1
+---
+1948
+Logic.	3
+Axiom	2
+Calculi	2
+Concerning	2
+Functional	2
+Schemes	2
+System	2
+Implication	1
+Lewis's	1
+Note	1
+---
+1949
+Logic.	6
+Note	4
+Calculus.	3
+Propositional	3
+Basic	2
+Completeness	2
+Decision	2
+Problem	2
+Arithmetic.	1
+---
+1950
+der	4
+Complete	3
+Numbers.	3
+Real	3
+Existence	2
+Formal	2
+Logic.	2
+Logik	2
+Reduction	2
+System	2
+---
+1951
+Part	4
+Consistent	2
+First	2
+Fragments	2
+Functional	2
+I.	2
+II.	2
+Lewis	2
+Logic.	2
+Propositional	2
+---
+1952
+New	4
+Logic.	3
+Operations	3
+computer	3
+digital	3
+Calculus.	2
+II.	2
+Inferential	2
+Interpretation	2
+Number	2
+---
+1953
+Discussion	14
+paper	12
+Theory	11
+Dr.	10
+theory	9
+Operations	7
+Communication	4
+Editor	4
+Information'.	4
+Problems.	4
+---
+1954
+Editor	20
+Letter	20
+Operations	14
+Research	11
+analog	6
+digital	6
+use	6
+Application	5
+Digital	5
+Computing	3
+---
+1955
+Editor	17
+Letter	17
+Operations	9
+Digital	8
+Analog	7
+Problem	6
+Solution	6
+Control	5
+Operational	5
+Some	5
+---
+1956
+der	17
+und	9
+Digital	8
+Electronic	8
+translation	8
+Some	7
+High-Speed	6
+Note	6
+PACT	6
+Quineschen	1
+---
+1957
+Analog	12
+Method	11
+Theory	10
+Digital	8
+Computer	7
+noise.	7
+Analysis	6
+Computer.	6
+Computers.	6
+Information	5
+---
+1958
+Note	16
+Computer	14
+Functions.	13
+Digital	10
+Computer.	9
+Solution	9
+der	9
+Automatic	8
+Logical	8
+Magnetic	8
+---
+1959
+Digital	23
+Computer	17
+Computer.	15
+Method	15
+Note	15
+der	15
+(Corresp.).	13
+Part	12
+Solution	12
+Differential	9
+---
+1960
+Method	16
+Digital	15
+(Corresp.).	14
+Computer	13
+der	13
+Binary	12
+Note	12
+Magnetic	11
+Analysis	10
+Die	10
+---
+1961
+Algorithm	47
+Computer	30
+algorithm	20
+editor:	19
+Letters	18
+Some	17
+der	16
+(Corresp.).	15
+Method	15
+Data	12
+---
+1962
+Algorithm	140
+Certification	51
+(Corresp.).	24
+Computer	23
+Book	16
+Design	14
+der	14
+Remark	13
+Simulation	13
+Reviews.	7
+---
+1963
+Algorithm	65
+algorithm	64
+Certification	48
+Book	26
+Computer	25
+(Corresp.).	23
+System	18
+Data	16
+Method	16
+computer	13
+---
+1964
+(Corresp.).	30
+Algorithm	29
+algorithm	29
+Digital	23
+computer	22
+von	22
+Certification	19
+Computer	19
+Book	18
+review:	9
+---
+1965
+(Corresp.).	48
+Algorithm	35
+Letters	25
+Sequential	25
+editor:	25
+Book	22
+Review:	22
+Threshold	22
+algorithm	22
+Method	18
+---
+1966
+Computer	35
+Book	34
+pages.	33
+Review:	32
+Algorithm	31
+Letter	29
+Editor	28
+(Corresp.).	27
+der	27
+Some	26
+---
+1967
+(Corresp.).	55
+Algorithm	49
+Letter	45
+Editor	39
+Some	35
+Computer	30
+System	30
+Systems.	30
+Note	27
+der	22
+---
+1968
+(Corresp.).	58
+Algorithm	44
+Letter	39
+Editor	38
+Letters	38
+editor:	36
+Some	35
+Computer	33
+Note	33
+von	20
+---
+1969
+(Corresp.).	55
+control	46
+Some	39
+algorithm	39
+Algorithm	38
+systems.	35
+Computer	31
+Design	30
+Systems.	30
+von	25
+---
+1970
+(Corresp.).	73
+Algorithm	63
+der	44
+Computer	39
+algorithm	36
+Sequential	30
+Method	29
+System	29
+Linear	28
+von	28
+---
+1971
+Note	78
+Some	64
+(Corresp.).	58
+Network	53
+Algorithm	51
+Sequential	51
+System	45
+Computer	42
+Data	40
+der	25
+---
+1972
+Computer	66
+(Corresp.).	65
+Some	55
+Data	52
+System	47
+Note	46
+Network	43
+Thesis	41
+abstr.).	41
+Linear	33
+---
+1973
+Note	68
+Computer	67
+Algorithm	64
+(Corresp.).	59
+Systems.	54
+Linear	48
+Information	47
+Programming	46
+Some	44
+Time	18
+---
+1974
+(Corresp.).	74
+Note	71
+Computer	66
+Algorithm	58
+Optimal	56
+Some	52
+Data	49
+Systems.	47
+Review	44
+Binary	24
+---
+1975
+Computer	86
+(Corresp.).	81
+Algorithm	63
+System	61
+Some	59
+Data	56
+der	56
+Note	55
+Systems.	52
+at	23
+---
+1976
+Computer	88
+Data	72
+System	71
+(Corresp.).	69
+Some	67
+Algorithm	63
+Systems.	62
+Systems	56
+Review	52
+Languages.	30
+---
+1977
+Computer	114
+Data	106
+Some	75
+Algorithm	72
+Analysis	72
+System	62
+(Corresp.).	61
+Systems.	60
+Note	59
+graphs.	48
+---
+1978
+Computer	98
+Some	88
+Data	80
+Information	71
+Systems.	68
+(Corresp.).	64
+Algorithm	60
+graphs.	58
+information	57
+conditions	6
+---
+1979
+Data	108
+Algorithm	74
+Computer	74
+Some	72
+Systems.	67
+(Corresp.).	66
+Information	66
+systems.	57
+Note	55
+System	55
+---
+1980
+Algorithm	83
+System	83
+Analysis	81
+Some	81
+(Corresp.).	76
+Data	75
+Systems.	74
+Note	72
+Computer	71
+graphs.	57
+---
+1981
+Computer	112
+Data	94
+Systems.	84
+Design	80
+Algorithm	74
+Some	69
+System	68
+graphs.	64
+Analysis	63
+as	40
+---
+1982
+Systems.	115
+Computer	101
+Some	96
+Data	91
+Information	82
+graphs.	79
+Algorithm	76
+Analysis	75
+Systems	75
+graphs	43
+---
+1983
+Data	119
+Systems.	108
+Computer	107
+System	87
+Design	82
+analysis	81
+Algorithm	79
+Some	79
+systems.	75
+New	74
+---
+1984
+Systems.	139
+Computer	134
+System	121
+Design	120
+Data	101
+Database	97
+Algorithm	93
+Some	93
+analysis	93
+graphs.	93
+---
+1985
+Systems.	162
+Computer	127
+Systems	121
+System	120
+Data	119
+Analysis	112
+Algorithm	110
+Design	102
+Performance	101
+Some	94
+---
+1986
+Systems.	169
+Computer	159
+Design	143
+Analysis	140
+Information	136
+System	135
+Performance	113
+algorithm	108
+Data	106
+system	98
+---
+1987
+Systems.	187
+Analysis	145
+Information	143
+System	141
+Distributed	137
+Computer	129
+Performance	127
+systems.	126
+Data	125
+algorithm	117
+---
+1988
+systems.	178
+system	164
+Parallel	153
+systems	143
+analysis	139
+algorithm	136
+Systems	133
+Analysis	131
+Information	131
+graphs.	106
+---
+1989
+Parallel	208
+systems.	188
+system	179
+Systems.	167
+Analysis	164
+Systems	154
+analysis	152
+Algorithm	148
+systems	146
+graphs.	104
+---
+1990
+Parallel	227
+systems.	210
+Analysis	197
+Systems.	185
+information	173
+System	165
+system	165
+analysis	164
+algorithm	160
+systems	157
+---
+1991
+Parallel	300
+systems.	243
+algorithm	233
+Analysis	222
+Systems.	218
+analysis	204
+system	198
+information	183
+Design	181
+Some	158
+---
+1992
+Parallel	311
+systems.	283
+algorithm	259
+neural	254
+Analysis	251
+analysis	247
+control	247
+Systems.	239
+system	209
+image	208
+---
+1993
+Parallel	397
+Systems.	293
+algorithm	290
+Analysis	283
+systems.	281
+analysis	271
+Information	267
+control	260
+neural	243
+new	153
+---
+1994
+Parallel	408
+systems.	352
+control	316
+Systems.	309
+analysis	301
+neural	291
+Analysis	289
+Algorithm	271
+algorithm	269
+system	253
+---
+1995
+Parallel	441
+Systems.	369
+neural	355
+Information	340
+systems.	333
+Algorithm	326
+Analysis	312
+control	289
+analysis	271
+algorithm	262
+---
+1996
+control	408
+Parallel	406
+Information	398
+Systems.	394
+Analysis	383
+systems.	357
+fuzzy	354
+neural	350
+Design	321
+systems	287
+---
+1997
+Parallel	458
+Information	413
+systems.	394
+Systems.	383
+fuzzy	369
+control	339
+Analysis	336
+Neural	307
+analysis	303
+Software	262
+---
+1998
+Information	463
+fuzzy	455
+Analysis	444
+Systems.	425
+systems.	405
+control	387
+neural	371
+analysis	369
+Design	352
+algorithm	330
+---
+1999
+systems.	571
+Information	536
+control	534
+fuzzy	470
+systems	444
+analysis	429
+Analysis	425
+Systems.	401
+system	387
+Data	327
+---
+2000
+systems.	764
+control	632
+analysis	627
+systems	539
+fuzzy	523
+system	506
+Analysis	504
+Information	503
+information	464
+approach	430
+---
+2001
+systems.	772
+control	690
+analysis	653
+systems	552
+Information	551
+fuzzy	547
+Analysis	524
+approach	500
+model	490
+over	285
+---
+2002
+systems.	749
+control	694
+analysis	684
+Information	633
+systems	599
+model	574
+Analysis	544
+information	540
+approach	528
+as	312
+---
+2003
+systems.	880
+analysis	811
+control	804
+systems	696
+Information	693
+system	672
+Analysis	664
+model	646
+networks.	623
+algorithm	569
+---
+2004
+analysis	1023
+systems.	979
+model	838
+control	837
+networks.	754
+systems	743
+system	740
+Analysis	727
+approach	699
+New	556
+---
+2005
+analysis	1212
+systems.	1103
+Analysis	957
+model	929
+networks.	892
+system	887
+control	875
+systems	822
+Information	797
+New	644
+---
+2006
+analysis	1416
+Analysis	1136
+networks.	1134
+systems.	1076
+model	1040
+method	1004
+approach	975
+algorithm	937
+systems	929
+at	476
+---
+2007
+Analysis	1500
+analysis	1337
+networks.	1185
+Design	1125
+model	1118
+Systems.	1068
+Control	1050
+Networks.	1005
+Systems	1004
+Information	923
+---
+2008
+analysis	1529
+Analysis	1507
+networks.	1302
+model	1231
+systems.	1206
+Design	1179
+Systems.	1098
+Networks.	1092
+Control	1090
+systems	1013
+---
+2009
+analysis	1883
+Analysis	1646
+networks.	1575
+model	1421
+systems.	1310
+approach	1286
+Design	1284
+method	1255
+system	1239
+under	638
+---
+2010
+Analysis	2031
+analysis	1835
+model	1586
+networks.	1554
+Networks.	1473
+Design	1425
+Wireless	1405
+method	1378
+approach	1340
+algorithm	1260
+---
+2011
+Analysis	2210
+analysis	2015
+model	1733
+Networks.	1690
+networks.	1532
+Data	1524
+method	1520
+Design	1513
+Wireless	1442
+approach	1424
+---
+2012
+Analysis	2530
+analysis	2068
+model	1818
+Networks.	1780
+Data	1732
+Wireless	1657
+Design	1650
+Model	1628
+System	1580
+approach	1514
+---
+2013
+Analysis	2655
+Networks.	2343
+analysis	2213
+Data	2023
+model	1957
+Wireless	1910
+networks.	1806
+Model	1781
+Control	1779
+Efficient	1519
+---
+2014
+Networks.	2864
+Analysis	2817
+analysis	2390
+Data	2248
+model	2043
+Wireless	2013
+networks.	1929
+Control	1886
+data	1867
+System	1708
+---
+2015
+Networks.	3143
+Analysis	2914
+Data	2545
+analysis	2414
+model	2187
+Wireless	2171
+Learning	2158
+via	2060
+data	1991
+as	1108
+---
+2016
+Networks.	3489
+Analysis	3259
+Data	3051
+Learning	2737
+analysis	2555
+via	2428
+model	2343
+data	2331
+Control	2204
+Systems	1563
+---
+2017
+Networks.	4293
+Learning	4075
+Analysis	3699
+Data	3649
+via	2786
+Control	2778
+analysis	2778
+Neural	2730
+Network	2647
+model	2493
+---
+2018
+Learning	6358
+Networks.	5245
+Analysis	4517
+Data	4505
+Neural	4406
+Deep	4359
+via	3895
+Network	3771
+Control	3597
+analysis	2918
+---
+2019
+Learning	9058
+Deep	6172
+Neural	5937
+Networks.	5507
+Data	5247
+Analysis	5200
+Network	4967
+via	4792
+Detection	4571
+problem	916
+---
+2020
+Learning	527
+Deep	408
+Control	349
+method	317
+via	317
+Data	313
+Neural	310
+Analysis	305
+learning	298
+Networks.	285
+---

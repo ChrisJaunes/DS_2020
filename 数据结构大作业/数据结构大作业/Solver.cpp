@@ -28,10 +28,35 @@ void F3Solver::ExportToFile(const TCHAR* filename)
         for (auto j : ImportData.f3_pFrequencyRanking->Get(i)) {
             ofs << (wchar_t*)j.first <<L"\t"<< j.second << endl;
         }
-        ofs << endl;
+        ofs << L"---" <<endl;
     }
 
     ofs.close();
+}
+
+std::map < STR, std::map<STR, ULONG64> > F3Solver::ImportFromFile(const TCHAR* filename)
+{
+    wifstream ifs;
+    std::map < STR, std::map<STR, ULONG64> > result;
+    ifs.open(filename, ios::in);
+    wchar_t buffer[0x200]{0};
+    while (ifs >> buffer) {
+        STR year(buffer);
+        std::map<STR, ULONG64> result_peryear;
+        while(STR(buffer)!=STR()) {
+            ifs >> buffer;
+            STR word(buffer);
+            if (STR(buffer) == STR(L"---")) {
+                break;
+            }
+            ULONG64 times;
+            ifs >> times;
+            result_peryear.insert(std::make_pair(word,times));
+        }
+        result.insert(std::make_pair(year, result_peryear));
+    }
+    ifs.close();
+    return result;
 }
 
 void F3Solver::InitMemory() {

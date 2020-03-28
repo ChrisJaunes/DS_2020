@@ -57,4 +57,5 @@ public:
 
 	// 这个是自己拓展的
 	void ExportToFile(const TCHAR*);
+	static std::map < STR, std::map<STR, ULONG64> > ImportFromFile(const TCHAR*);
 };

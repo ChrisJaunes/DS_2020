@@ -286,6 +286,8 @@ std::vector<STR> ignoresWords()
 	ignores.push_back(STR(L"from"));
 	ignores.push_back(STR(L"With"));
 	ignores.push_back(STR(L"How"));
+	ignores.push_back(STR(L"or"));
+
 	//ignores.push_back(STR(L"analysis"));
 	//ignores.push_back(STR(L"Analysis"));
 

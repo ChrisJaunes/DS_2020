@@ -3,7 +3,7 @@
 合作文档地址:
 https://shimo.im/docs/CGcDQKCrhvkCGvQj
 
-### parseInfo大致的用时和内存消耗
+### F3: parseInfo大致的用时和内存消耗
 
 @Q4n:
 
@@ -21,3 +21,5 @@ phdthesis 47.75s
 proceedings  41.547s
 www 132.031s 16G
 ```
+
+数据库导出到了database中, 并且提供了F3Solver接口对数据进行导入.
