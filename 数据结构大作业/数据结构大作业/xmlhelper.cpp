@@ -113,8 +113,11 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 				}
 			}
 
-			// TODO: 使用temp
-			psolver->InsertObject(temp);
+			// 假如没有title的, 将会被忽略
+			if (temp.GetProperty(L"title").size()) {
+				// TODO: 使用temp
+				psolver->InsertObject(temp);
+			}
 		}
 	}
 	return 0;

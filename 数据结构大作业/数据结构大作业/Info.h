@@ -2,11 +2,11 @@
 #include "pch.h"
 #define STR bstr_t
 
+// update: title为必要属性
 class Info {
 protected:
 	// 标识当前大类属性
 	STR clsid;
-	STR title;
 	std::map<STR, std::vector<STR>>* properties;
 public:
 	Info();
