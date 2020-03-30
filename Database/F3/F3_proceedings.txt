@@ -1,0 +1,717 @@
+1960
+1st	2
+Information	2
+Processing,	2
+15-20	1
+Annual	1
+Conference	1
+International	1
+June	1
+Paris	1
+Proceedings	1
+---
+1961
+2nd	1
+Annual	1
+Circuit	1
+Design,	1
+Detroit,	1
+Logical	1
+Michigan,	1
+Switching	1
+Symposium	1
+Theory	1
+---
+1962
+1962	2
+1962,	1
+2nd	1
+August	1
+Congress	1
+Germany,	1
+IFIP	1
+Information	1
+Munich,	1
+Proceedings	1
+---
+1963
+4th	1
+Annual	1
+Chicago,	1
+Circuit	1
+Design,	1
+Illinois,	1
+Logical	1
+Switching	1
+Symposium	1
+Theory	1
+---
+1964
+1964	2
+USA,	2
+5th	1
+Annual	1
+Circuit	1
+Design,	1
+Logical	1
+New	1
+Princeton,	1
+Switching	1
+---
+1965
+1965	3
+USA,	3
+6th	1
+Ann	1
+Annual	1
+Arbor,	1
+Circuit	1
+Design,	1
+June	1
+---
+1966
+Proceedings	3
+'66	2
+AFIPS	2
+American	2
+California,	2
+Federation	2
+Information	2
+Joint	2
+Processing	2
+USA,	2
+---
+1967
+1967	3
+1967,	3
+Conference,	3
+Proceedings	3
+'67	2
+18-20,	2
+AFIPS	2
+American	2
+Federation	2
+Information	2
+---
+1968
+1968,	6
+Information	6
+Proceedings	5
+AFIPS	4
+American	4
+Computer	4
+Federation	4
+Joint	4
+Processing	4
+USA,	4
+---
+1969
+1969	5
+Proceedings	5
+1969,	4
+Symposium	3
+USA,	3
+1st	2
+Annual	2
+Conference,	2
+International	2
+---
+1970
+1970	4
+Proceedings	3
+USA,	3
+AFIPS	2
+American	2
+Computer	2
+Federation	2
+Information	2
+Joint	2
+---
+1971
+1971	6
+Proceedings	6
+USA,	5
+1971,	3
+ACM	3
+Conference	3
+Information	3
+Joint	3
+November	3
+---
+1972
+1972	10
+Proceedings	10
+USA,	7
+1972,	6
+Computer	5
+Information	5
+Symposium	5
+Conference,	4
+USA	4
+---
+1973
+1973	14
+Proceedings	9
+USA,	9
+Conference	6
+Symposium	6
+1973,	5
+5th	4
+ACM	3
+Annual	3
+---
+1974
+Proceedings	16
+1974	14
+1974,	13
+USA,	8
+2,	5
+Annual	5
+Conference,	5
+France,	5
+April	4
+---
+1975
+1975	22
+Proceedings	19
+USA,	18
+1975,	12
+Computer	10
+Symposium	8
+Conference,	7
+ACM	6
+Conference	6
+Massachusetts,	2
+---
+1976
+Proceedings	24
+1976	19
+1976,	16
+USA,	15
+Computer	11
+Conference	11
+International	8
+September	8
+ACM	6
+Brussels,	1
+---
+1977
+Proceedings	28
+1977	24
+1977,	20
+USA,	17
+Computer	13
+International	10
+October	8
+Conference	7
+Symposium	7
+Tokyo,	1
+---
+1978
+Proceedings	25
+1978	22
+1978,	22
+USA,	19
+Conference	13
+Computer	12
+International	9
+Annual	7
+Conference,	7
+Berlin,	2
+---
+1979
+Proceedings	31
+1979,	22
+1979	21
+USA,	15
+International	14
+Computer	12
+Conference	12
+Annual	8
+Conference,	7
+San	5
+---
+1980
+Proceedings	36
+1980	30
+1980,	24
+USA,	18
+International	12
+Conference	11
+Annual	9
+und	9
+ACM	8
+Pennsylvania,	3
+---
+1981
+Proceedings	48
+1981,	36
+1981	33
+USA,	23
+Conference	16
+International	15
+Computer	12
+Symposium	12
+ACM	8
+June	8
+---
+1982
+Proceedings	47
+1982	31
+1982,	29
+USA,	26
+International	19
+Conference	17
+Symposium	15
+Computer	13
+ACM	10
+June	8
+---
+1983
+Proceedings	53
+1983	43
+1983,	32
+USA,	29
+Conference	22
+International	21
+Symposium	15
+Computer	14
+ACM	13
+June	6
+---
+1984
+Proceedings	64
+1984,	44
+1984	40
+USA,	28
+International	24
+Conference	20
+Symposium	17
+Computer	16
+und	11
+---
+1985
+Proceedings	73
+1985,	48
+1985	45
+USA,	35
+International	28
+Conference	26
+Symposium	16
+ACM	15
+Computer	15
+Proceedings.	1
+---
+1986
+Proceedings	87
+1986	53
+1986,	48
+USA,	38
+Conference	31
+International	29
+Computer	21
+Symposium	18
+ACM	17
+July	11
+---
+1987
+Proceedings	98
+1987,	58
+1987	55
+USA,	47
+International	42
+Conference	39
+Computer	22
+September	21
+Symposium	21
+July	10
+---
+1988
+Proceedings	145
+1988,	99
+1988	75
+Conference	64
+USA,	64
+International	61
+Computer	33
+Symposium	28
+Systems,	27
+Proceedings.	5
+---
+1989
+Proceedings	153
+1989,	116
+1989	72
+USA,	72
+International	68
+Conference	58
+June	39
+Computer	37
+Workshop	30
+University	8
+---
+1990
+Proceedings	188
+1990,	137
+1990	103
+International	93
+Conference	85
+USA,	84
+Computer	40
+Symposium	39
+Workshop	37
+Proceedings.	5
+---
+1991
+Proceedings	215
+1991,	153
+International	102
+1991	96
+USA,	85
+Conference	74
+Symposium	40
+Computer	39
+Workshop	38
+Proceedings.	5
+---
+1992
+Proceedings	235
+1992,	153
+1992	145
+International	122
+Conference	109
+USA,	103
+Computer	55
+Workshop	49
+June	40
+Proceedings.	5
+---
+1993
+Proceedings	277
+1993,	189
+1993	183
+International	159
+Conference	126
+USA,	125
+Workshop	58
+June	54
+'93,	53
+Proceedings.	7
+---
+1994
+Proceedings	308
+1994,	222
+1994	209
+International	177
+Conference	154
+USA,	139
+Workshop	75
+Computer	57
+September	55
+Proceedings.	2
+---
+1995
+Proceedings	287
+1995,	249
+1995	196
+International	178
+USA,	136
+Conference	128
+'95,	70
+Workshop	62
+Symposium	59
+---
+1996
+Proceedings	302
+1996,	283
+1996	222
+International	211
+Conference	145
+USA,	141
+Workshop	80
+'96,	76
+Symposium	60
+---
+1997
+1997,	339
+Proceedings	320
+International	250
+1997	234
+Conference	159
+USA,	129
+'97,	96
+Workshop	76
+Symposium	68
+---
+1998
+1998,	365
+Proceedings	347
+International	285
+1998	261
+Conference	186
+USA,	156
+'98,	90
+Workshop	82
+Conference,	75
+---
+1999
+1999,	419
+Proceedings	392
+International	312
+1999	288
+Conference	177
+USA,	174
+Workshop	101
+'99,	99
+Conference,	96
+---
+2000
+2000,	658
+Proceedings	408
+International	349
+2000	307
+Conference	202
+USA,	164
+September	109
+Conference,	106
+Workshop	102
+---
+2001
+2001,	730
+Proceedings	479
+International	433
+2001	367
+Conference	231
+USA,	166
+Workshop	124
+September	121
+Conference,	119
+Papers	57
+---
+2002
+2002,	859
+Proceedings	507
+International	446
+2002	387
+Conference	254
+USA,	180
+Workshop	137
+Conference,	135
+2002),	121
+Papers	49
+---
+2003
+2003,	1010
+International	584
+Proceedings	567
+2003	443
+Conference	328
+USA,	212
+Conference,	162
+June	161
+Workshop	156
+Papers	88
+---
+2004
+2004,	1190
+International	667
+Proceedings	644
+2004	492
+Conference	367
+USA,	217
+Workshop	199
+Conference,	190
+2004),	169
+Demonstration	2
+---
+2005
+2005,	1457
+International	815
+Proceedings	747
+2005	656
+Conference	442
+USA,	280
+Conference,	258
+September	215
+Workshop	215
+Papers	133
+---
+2006
+2006,	1553
+International	910
+Proceedings	807
+2006	747
+Conference	503
+USA,	308
+Conference,	247
+September	228
+Workshop	227
+Magdeburg	2
+---
+2007
+2007,	1809
+International	1028
+Proceedings	946
+2007	858
+Conference	565
+USA,	309
+Conference,	288
+Workshop	266
+June	248
+2006,	144
+---
+2008
+2008,	1744
+International	1086
+Proceedings	1043
+2008	931
+Conference	616
+USA,	339
+Conference,	316
+Workshop	306
+2008.	289
+June	217
+---
+2009
+2009,	1814
+International	1200
+Proceedings	1075
+2009	1052
+Conference	629
+2009.	433
+USA,	381
+Conference,	377
+Workshop	299
+Papers	168
+---
+2010
+2010,	1837
+International	1287
+2010	1239
+Proceedings	1116
+Conference	672
+2010.	495
+Conference,	446
+USA,	368
+September	347
+Papers	181
+---
+2011
+2011,	1844
+2011	1534
+International	1390
+Proceedings	1055
+Conference	664
+Conference,	537
+2011.	488
+USA,	469
+Workshop	343
+USA	54
+---
+2012
+2012	1691
+2012,	1641
+International	1394
+Proceedings	971
+Conference	710
+Conference,	510
+2012.	505
+USA,	409
+Workshop	368
+Darmstadt	1
+---
+2013
+2013,	1938
+2013	1802
+International	1569
+Proceedings	1070
+Conference	776
+USA,	547
+Conference,	541
+2013.	528
+Workshop	454
+2012,	297
+---
+2014
+2014,	2010
+2014	1929
+International	1680
+Proceedings	1210
+Conference	889
+2014.	658
+Conference,	572
+Workshop	512
+USA,	477
+Papers	210
+---
+2015
+2015,	2445
+2015	1993
+International	1804
+Proceedings	1306
+Conference	1009
+Conference,	556
+Workshop	548
+USA,	528
+September	458
+Papers	239
+---
+2016
+2016,	2503
+2016	1909
+International	1770
+Proceedings	1345
+Conference	1003
+Workshop	556
+Conference,	554
+USA,	553
+2016.	384
+September	366
+---
+2017
+2017,	2554
+2017	1871
+International	1791
+Proceedings	1331
+Conference	1020
+Conference,	569
+Workshop	510
+USA,	456
+September	417
+2016,	392
+---
+2018
+2018,	2701
+2018	1849
+International	1807
+Proceedings	1316
+Conference	1036
+Conference,	644
+Workshop	453
+USA,	440
+September	406
+2017,	401
+---
+2019
+2019,	2420
+International	1607
+Proceedings	1164
+2019	1152
+Conference	864
+Conference,	641
+2019.	484
+2018,	464
+USA,	400
+Selected	213
+---
+2020
+2019,	94
+International	88
+Proceedings	56
+Conference	55
+Systems	37
+2019.	32
+Conference,	30
+2020,	28
+2019	22
+---

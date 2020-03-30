@@ -3,13 +3,34 @@
 
 Article::Article()
 {
-	mdate = key = title = journal 
+	mdate = key = title = journal = cdrom
 		= volume = month = year = ee = "";
 	this->authors = new std::vector<bstr_t>;
 }
 
+Article::Article(const Article& src) {
+	this->mdate = src.mdate.copy();
+	this->key = src.key.copy();
+	this->title = src.title.copy();
+	this->journal = src.journal.copy();
+	this->volume = src.volume.copy();
+	this->month = src.month.copy();
+	this->year = src.year.copy();
+	this->cdrom = src.cdrom.copy();
+	this->ee = src.ee.copy();
+
+	this->authors = new std::vector<bstr_t>;
+	for (int i = 0; i < src.authors->size(); i++) {
+		this->authors->push_back(src.authors->at(i).copy());
+	}
+}
+
 Article::~Article() 
 {
+	// 传入和传出都是用copy的, 也就是内部空间是独立的, 所以析构的时候直接调用析构函数
+	// 不需要考虑内部数据析构
+
+	// vector会自动析构内部对象
 	delete authors;
 }
 

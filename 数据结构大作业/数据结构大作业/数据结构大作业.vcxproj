@@ -107,6 +107,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>D:\Code\ds_hw\new\DS_2020\数据结构大作业\数据结构大作业;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,18 +153,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="article.h" />
     <ClInclude Include="BPTrees.h" />
+    <ClInclude Include="CommUtils.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="FrequencyRanking.h" />
+    <ClInclude Include="Info.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Solver.h" />
     <ClInclude Include="xmlhelper.h" />
     <ClInclude Include="Author.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="article.cpp" />
     <ClCompile Include="Author.cpp" />
+    <ClCompile Include="CommUtils.cpp" />
     <ClCompile Include="FrequencyRanking.cpp" />
+    <ClCompile Include="Info.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -171,6 +175,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Solver.cpp" />
     <ClCompile Include="xmlhelper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

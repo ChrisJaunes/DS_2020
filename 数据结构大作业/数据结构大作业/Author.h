@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
-#include "Article.h"
+#include "error.h"
+
 #ifndef AUTHOR_H
 #define AUTHOR_H
 /*
@@ -14,30 +15,34 @@
  * 
  */
 #define Collaborator Author
-template<typename STR, typename W>
+#define STR bstr_t
+#define W int
 class Author {
 protected:
 	STR name;
 	std::vector<STR>* articles;
-	std::vector<std::pair<W, STR> >* collaborators;
+	std::vector<std::pair<int, STR> >* collaborators;
 public:
 	Author();
 	Author(STR);
-	Author(STR, std::vector<STR> &, std::vector<std::pair<W, STR> >& );
+	Author(STR, std::vector<STR>, std::vector<std::pair<int, STR> > );
+	Author& operator = (Author&);
 	~Author();
-	OPRESULT GetNumOfArticle()const;
 	OPRESULT AddArticle(STR);
 	std::pair<OPRESULT, std::vector<STR> > GetArticles();
-	OPRESULT GetCollaboratorByArticle(const STR&, std::map<STR, W>&);
-	std::pair<OPRESULT, std::vector<W, STR> > GetCollaborators();
+	OPRESULT GetNumOfArticle()const;
+	OPRESULT GetCollaboratorByArticle(const STR, std::map<STR, int>);
+	std::pair<OPRESULT, std::vector<std::pair<int, STR> > > GetCollaborators();
 	static std::pair<OPRESULT, std::vector<STR> >GetTopNOfNumOfArticle(int lim = 100);
-	static Author<STR,W> getAuthorByArticle(STR&);
+	static Author getAuthorByName(STR&);
 };
 
-template<typename STR, typename W>
+
 struct AuthorCmpByNumOfArticle {
-	bool operator()(const Author<STR, W> *a, const Author<STR,W> *b) {
+	bool operator()(const Author *a, const Author *b) {
 		return a->GetNumOfArticle() < b->GetNumOfArticle();
 	}
 };
+#undef STR
+#undef W
 #endif

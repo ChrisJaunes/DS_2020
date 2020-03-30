@@ -1,51 +1,60 @@
 #include <qdebug.h>
 #include "MainWindow.h"
+#include "Info_Detail_Widget.h"
 #include "Author_Article_Widget.h"
-#include "Article_Detail_Widget.h"
-#include <xmlhelper.h>
+
+#include "Hotspot_Analysis_Widget.h"
+//#include <xmlhelper.h>
 #include <QProgressDialog>
 #include <QMessageBox>
-_ImportData ImportData;
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
 	  ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	ui->rbn_F1_Author->setChecked(true);
+	ui->rbn_F1_Info->setChecked(true);
 	connect(ui->tet_inputParameter, SIGNAL(returnPressed()), ui->btn_search, SIGNAL(clicked()), Qt::UniqueConnection);
+	//ImportData.isDone = false;
+	//CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)L"D:\\Code\\ds_hw\\dblp.xml", 0, 0);
 }
 
 void MainWindow::on_btn_loadfile_clicked() {
-	ImportData.isDone = false;
-	QString filepath =ui->tet_loadfile->toPlainText();
-	LPCWSTR rfilepath = charToWChar(filepath.toLatin1());
+	//ImportData.isDone = false;
+	//QString filepath =ui->tet_loadfile->toPlainText();
+	//LPCWSTR rfilepath = charToWChar(filepath.toLatin1());
 	// D:\Code\ds_hw\dblp.xml
-	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)rfilepath, 0, 0);
+	//CreateThread(0, 0, (LPTHREAD_START_ROUTINE)ImportDataWrapper, (LPVOID)rfilepath, 0, 0);
 }
 
 void MainWindow::on_btn_search_clicked() {
 	qDebug() << "on_btn_search_clicked" << '\n';
-	if (!ImportData.isDone) {
-		// Ã»ÓÐÍê³Éxml½âÎö¹¤×÷, µ¯³öÌáÊ¾¿ò
+	/*if (!ImportData.isDone) {
+		// æ²¡æœ‰å®Œæˆxmlè§£æžå·¥ä½œ, å¼¹å‡ºæç¤ºæ¡†
 		QMessageBox::information(this, "Error", "XML not loaded");
 		return;
 	}
 	else {
 		qDebug() << "parse done" << '\n';
 	}
-
-    QString parameter = ui->tet_inputParameter->toPlainText();
-    if (ui->rbn_F1_Author->isChecked()) show_ArticleOfAuthor(parameter);
-    else;
+	*/
+	QString parameter = ui->tet_inputParameter->toPlainText();
+	if (ui->rbn_F1_Info->isChecked()) {
+		(new Info_Detail_Widget(parameter))->show();
+	}else if (ui->rbn_F1_Author->isChecked()) {
+		(new Author_Article_Widget(parameter))->show();
+	}
+	else if (ui->rbn_F3) {
+		(new Hotspot_Analysis_Widget(parameter))->show();
+	}
 }
 
 void MainWindow::show_ArticleOfAuthor(QString parameter) {
 	qDebug() << "show_ArticleOfAuthor" << parameter << '\n';
-	(new Author_Article_Widget())->show();
+	//(new Author_Article_Widget())->show();
 }
 
 void MainWindow::show_DetailOfArticle(QString parameter) {
 	qDebug() << "show_DetailOfArticle" << parameter << '\n';
-	(new Article_Detail_Widget())->show();
+	//(new Article_Detail_Widget())->show();
 }

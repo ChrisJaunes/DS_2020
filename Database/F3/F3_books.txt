@@ -1,0 +1,812 @@
+1949
+Human	2
+Behaviour	1
+Ecology	1
+Giants	1
+Least	1
+Principle	1
+brains,	1
+machines	1
+or	1
+that	1
+---
+1950
+human	2
+Decision	1
+Functions.	1
+Statistical	1
+beings	1
+cybernetics	1
+society.	1
+use	1
+---
+1951
+Les	1
+Programmgesteuerte	1
+Rechengerte	1
+Rechenmaschinen.	1
+arithmtiques.	1
+calculer	1
+digitale	1
+elektronische	1
+machines	1
+---
+1953
+Sampling	1
+Techniques	1
+---
+1954
+Analog	1
+computation	1
+methods	1
+simulation.	1
+---
+1955
+computers.	2
+Arithmetic	1
+Introduction	1
+Sur	1
+analogue	1
+digital	1
+electronic	1
+les	1
+operations	1
+solutions	1
+---
+1956
+analog	2
+computers	2
+(2.	1
+Computers	1
+D-c	1
+Electronic	1
+applications.	1
+ed.).	1
+operation	1
+their	1
+---
+1957
+22	1
+Elektro-Feinmechanische	1
+Hnfeld:	1
+K.-G.	1
+Kreis	1
+Neukirchen,	1
+Programmierungsanleitung	1
+Rechengerte,	1
+Z	1
+Zuse	1
+---
+1958
+Computability	1
+Logical	1
+Unsolvability.	1
+computers.	1
+design	1
+digital	1
+---
+1959
+(2.	1
+Analog	1
+computation	1
+ed.).	1
+methods	1
+simulation	1
+---
+1960
+Analogrechner	1
+Anwendung.	1
+Computer	1
+Elektronische	1
+Wirkungsweise	1
+design	1
+digital	1
+functional	1
+logic	1
+und	1
+---
+1961
+Mathematical	1
+programming.	1
+---
+1962
+de	2
+en	2
+Beschreibung	1
+Elektronen	1
+Engineering.	1
+Methodology	1
+So	1
+Systems	1
+eine	1
+moderner	1
+---
+1963
+Digital	1
+Einfhrung	1
+Programmierung	1
+circuitry,	1
+computer	1
+design	1
+die	1
+digitaler	1
+logic,	1
+synthesis.	1
+---
+1964
+Electronic	1
+analyse	1
+computers.	1
+d'extrapolation	1
+de	1
+digital	1
+en	1
+integrating	1
+procds	1
+tude	1
+---
+1965
+Active	1
+network	1
+synthesis.	1
+---
+1966
+de	4
+et	3
+Etude	2
+certains	2
+des	2
+Sur	1
+application	1
+l'analyse	1
+la	1
+notion	1
+---
+1967
+Einfhrung	3
+de	3
+die	3
+Contribution	2
+Programming	2
+l'tude	2
+(2.	1
+ALCOR-Gruppe	1
+ALGOL	1
+ALGOL-Manual	1
+---
+1968
+Algebraic	2
+Contribution	2
+des	2
+structures	2
+Mathematical	1
+algbriques	1
+coding	1
+language.	1
+languages	1
+machines,	1
+---
+1969
+de	5
+approach	2
+asynchrones	2
+automata.	2
+du	2
+en	2
+la	2
+languages	2
+par	2
+machines-outils.	1
+---
+1970
+de	8
+des	5
+et	5
+:	3
+la	3
+les	3
+Programming	2
+Sur	2
+dans	2
+sur	2
+---
+1971
+de	8
+des	5
+la	5
+Contribution	4
+et	3
+Automaten.	2
+Mthodes	2
+convergence	2
+l'tude	2
+propres	2
+---
+1972
+de	5
+la	3
+computer	2
+dans	2
+face	2
+introduction	2
+les	2
+logic.	2
+Introduction	1
+minimax.	1
+---
+1973
+de	4
+au	3
+en	3
+Art	2
+I.	2
+convexe.	2
+des	2
+et	2
+la	2
+optimisation	2
+---
+1974
+de	6
+et	5
+:	2
+dans	2
+des	2
+la	2
+les	2
+Informationstheorie	1
+Nonlinear	1
+programmation.	1
+---
+1975
+et	3
+und	3
+Analysis	2
+Digital	2
+Pascal	2
+dans	2
+de	2
+la	2
+les	2
+theory	2
+---
+1976
+de	10
+et	7
+des	6
+la	5
+:	3
+Etude	3
+systme	3
+Contribution	2
+Software	2
+Theory	2
+---
+1977
+de	6
+et	5
+Sur	4
+des	4
+dans	3
+problmes	3
+quelques	3
+systmes	3
+Database	2
+Design.	2
+---
+1978
+de	8
+et	3
+les	3
+1st	2
+Einfhrung	2
+Mthodes	2
+dans	2
+des	2
+la	2
+rparties	2
+---
+1979
+et	7
+de	5
+:	3
+Theory	3
+des	3
+Logic	2
+applications	2
+computational	2
+languages.	2
+programming	2
+---
+1980
+de	7
+und	7
+Datenverarbeitung	4
+der	4
+et	4
+von	4
+Computer	3
+Introduction	3
+theory	3
+:	2
+---
+1981
+de	10
+Computer	5
+la	5
+und	5
+Algebraic	4
+des	4
+et	4
+pour	4
+Programming	3
+Database	2
+---
+1982
+Computer	6
+Programming	5
+introduction	4
+Introduction	3
+Logic	3
+de	3
+die	3
+fr	3
+language	3
+und	3
+---
+1983
+de	11
+und	8
+des	7
+fr	6
+Data	5
+et	5
+la	5
+Language	4
+computer	3
+Anwender	1
+---
+1984
+Algorithms	6
+programming	6
+computer	5
+analysis	4
+de	4
+Data	3
+Structures	3
+artificial	3
+eine	3
+und	3
+---
+1985
+und	8
+de	6
+von	5
+Computer	4
+der	4
+mit	4
+zur	4
+(2.	3
+Edition.	3
+applications.	3
+---
+1986
+Computer	9
+Introduction	9
+Programming	9
+ed.).	8
+theory	8
+und	8
+(2.	7
+der	7
+logic	6
+Leistungsbewertung	1
+---
+1987
+und	11
+:	9
+Computer	9
+ed.).	9
+(2.	8
+fr	8
+language	8
+Introduction	7
+Edition.	6
+von	5
+---
+1988
+und	18
+computer	13
+de	11
+der	10
+theory	10
+Programming	9
+systems	9
+design	8
+system	8
+Organisationsplanung.	1
+---
+1989
+und	38
+von	17
+introduction	16
+systems	15
+computer	13
+der	12
+programming	11
+Computer	10
+theory	10
+zur	9
+---
+1990
+und	30
+(2.	21
+ed.).	19
+design	17
+programming	17
+Computer	16
+Programming	15
+der	15
+computer	14
+Deckungsbeitragsrechnung.	1
+---
+1991
+und	36
+(2.	18
+ed.).	16
+der	14
+programming	14
+theory	14
+Aufl.).	13
+Einfhrung	13
+eine	13
+fr	11
+---
+1992
+und	48
+ed.).	23
+(2.	22
+computer	21
+der	21
+design	21
+fr	20
+von	20
+systems	18
+des	5
+---
+1993
+und	58
+der	32
+ed.).	31
+systems	28
+(2.	24
+fr	24
+von	20
+computer	19
+design	18
+mit	16
+---
+1994
+und	80
+(2.	29
+der	29
+ed.).	29
+fr	29
+mit	26
+von	23
+programming	21
+systems	21
+Computer	16
+---
+1995
+und	98
+fr	55
+der	44
+von	32
+(2.	31
+ed.).	28
+guide	22
+mit	22
+des	18
+Maschinenbauunternehmen.	1
+---
+1996
+und	92
+von	41
+(2.	34
+der	31
+fr	31
+ed.).	29
+mit	22
+zur	21
+Aufl.).	17
+einem	3
+---
+1997
+und	71
+Java	34
+fr	33
+der	26
+(2.	25
+mit	23
+von	22
+design	21
+die	21
+des	11
+---
+1998
+und	53
+ed.).	27
+(2.	24
+von	24
+der	21
+fr	21
+programming	20
+Windows	18
+mit	16
+computer	15
+---
+1999
+und	68
+der	29
+(2.	27
+Java	25
+von	25
+fr	23
+ed.).	20
+Aufl.).	19
+mit	16
+Verarbeitung.	1
+---
+2000
+und	60
+(2.	27
+ed.).	22
+fr	21
+mit	21
+Aufl.).	16
+Windows	16
+programming	15
+Java	14
+applications.	13
+---
+2001
+und	47
+(2.	29
+ed.).	24
+der	23
+Java	22
+Aufl.).	19
+Oracle	15
+mit	15
+systems	14
+zur	10
+---
+2002
+und	63
+(2.	37
+ed.).	36
+Aufl.).	23
+Java	21
+covers	20
+von	19
+mit	18
+fr	17
+Information	15
+---
+2003
+und	45
+ed.).	44
+(2.	38
+covers	25
+pocket	23
+.NET	22
+guide	20
+reference:	20
+mit	18
+Programming	17
+---
+2004
+und	53
+(2.	33
+ed.).	31
+covers	23
+mit	23
+Java	21
+der	18
+Aufl.).	17
+fr	16
+application	3
+---
+2005
+und	68
+ed.).	51
+(2.	41
+covers	29
+Aufl.).	28
+mit	27
+der	26
+des	24
+Edition.	23
+Systems	20
+---
+2006
+ed.).	55
+(2.	44
+und	35
+et	30
+de	25
+Data	24
+Aufl.).	21
+des	21
+Edition.	19
+Applications	16
+---
+2007
+und	54
+ed.).	46
+et	39
+(2.	32
+de	26
+der	26
+web	25
+(3.	20
+la	20
+zur	9
+---
+2008
+und	45
+Applications	37
+Data	28
+de	28
+ed.).	27
+et	26
+Introduction	25
+Systems	25
+la	25
+building	7
+---
+2009
+Systems	56
+de	45
+Applications	41
+Data	35
+Information	30
+Programming	30
+Web	29
+et	29
+Design	24
+Software	21
+---
+2010
+Systems	56
+Applications	47
+Information	38
+Data	37
+de	34
+Design	28
+et	28
+Analysis	25
+Web	25
+Modeling	11
+---
+2011
+de	50
+et	42
+Data	41
+Systems	39
+Design	33
+la	32
+Applications	30
+des	29
+Information	27
+control	3
+---
+2012
+de	50
+Edition.	44
+et	42
+Applications	37
+Programming	32
+Web	32
+Guide	31
+Systems	28
+des	28
+Search	8
+---
+2013
+Systems	57
+de	40
+Applications	38
+et	38
+la	35
+Analysis	33
+Data	32
+Information	31
+Modeling	29
+und	17
+---
+2014
+de	69
+Systems	68
+et	48
+Data	45
+Applications	38
+Networks	38
+la	33
+Analysis	30
+Management	29
+Information	27
+---
+2015
+de	55
+et	40
+Data	37
+Systems	37
+Applications	35
+Design	30
+des	30
+la	29
+Networks	25
+Wireless	13
+---
+2016
+Data	54
+Applications	48
+Systems	45
+et	45
+de	42
+Analysis	30
+des	30
+la	30
+Computing	27
+Mobile	8
+---
+2017
+de	53
+Systems	43
+Applications	42
+Edition	42
+et	39
+Data	38
+Second	32
+la	32
+Computing	31
+Analysis	26
+---
+2018
+de	52
+Data	41
+et	36
+la	35
+Applications	33
+Systems	26
+des	24
+Computer	23
+Learning	21
+Support	4
+---
+2019
+Data	45
+et	35
+de	34
+Systems	31
+Edition	27
+Learning	27
+Applications	25
+Computing	22
+des	22
+Software	15
+---
+2020
+Systems	16
+Learning	12
+Machine	11
+Applications	9
+Fuzzy	9
+Analysis	7
+Control	7
+Design	7
+Intelligent	7
+Methods	7
+---
