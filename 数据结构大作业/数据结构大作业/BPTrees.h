@@ -1,14 +1,14 @@
 #pragma once
-#include<vector>
-#include<algorithm>
+#include "pch.h"
+#include"error.h"
 #ifndef BPTree_H
 #define BPTree_H
 #define NULL 0
-#define m 15 //internal的限制
-#define n 50 //leaf的限制
+#define m 5 //internal的限制
+#define n 10 //leaf的限制
 //E--Article类 KEY--字符类型(eg宽字符)
 //B+树默认阶为15，也可自定义
-//树叶默认record数目m=15（vector只是为了省事）
+//树叶默认record数目50（vector只是为了省事）
 //叶节点内部采用二分查找
 
 
@@ -29,10 +29,10 @@ public:
 	std::vector<BPNode*> pointer;
 	int num;//现存的数量
 	BPNode* nextNode;
-	BPNode* prevNode;
+	//BPNode* prevNode;
 	BPNode<E, KEY>()
 	{
-		parent = nullptr; nextNode = nullptr; prevNode = nullptr;
+		parent = nullptr; nextNode = nullptr; //prevNode = nullptr;
 		num = 0;
 		key.reserve(m);
 		pointer.reserve(m + 1);
@@ -45,27 +45,36 @@ public:
 	}
 	BPNode<E, KEY>(int x)
 	{
-		parent = nullptr; nextNode = nullptr; prevNode = nullptr;
+		parent = nullptr; nextNode = nullptr; //prevNode = nullptr;
 		num = 0;
-		pos = 0;
-		key.reserve(x - 1);
-		pointer.reserve(x);
-		for (int i = 0; i < x - 1; i++)
+		//pos = 0;
+		key.reserve(x);
+		pointer.reserve(x + 1);
+		for (int i = 0; i < x; i++)
 		{
 			this->key.push_back(NULL);
 			this->pointer.push_back(nullptr);
 		}
 		pointer.push_back(nullptr);
 	}
-	~BPNode<E, KEY>()
+	BPNode<E, KEY>(const BPNode<E, KEY> & x)
+	{
+		parent = x.parent;
+		key = x.key;
+		pointer = x.pointer;
+		num = x.num;
+		nextNode = x.nextNode;
+		//prevNode = x.prevNode;
+	}
+	virtual ~BPNode<E, KEY>()
 	{
 		delete parent;
 		delete nextNode;
-		delete prevNode;
+		//delete prevNode;
 	}
 	virtual bool isLeaf() = 0;
 	//virtual void add(E, KEY) = 0;
-	void findpos(KEY, int);
+	void findpos(KEY, int&);
 };
 
 template<typename E, typename KEY>
@@ -74,6 +83,7 @@ class BPInternal :public BPNode<E, KEY>
 public:
 	BPInternal<E, KEY>() : BPNode<E, KEY>(m) {}
 	~BPInternal<E, KEY>() {}
+	BPInternal<E, KEY>(const BPInternal<E, KEY> & x) : BPNode<E, KEY>(x) {}
 	void add(E, KEY, BPNode<E, KEY>*);
 	//void add_pointer(E, KEY, BPNode<E, KEY>*);
 	void split(KEY, BPInternal<E, KEY>*, BPInternal<E, KEY>*, KEY, BPNode<E, KEY>*);
@@ -85,7 +95,7 @@ template<typename E, typename KEY>
 class BPLeaf :public BPNode<E, KEY>
 {
 private:
-	std::vector<std::vector<E>> value;//放地址
+	std::vector<std::vector<E>> value;//放value
 public:
 	BPLeaf<E, KEY>() : BPNode<E, KEY>(n)
 	{
@@ -96,10 +106,13 @@ public:
 			value.push_back(tmp);
 		}
 	}
+	BPLeaf<E, KEY>(const BPLeaf<E, KEY> & x) : BPNode<E, KEY>(x) {
+		value = x.value;
+	}
 	~BPLeaf<E, KEY>() {}
 	virtual bool isLeaf() { return true; }
 	void add(E, KEY);
-	void split(KEY, BPLeaf<E, KEY>* &, BPLeaf<E, KEY>*, KEY, E);
+	void split(KEY&, BPLeaf<E, KEY>* &, BPLeaf<E, KEY>*, KEY, E);
 	bool find(std::vector<E> &, KEY);
 	BPLeaf<E, KEY>* next() {
 		return (BPLeaf<E, KEY>*)this->nextNode;
@@ -119,6 +132,10 @@ private:
 public:
 	BPTree();//默认阶为5
 	~BPTree();
+	BPTree(const BPTree & x) {
+		order = x.order;
+		root = x.root;
+	}
 	void insert(E, KEY);
 	bool search(std::vector<E> &, KEY);
 	BPLeaf<E, KEY>* begin();//第一个BPLeaf
@@ -133,10 +150,10 @@ using namespace std;
 //bpnode
 //return第一个>=key的位置
 template<typename E, typename KEY>
-void BPNode<E, KEY>::findpos(KEY str, int pos)
+void BPNode<E, KEY>::findpos(KEY str, int& pos)
 {
 	int start = 0; int end = this->num - 1;
-	int pos = -1;
+	pos = -1;
 	while (start <= end)
 	{
 		int mid = start + (end - start) / 2;
@@ -159,9 +176,8 @@ void BPNode<E, KEY>::findpos(KEY str, int pos)
 template<typename E, typename KEY>
 void BPInternal<E, KEY>::add(E x, KEY str, BPNode<E, KEY>*node_new)
 {
-	this->num++;
 	BPNode<E, KEY>*p = this;
-	int i;
+	int i = 0;
 	/*原始版找位置
 	for (i = 0; i < this->num; i++) {
 		if (comp(str, p->key.at(i)) == 0) {
@@ -181,8 +197,9 @@ void BPInternal<E, KEY>::add(E x, KEY str, BPNode<E, KEY>*node_new)
 		p->pointer.at(j + 1) = p->pointer.at(j);
 	}
 	p->key.at(i) = str;
-	p->pointer.at(i) = node_new;
+	p->pointer.at(i + 1) = node_new;
 	node_new->parent = this;
+	this->num++;
 }
 template<typename E, typename KEY>
 BPNode<E, KEY>* BPInternal<E, KEY>::find(KEY str)
@@ -202,7 +219,7 @@ template<typename E, typename KEY>
 void BPInternal<E, KEY>::split(KEY k, BPInternal<E, KEY>*node_new, BPInternal<E, KEY>*node, KEY str, BPNode<E, KEY>*newchild)
 {
 	node_new->parent = node->parent;
-	int i;//x插入位置
+	int i = -1;//x插入位置
 	BPNode<E, KEY>*temp1 = node_new;//new node
 	BPNode<E, KEY>*temp2 = node;//old node
 	temp2->findpos(str, i);
@@ -232,6 +249,7 @@ void BPInternal<E, KEY>::split(KEY k, BPInternal<E, KEY>*node_new, BPInternal<E,
 	node->num = m - m / 2;
 	node_new->num = m / 2;
 	int up = (m - 1) / 2;
+	BPNode<E, KEY>*temp = nullptr;
 	if (i <= up) {
 		k = temp2->key.at(up);
 		for (int j = up + 1; j < up + 1 + m / 2; j++) {
@@ -240,6 +258,8 @@ void BPInternal<E, KEY>::split(KEY k, BPInternal<E, KEY>*node_new, BPInternal<E,
 		}//copy key
 		for (int j = up + 1; j <= up + 1 + m / 2; j++) {
 			temp1->pointer.at(j - up - 1) = temp2->pointer.at(j);
+			temp = temp1->pointer.at(j - up - 1);
+			temp->parent = temp1;
 			temp2->pointer.at(j) = nullptr;
 		}//copy pointer
 		for (int j = up; j > i; j--) {
@@ -247,15 +267,19 @@ void BPInternal<E, KEY>::split(KEY k, BPInternal<E, KEY>*node_new, BPInternal<E,
 			temp2->pointer.at(j + 1) = temp2->pointer.at(j);
 		}//move key and pointer
 		temp2->key.at(i) = str;
+		newchild->parent = temp2;
 		temp2->pointer.at(i + 1) = newchild;
 	}
 	else if (i == up + 1) {
 		k = str;
+		newchild->parent = temp1;
 		temp1->pointer.at(0) = newchild;
 		for (int j = 0; j < m / 2; j++) {
 			temp1->key.at(j) = temp2->key.at(j + up + 1);
 			temp2->key.at(j + up + 1) = NULL;
 			temp1->pointer.at(j + 1) = temp2->pointer.at(j + up + 2);
+			temp = temp1->pointer.at(j + 1);
+			temp->parent = temp1;
 			temp2->pointer.at(j + up + 2) = nullptr;
 		}
 	}
@@ -266,16 +290,23 @@ void BPInternal<E, KEY>::split(KEY k, BPInternal<E, KEY>*node_new, BPInternal<E,
 			temp1->key.at(j - up - 1) = temp2->key.at(j);
 			temp2->key.at(j) = NULL;
 			temp1->pointer.at(j - up) = temp2->pointer.at(j + 1);
+			temp = temp1->pointer.at(j - up);
+			temp->parent = temp1;
 			temp2->pointer.at(j + 1) = nullptr;
 		}
 		temp1->pointer.at(i - up - 1) = temp2->pointer.at(i);
+		temp = temp1->pointer.at(i - up - 1);
+		temp->parent = temp1;
 		temp2->pointer.at(i) = nullptr;
 		temp1->key.at(i - up - 2) = str;
+		newchild->parent = temp1;
 		temp1->pointer.at(i - up - 2) = newchild;
 		for (int j = up + 2; j < i; j++) {
 			temp1->key.at(j - up - 2) = temp2->key.at(j);
 			temp2->key.at(j) = NULL;
 			temp1->pointer.at(j - up - 2) = temp2->pointer.at(j);
+			temp = temp1->pointer.at(j - up - 2);
+			temp->parent = temp1;
 			temp2->pointer.at(j) = nullptr;
 		}
 	}
@@ -290,7 +321,7 @@ void BPLeaf<E, KEY>::add(E x, KEY str)
 	int i;
 	for (i = 0; i < number; i++) {
 		if (comp(str, p->key.at(i)) == 0) {
-			std::vector<E> temp = this->value.at(i);
+			std::vector<E>&temp = this->value.at(i);
 			temp.push_back(x);
 			this->num--;
 			return;
@@ -307,9 +338,8 @@ void BPLeaf<E, KEY>::add(E x, KEY str)
 		this->value.at(j + 1) = this->value.at(j);
 	}
 	p->key.at(i) = str;
-	std::vector<E> temp;
+	std::vector<E>&temp = this->value.at(i);
 	temp.push_back(x);
-	this->value.at(i) = temp;
 }
 template<typename E, typename KEY>
 bool BPLeaf<E, KEY>::find(vector<E> &p, KEY str)//二分查找
@@ -334,9 +364,9 @@ bool BPLeaf<E, KEY>::find(vector<E> &p, KEY str)//二分查找
 }
 //internode孩子没满的情况,leaf_new是函数外新建的
 template<typename E, typename KEY>
-void BPLeaf<E, KEY>::split(KEY k, BPLeaf<E, KEY>* &leaf_new, BPLeaf<E, KEY>*leaf, KEY str, E x)
+void BPLeaf<E, KEY>::split(KEY& k, BPLeaf<E, KEY>* &leaf_new, BPLeaf<E, KEY>*leaf, KEY str, E x)
 {
-	//leaf_new->parent = leaf->parent;
+	leaf_new->parent = leaf->parent;//连接的是老parent???
 	int i;//x插入位置
 	BPNode<E, KEY>*lfnode = (BPNode<E, KEY>*)leaf;
 	for (i = 0; i < n; i++) {
@@ -354,8 +384,8 @@ void BPLeaf<E, KEY>::split(KEY k, BPLeaf<E, KEY>* &leaf_new, BPLeaf<E, KEY>*leaf
 	if (i <= n / 2) {
 		for (int j = n / 2; j < n; j++) {
 			leaf_new->value.at(j - n / 2) = leaf->value.at(j);
-			std::vector<E>*t = leaf->value.at(j);
-			t->clear();
+			std::vector<E>&t = leaf->value.at(j);
+			t.clear();
 			temp1->key.at(j - n / 2) = temp2->key.at(j);
 			temp2->key.at(j) = NULL;
 		}
@@ -424,14 +454,14 @@ void BPTree<E, KEY>::insert(E x, KEY str)
 			return;
 		}
 		else if (curr->num < n &&curr->num>0) {
-			BPLeaf<E, KEY>* lf = root->pointer.at(0);
+			BPLeaf<E, KEY>* lf = (BPLeaf<E, KEY>*)root->pointer.at(0);
 			lf->add(x, str);
 			return;
 		}
 		else {
 			BPLeaf<E, KEY>* lf_new = new BPLeaf<E, KEY>;
-			BPLeaf<E, KEY>* lf = root->pointer.at(0);
-			KEY k;
+			BPLeaf<E, KEY>* lf = (BPLeaf<E, KEY>*)root->pointer.at(0);
+			KEY k = NULL;
 			lf->split(k, lf_new, lf, str, x);
 			root->pointer.at(1) = lf_new;
 			root->key.at(0) = k;
@@ -452,11 +482,10 @@ void BPTree<E, KEY>::insert(E x, KEY str)
 		else {
 			BPLeaf<E, KEY>* lf_new = new BPLeaf<E, KEY>;
 			BPInternal<E, KEY>*internode_new = nullptr;
-			BPInternal<E, KEY>*internode_new = nullptr;
-			KEY k;//leaf传上去的key值key_leaf,internode传上去的key值key_internode
+			KEY k = NULL;//leaf传上去的key值key_leaf,internode传上去的key值key_internode
 			int pos;//顶上去的key的位置
 			leaf->split(k, lf_new, leaf, str, x);
-			lf_new->parent = leaf->parent;
+			//lf_new->parent = leaf->parent;
 			int mark = 0;//leaf
 			//upupup
 			while (true) {
@@ -471,9 +500,9 @@ void BPTree<E, KEY>::insert(E x, KEY str)
 				BPInternal<E, KEY>*internode = (BPInternal<E, KEY>*)curr;
 				if (curr->num < m) {
 					if (mark == 0)
-						internode->add(k, str, lf_new);
+						internode->add(x, k, lf_new);
 					else
-						internode->add(k, str, internode_new);
+						internode->add(x, k, internode_new);
 					break;
 				}
 				else {
