@@ -156,6 +156,7 @@
     <ClInclude Include="BPTrees.h" />
     <ClInclude Include="CommUtils.h" />
     <ClInclude Include="error.h" />
+    <ClInclude Include="F1Solver.h" />
     <ClInclude Include="FrequencyRanking.h" />
     <ClInclude Include="Info.h" />
     <ClInclude Include="pch.h" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClCompile Include="Author.cpp" />
     <ClCompile Include="CommUtils.cpp" />
+    <ClCompile Include="F1Solver.cpp" />
     <ClCompile Include="FrequencyRanking.cpp" />
     <ClCompile Include="Info.cpp" />
     <ClCompile Include="main.cpp" />
