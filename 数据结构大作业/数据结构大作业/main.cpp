@@ -7,6 +7,6 @@
 int _tmain()
 {
     CalcTime timer;
-	F1Solver f1solver(L"D:\\Code\\ds_hw\\dblp.xml", article);
+	F1Solver f1solver(L"E:\\数据结构课设\\dblp.xml\\dblp.xml", article);
 	return 0;
 }

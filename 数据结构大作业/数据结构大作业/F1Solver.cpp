@@ -24,6 +24,6 @@ void F1Solver::InitMemory()
 
 void F1Solver::InsertObject(Info temp)
 {
-    ImportData.titleTree->insert(temp, STR(temp.GetProperty(STR(L"title")).at(0)));
+	ImportData.titleTree->insert(temp, STR(temp.GetProperty(STR(L"title")).at(0)));
 }
 

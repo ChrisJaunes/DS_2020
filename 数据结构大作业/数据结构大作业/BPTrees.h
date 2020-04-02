@@ -111,8 +111,9 @@ public:
 	}
 	~BPLeaf<E, KEY>() {}
 	virtual bool isLeaf() { return true; }
+	std::vector<E> getvalue_pos(int i) { return value.at(i); }
 	void add(E, KEY);
-	void split(KEY&, BPLeaf<E, KEY>* &, BPLeaf<E, KEY>*, KEY, E);
+	void split(KEY&, BPLeaf<E, KEY>* &, BPLeaf<E, KEY>* &, KEY, E);
 	bool find(std::vector<E> &, KEY);
 	BPLeaf<E, KEY>* next() {
 		return (BPLeaf<E, KEY>*)this->nextNode;
@@ -337,8 +338,12 @@ void BPLeaf<E, KEY>::add(E x, KEY str)
 		this->value.at(j + 1) = this->value.at(j);
 	}
 	p->key.at(i) = str;
-	std::vector<E>&temp = this->value.at(i);
+	/*std::vector<E>*temp = &this->value.at(i);
+	temp->clear();
+	temp->push_back(x);*/
+	std::vector<E> temp;
 	temp.push_back(x);
+	this->value.at(i) = temp;
 }
 template<typename E, typename KEY>
 bool BPLeaf<E, KEY>::find(vector<E> &p, KEY str)//二分查找
@@ -363,7 +368,7 @@ bool BPLeaf<E, KEY>::find(vector<E> &p, KEY str)//二分查找
 }
 //internode孩子没满的情况,leaf_new是函数外新建的
 template<typename E, typename KEY>
-void BPLeaf<E, KEY>::split(KEY& k, BPLeaf<E, KEY>* &leaf_new, BPLeaf<E, KEY>*leaf, KEY str, E x)
+void BPLeaf<E, KEY>::split(KEY& k, BPLeaf<E, KEY>* &leaf_new, BPLeaf<E, KEY>* &leaf, KEY str, E x)
 {
 	leaf_new->parent = leaf->parent;//连接的是老parent???
 	int i;//x插入位置
@@ -460,7 +465,9 @@ void BPTree<E, KEY>::insert(E x, KEY str)
 		else {
 			BPLeaf<E, KEY>* lf_new = new BPLeaf<E, KEY>;
 			BPLeaf<E, KEY>* lf = (BPLeaf<E, KEY>*)root->pointer.at(0);
+			//BPLeaf<E, KEY>* lf = (BPLeaf<E, KEY>*)curr;
 			KEY k = NULLSTR;
+			//std::vector<E>tt = lf->getvalue_pos(0);测试
 			lf->split(k, lf_new, lf, str, x);
 			root->pointer.at(1) = lf_new;
 			root->key.at(0) = k;
