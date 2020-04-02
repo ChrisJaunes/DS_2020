@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="Info_Detail_Widget.ui" />
-    <QtUic Include="Author_Article_Widget.ui" />
+    <QtUic Include="Author_Detail_Widget.ui" />
     <QtUic Include="Hotspot_Analysis_Widget.ui" />
     <QtUic Include="MainWindow.ui" />
   </ItemGroup>
@@ -109,7 +109,7 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp" />
     <ClCompile Include="Info_Detail_Widget.cpp" />
-    <ClCompile Include="Author_Article_Widget.cpp" />
+    <ClCompile Include="Author_Detail_Widget.cpp" />
     <ClCompile Include="Hotspot_Analysis_Widget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -131,7 +131,7 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
     <QtMoc Include="Hotspot_Analysis_Widget.h" />
-    <QtMoc Include="Author_Article_Widget.h" />
+    <QtMoc Include="Author_Detail_Widget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ds_2020_gui_zh.ts" />

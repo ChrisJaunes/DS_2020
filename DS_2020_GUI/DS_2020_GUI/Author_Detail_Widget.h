@@ -6,41 +6,42 @@
 #include <QStyledItemDelegate>
 #include <QModelIndex>
 #include <QSortFilterProxyModel>
-#include <map>
+#include "pch.h"
+#include "Info.h"
 #include "Author.h"
-#include "Article.h"
 
-struct Author_Article_Item{
-	bstr_t title;
-	std::vector<bstr_t> authors;
-	Author_Article_Item();
-	Author_Article_Item(Article *article);
-	~Author_Article_Item();
+struct Author_Property_Item{
+	QString title;
+	QString authors;
+	Author_Property_Item();
+	Author_Property_Item(QString&, QString&);
+	void addAuthor(const QString&);
+	~Author_Property_Item();
 };
-Q_DECLARE_METATYPE(Author_Article_Item)
+Q_DECLARE_METATYPE(Author_Property_Item)
 
-class ArticleDelegate : public QStyledItemDelegate
+class AuthorDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 signals:
 
 public:
-	explicit ArticleDelegate(QObject* parent = 0);
-	~ArticleDelegate();
+	explicit AuthorDelegate(QObject* parent = 0);
+	~AuthorDelegate();
 
 	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };
 
-namespace Ui { class Author_Article_Widget; };
+namespace Ui { class Author_Detail_Widget; };
 
-class Author_Article_Widget : public QWidget
+class Author_Detail_Widget : public QWidget
 {
 	Q_OBJECT
 
 public:
-	Author_Article_Widget(QString parameter, QWidget *parent = Q_NULLPTR);
-	~Author_Article_Widget();
+	Author_Detail_Widget(QString parameter, QWidget *parent = Q_NULLPTR);
+	~Author_Detail_Widget();
 	void initData(QString&);
 
 private slots:
@@ -53,8 +54,8 @@ private slots:
 
 private:
 	Author                    author;
-	Ui::Author_Article_Widget *ui;
-	QStandardItemModel        *article_model;
-	ArticleDelegate           *article_delegate;
-	QSortFilterProxyModel     *article_proxyModel;
+	Ui::Author_Detail_Widget  *ui;
+	QStandardItemModel        *author_model;
+	AuthorDelegate            *author_delegate;
+	QSortFilterProxyModel     *author_proxyModel;
 };

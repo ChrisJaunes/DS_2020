@@ -5,13 +5,13 @@
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 #include <QModelIndex>
-#include "ui_Info_Detail_Widget.h"
 
 struct Info_Property_Item {
 	QString property_name;
 	QString property_data;
 	Info_Property_Item();
-	Info_Property_Item(QString& _name, QString& _data);
+	void setProperty(const QString& , const QString& );
+	void addPropertyData(const QString&);
 	~Info_Property_Item();
 };
 Q_DECLARE_METATYPE(Info_Property_Item)

@@ -1,45 +1,74 @@
 #include "pch.h"
+#include "Info.h"
 #include "Author.h"
-#include "Article.h"
 #include "BPTrees.h"
 #include <queue>
 
 #define STR bstr_t
 #define W int
-extern BPTree<Article, bstr_t> Article_BPtree;
 extern BPTree<Author, bstr_t> Author_BPtree;
 
 Author::Author() {
-	this->name = "";
-	this->articles = new std::vector<STR>();
-	this->collaborators = nullptr;
+	this->name = ""; 
+	this->articles      = new std::map<STR, std::vector<STR> >();
+	this->collaborators = new std::map<STR, W>();
 }
 
-Author::Author(STR _name) {
-	this->name = _name;
-	this->articles = new std::vector<STR>();
-	this->collaborators = nullptr;
-}
-
-Author::Author(STR _name, std::vector<STR> _articles, std::vector<std::pair<W, STR>> _collaborators)
+Author::Author(STR& _name, std::map<STR, std::vector<STR> >& _articles)
 {
 	this->name = _name;
-	this->articles = new std::vector<STR> (_articles);
-	this->collaborators = new std::vector<pair<W, STR> >(_collaborators);
+	this->articles      = new std::map<STR, std::vector<STR> >(_articles);
+	this->collaborators = new std::map<STR, W>();
+	for (auto &it : _articles) {
+		for (auto& jt : it.second) (*collaborators)[jt] += 1;
+	}
 }
 
-Author& Author::operator= (Author& a)
+Author::Author(Author& _author)
 {
-	if (articles) delete articles;
+	this->name = _author.name;
+	this->articles     = new std::map<STR, std::vector<STR> >(*_author.articles);
+	this->collaborators = new std::map<STR, W>(*_author.collaborators);
+}
+
+Author& Author::operator= (Author& _author)
+{
+	if (articles)     delete articles;
 	if (collaborators) delete collaborators;
-	articles = new std::vector<STR>(*a.articles);
-	collaborators = new std::vector<std::pair<W, STR> >(*a.collaborators);
+	this->articles      = new std::map<STR, std::vector<STR> >(*_author.articles);
+	this->collaborators = new std::map<STR, W>(*_author.collaborators);
 	return *this;
 }
 
 Author::~Author() {
-	delete this->articles;
-	delete this->collaborators;
+	delete articles;
+	delete collaborators;
+}
+
+OPRESULT Author::AddArticle(STR& _name, std::vector<STR>& _author)
+{
+	if (articles->count(_name)) {
+		return false;
+	}
+	for (auto& it : _author) {
+		(*articles)[_name].push_back(it);
+		(*collaborators)[it]++;
+	}
+	return true;
+}
+
+std::pair<OPRESULT, std::vector<STR>> Author::GetTitleOfArticles()
+{
+	vector<STR> res;
+	for (auto it : *articles) {
+		res.push_back(it.first);
+	}
+	return make_pair(true, res);
+}
+
+std::pair<OPRESULT, std::map<STR, std::vector<STR> > > Author::GetArticles()
+{
+	return std::make_pair(true, *articles);
 }
 
 OPRESULT Author::GetNumOfArticle() const
@@ -47,65 +76,28 @@ OPRESULT Author::GetNumOfArticle() const
 	return articles->size();
 }
 
-OPRESULT Author::AddArticle(STR _name)
-{
-	articles->push_back(_name);
-	return OPRESULT();
-}
 
-std::pair<OPRESULT, std::vector<STR>> Author::GetArticles()
+OPRESULT Author::GetCollaboratorByArticle(const STR& titleOfArticle, std::map<STR, W>& res)
 {
-	try {
-		return make_pair(true, std::vector<STR>(*(this->articles)));
+	if (articles->count(titleOfArticle)) {
+		for (auto it : articles->at(titleOfArticle)) {
+			res[it] += 1;
+		}
 	}
-	catch (std::exception e) {
-		return make_pair(false, std::vector<STR>());
-	}
-}
-
-OPRESULT Author::GetCollaboratorByArticle(const STR nameOfArticle, std::map<STR, W> res)
-{
-	try {
-		/*vector<Article> articles;
-		Article_BPtree.search(articles, nameOfArticle);
-		for (auto article : articles) {
-			//vector<STR> authorByArticle;
-			vector<bstr_t> authorByArticle;
-			article.Getauthors(&authorByArticle);
-			for (auto it : authorByArticle) {
-				res[it] += 1;
-			}
-		}*/
-		return true;
-	}
-	catch (std::exception e) {
-		return false;
-	}
+	return true;
 }
 
 std::pair<OPRESULT, std::vector<pair<W, STR> > > Author::GetCollaborators() {
-	try {
-		if (collaborators == nullptr) {
-			std::map<STR, W> res;
-			for (int i = 0; i < (*articles).size(); i++) {
-				STR article = articles->at(i);
-				if (!GetCollaboratorByArticle(article, res)) throw std::exception();
-			}
-			res.erase(res.find(this->name));
-			collaborators = new vector<pair<W, STR> >();
-			for (auto collaborator : res) {
-				collaborators->push_back(make_pair(collaborator.second, collaborator.first));
-			}
-			sort(collaborators->begin(), collaborators->end());
-		}
-		return make_pair(true, std::vector<pair<int, STR> >(*(this->collaborators)));
+	vector<pair<W, STR> > res;
+	for (auto &it : *collaborators) {
+		res.push_back(std::make_pair(it.second, it.first));
 	}
-	catch (std::exception e) {
-		return make_pair(false, std::vector<pair<int, STR> >());
-	}
+	std::sort(res.begin(), res.end());
+	std::reverse(res.begin(), res.end());
+	return make_pair(true, res);
 }
 
-//todu
+//todo
 std::pair<OPRESULT, std::vector<STR>> Author::GetTopNOfNumOfArticle(int lim)
 {
 	try {

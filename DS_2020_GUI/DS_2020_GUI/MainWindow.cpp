@@ -1,12 +1,13 @@
 #include <qdebug.h>
 #include "MainWindow.h"
 #include "Info_Detail_Widget.h"
-#include "Author_Article_Widget.h"
+#include "Author_Detail_Widget.h"
 
 #include "Hotspot_Analysis_Widget.h"
 //#include <xmlhelper.h>
 #include <QProgressDialog>
 #include <QMessageBox>
+#include "test.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent),
@@ -28,7 +29,9 @@ void MainWindow::on_btn_loadfile_clicked() {
 }
 
 void MainWindow::on_btn_search_clicked() {
+#ifdef TEST_DEBUG
 	qDebug() << "on_btn_search_clicked" << '\n';
+	clock_t beg = clock();
 	/*if (!ImportData.isDone) {
 		// 没有完成xml解析工作, 弹出提示框
 		QMessageBox::information(this, "Error", "XML not loaded");
@@ -38,23 +41,22 @@ void MainWindow::on_btn_search_clicked() {
 		qDebug() << "parse done" << '\n';
 	}
 	*/
+#endif // !TEST_DEBUG
 	QString parameter = ui->tet_inputParameter->toPlainText();
 	if (ui->rbn_F1_Info->isChecked()) {
-		(new Info_Detail_Widget(parameter))->show();
+		Info_Detail_Widget *tmp = new Info_Detail_Widget(parameter);
+		tmp->show();
+		tmp->setAttribute(Qt::WA_DeleteOnClose);
 	}else if (ui->rbn_F1_Author->isChecked()) {
-		(new Author_Article_Widget(parameter))->show();
+		Author_Detail_Widget* tmp = new Author_Detail_Widget(parameter);
+		tmp->show();
+		tmp->setAttribute(Qt::WA_DeleteOnClose);
 	}
 	else if (ui->rbn_F3) {
 		(new Hotspot_Analysis_Widget(parameter))->show();
 	}
-}
 
-void MainWindow::show_ArticleOfAuthor(QString parameter) {
-	qDebug() << "show_ArticleOfAuthor" << parameter << '\n';
-	//(new Author_Article_Widget())->show();
-}
-
-void MainWindow::show_DetailOfArticle(QString parameter) {
-	qDebug() << "show_DetailOfArticle" << parameter << '\n';
-	//(new Article_Detail_Widget())->show();
+#ifdef TEST_DEBUG
+	qDebug() << "on_btn_search_clicked" << clock() - beg << '\n';
+#endif // TEST_DEBU
 }

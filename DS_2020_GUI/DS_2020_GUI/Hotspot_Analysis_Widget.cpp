@@ -6,13 +6,12 @@
 #include "Hotspot_Analysis_Widget.h"
 #include "ui_Hotspot_Analysis_Widget.h"
 #include "test.h"
-#define STR QString
 #define W int
 Hotspot_Item::Hotspot_Item()
 {
 }
 
-Hotspot_Item::Hotspot_Item(STR _hotspot_word, W _hotspot_number)
+Hotspot_Item::Hotspot_Item(QString _hotspot_word, W _hotspot_number)
 	: hotspot_word(_hotspot_word)
 	, hotspot_number(_hotspot_number)
 {
@@ -132,6 +131,4 @@ void Hotspot_Analysis_Widget::initData(const QString& parameter)
     }
 }
 
-
-#undef STR
 #undef W

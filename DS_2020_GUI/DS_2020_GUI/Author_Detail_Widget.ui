@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Author_Article_Widget</class>
- <widget class="QWidget" name="Author_Article_Widget">
+ <class>Author_Detail_Widget</class>
+ <widget class="QWidget" name="Author_Detail_Widget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Author_Article_Widget</string>
+   <string>Author_Detail_Widget</string>
   </property>
   <widget class="QListView" name="listView">
    <property name="geometry">

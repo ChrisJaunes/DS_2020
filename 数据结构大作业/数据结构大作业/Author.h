@@ -20,19 +20,24 @@
 class Author {
 protected:
 	STR name;
-	std::vector<STR>* articles;
-	std::vector<std::pair<int, STR> >* collaborators;
+	std::map<STR, std::vector<STR> > *articles;
+	std::map<STR, W> *collaborators;
+
 public:
 	Author();
-	Author(STR);
-	Author(STR, std::vector<STR>, std::vector<std::pair<int, STR> > );
+	Author(STR&, std::map<STR, std::vector<STR> >&);
+	Author(Author&);
 	Author& operator = (Author&);
 	~Author();
-	OPRESULT AddArticle(STR);
-	std::pair<OPRESULT, std::vector<STR> > GetArticles();
+
+	OPRESULT AddArticle(STR&, std::vector<STR>&);
+	std::pair<OPRESULT, std::vector<STR> > GetTitleOfArticles();
+	std::pair<OPRESULT, std::map<STR, std::vector<STR> > > GetArticles();
 	OPRESULT GetNumOfArticle()const;
-	OPRESULT GetCollaboratorByArticle(const STR, std::map<STR, int>);
+
+	OPRESULT GetCollaboratorByArticle(const STR&, std::map<STR, int>&);
 	std::pair<OPRESULT, std::vector<std::pair<int, STR> > > GetCollaborators();
+
 	static std::pair<OPRESULT, std::vector<STR> >GetTopNOfNumOfArticle(int lim = 100);
 	static Author getAuthorByName(STR&);
 };

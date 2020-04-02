@@ -4,13 +4,13 @@
 #define TEST_H
 #define TEST_DEBUG
 #include "Author.h"
-#include "Article.h"
+#include "Info.h"
 #include <qstring.h>
 namespace FST {
 	const int AUTHORSN = 10;
-	const int ARTICLESN = 10;
+	const int INFON = 10;
 	extern Author  *AUTHORS[AUTHORSN];
-	extern Article *ARTICLES[ARTICLESN];
+	extern Info    *INFO[INFON];
 	bstr_t getStr(char ch);
 	void create_FST();
 }
