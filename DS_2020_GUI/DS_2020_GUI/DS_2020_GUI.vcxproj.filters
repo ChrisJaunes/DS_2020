@@ -72,9 +72,6 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Article.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,9 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Author.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Article.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\BPTrees.h">

@@ -97,34 +97,5 @@ std::pair<OPRESULT, std::vector<pair<W, STR> > > Author::GetCollaborators() {
 	return make_pair(true, res);
 }
 
-//todo
-std::pair<OPRESULT, std::vector<STR>> Author::GetTopNOfNumOfArticle(int lim)
-{
-	try {
-		/*BPLeaf<Author, bstr_t>* author_begin = Author_BPtree.begin();
-		BPLeaf<Author, bstr_t>* author_end = Author_BPtree.end();
-		std::priority_queue<Author*> q;
-		priority_queue<Author*, vector<Author*>, AuthorCmpByNumOfArticle > pq;
-		for (; author_begin != author_end; author_begin->next()) {
-			//author_begin->getvalue();
-		}
-		vector<bstr_t> res;
-		while (!q.empty()) {
-			res.emplace_back(q.top()->name); q.pop();
-		}
-		return make_pair(true, res);*/
-	}
-	catch (std::exception e) {
-		return make_pair(false, vector<STR>());
-	}
-}
-
-//todo
-Author Author::getAuthorByName(STR& _name)
-{
-	//Author_BPtree.search();
-	return Author();
-}
-
 #undef STR
 #undef W

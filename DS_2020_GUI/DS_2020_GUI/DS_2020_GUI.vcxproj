@@ -101,7 +101,6 @@
     <QtMoc Include="MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Article.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\CommUtils.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.cpp" />
@@ -119,7 +118,6 @@
     <QtMoc Include="Info_Detail_Widget.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Article.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Author.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\BPTrees.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\CommUtils.h" />

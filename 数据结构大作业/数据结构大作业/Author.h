@@ -38,8 +38,6 @@ public:
 	OPRESULT GetCollaboratorByArticle(const STR&, std::map<STR, int>&);
 	std::pair<OPRESULT, std::vector<std::pair<int, STR> > > GetCollaborators();
 
-	static std::pair<OPRESULT, std::vector<STR> >GetTopNOfNumOfArticle(int lim = 100);
-	static Author getAuthorByName(STR&);
 };
 
 
