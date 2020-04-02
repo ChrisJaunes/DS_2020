@@ -26,7 +26,7 @@ class AuthorDelegate : public QStyledItemDelegate
 signals:
 
 public:
-	explicit AuthorDelegate(QObject* parent = 0);
+	explicit AuthorDelegate(QObject* parent = Q_NULLPTR);
 	~AuthorDelegate();
 
 	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;

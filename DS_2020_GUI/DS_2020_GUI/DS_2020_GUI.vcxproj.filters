@@ -38,13 +38,13 @@
     <QtUic Include="MainWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="Hotspot_Analysis_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="Info_Detail_Widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="Author_Detail_Widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Hotspot_Detail_Widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -52,13 +52,13 @@
     <QtMoc Include="MainWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Hotspot_Analysis_Widget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="Info_Detail_Widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Author_Detail_Widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Hotspot_Detail_Widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -73,9 +73,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Hotspot_Analysis_Widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\CommUtils.cpp">
@@ -97,6 +94,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Author_Detail_Widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hotspot_Detail_Widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,5 +3,13 @@
         <file>html/Hotspot_Analysis_Web.html</file>
         <file>html/js/d3.js</file>
         <file>html/js/d3.min.js</file>
+        <file>database/f3/F3_articles.txt</file>
+        <file>database/f3/F3_books.txt</file>
+        <file>database/f3/F3_incollection.txt</file>
+        <file>database/f3/F3_inproceedings.txt</file>
+        <file>database/f3/F3_mastersthesis.txt</file>
+        <file>database/f3/F3_phdthesis.txt</file>
+        <file>database/f3/F3_proceedings.txt</file>
+        <file>database/f3/F3_www.txt</file>
     </qresource>
 </RCC>

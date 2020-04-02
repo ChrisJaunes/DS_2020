@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Hotspot_Detail_Widget</class>
+ <widget class="QWidget" name="Hotspot_Detail_Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>843</width>
+    <height>606</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Hotspot_Detail_Widget</string>
+  </property>
+  <widget class="QLabel" name="year">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>20</y>
+     <width>381</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>热点分析</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QListView" name="listView">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>110</y>
+     <width>661</width>
+     <height>441</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QWidget" name="formLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>10</y>
+     <width>231</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <property name="horizontalSpacing">
+     <number>50</number>
+    </property>
+    <property name="leftMargin">
+     <number>1</number>
+    </property>
+    <property name="topMargin">
+     <number>1</number>
+    </property>
+    <property name="rightMargin">
+     <number>1</number>
+    </property>
+    <property name="bottomMargin">
+     <number>1</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_year">
+      <property name="text">
+       <string>年份</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="cbx_year"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="cbx_type"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_type">
+      <property name="text">
+       <string>类型</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="btn_ok">
+      <property name="text">
+       <string>ok</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="DS_2020_GUI.qrc"/>
+ </resources>
+ <connections/>
+</ui>

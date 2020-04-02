@@ -1,0 +1,815 @@
+1918
+Algorithms	1
+Control.	1
+Convex	1
+For	1
+Formal	1
+Optimization	1
+Predictive	1
+Validation	1
+Verification	1
+model	1
+---
+1938
+Logic	1
+Ordinals.	1
+Systems	1
+---
+1948
+binary	1
+computing	1
+digital	1
+machines.	1
+storage	1
+system	1
+use	1
+---
+1953
+digital	2
+Some	1
+application	1
+applications	1
+computation.	1
+computer	1
+electronic	1
+engineering	1
+mathematics	1
+problems	1
+---
+1954
+des	4
+de	3
+la	3
+en	2
+et	2
+Mise	1
+groupes	1
+lectriques	1
+milieux	1
+perfectionnements.	1
+---
+1956
+de	3
+des	2
+Essais	1
+Les	1
+l'aptitude	1
+l'criture.	1
+logiques	1
+mesure	1
+oprations	1
+rvolution	1
+---
+1958
+Intgration	1
+approche	1
+d'ordre	1
+des	1
+diffrentielles	1
+drive	1
+la	1
+le	1
+lorsque	1
+quations	1
+---
+1959
+de	4
+d'une	3
+approche	2
+Automatic	1
+Communication	1
+Computer	1
+Etude	1
+Hall	1
+application	1
+circuits	1
+---
+1960
+de	11
+des	5
+la	5
+Problems	2
+control	2
+du	2
+et	2
+mthode	2
+non-linear	2
+tempratures	1
+---
+1961
+de	5
+control	3
+digital	3
+Contribution	2
+d'une	2
+des	2
+l'tude	2
+response	2
+system	2
+Lanczos.	1
+---
+1962
+de	8
+des	8
+la	4
+en	3
+Contribution	2
+Kutta	2
+Runge	2
+dans	2
+mthodes	2
+traduction	2
+---
+1963
+de	5
+et	3
+compilation	2
+des	2
+du	2
+Design	1
+adaptive	1
+application	1
+beam	1
+spectres	1
+---
+1964
+de	12
+la	8
+des	6
+dans	4
+par	4
+Etude	3
+erreurs	3
+et	3
+mthodes	3
+Algol	2
+---
+1965
+de	19
+des	11
+la	10
+pour	4
+Mthodes	3
+au	3
+d'une	3
+problme	3
+problmes	3
+programmation	3
+---
+1966
+de	9
+des	6
+d'un	5
+la	5
+Etude	3
+systems.	3
+type	3
+Contribution	2
+control	2
+chambres	1
+---
+1967
+de	11
+des	6
+control	5
+et	4
+systems.	4
+langages	3
+programmation	3
+analysis	2
+au	2
+contraintes.	2
+---
+1968
+de	11
+des	6
+et	5
+systems	4
+control	3
+en	3
+linaire	3
+numrique	3
+problmes	3
+Langages	2
+---
+1969
+de	12
+des	10
+der	7
+la	5
+d'un	4
+du	4
+calcul	3
+en	3
+et	3
+certains	1
+---
+1970
+de	15
+et	10
+des	8
+la	7
+d'un	5
+du	5
+en	5
+systme	5
+:	4
+programmes.	1
+---
+1971
+de	14
+der	11
+des	11
+systems.	9
+und	8
+control	7
+et	6
+au	5
+von	5
+grammaire	1
+---
+1972
+de	18
+der	18
+des	12
+und	10
+control	9
+im	6
+von	6
+zur	6
+:	5
+dans	5
+---
+1973
+de	34
+des	19
+zur	15
+der	14
+und	14
+et	13
+:	9
+von	9
+d'un	8
+la	8
+---
+1974
+de	23
+der	15
+des	13
+und	12
+et	11
+:	9
+control	9
+Computer	8
+computer	8
+research.	2
+---
+1975
+de	18
+:	11
+Computer	11
+Systems.	11
+von	11
+der	10
+des	10
+et	9
+Control	8
+studies	2
+---
+1976
+de	26
+des	23
+der	17
+la	14
+un	12
+et	11
+dans	10
+:	9
+systems.	9
+rseau	7
+---
+1977
+de	30
+der	20
+des	19
+la	15
+von	15
+zur	14
+:	12
+et	12
+und	11
+system	6
+---
+1978
+de	42
+des	22
+control	19
+et	17
+computer	14
+und	13
+von	13
+:	12
+Computer	12
+files	3
+---
+1979
+de	46
+der	35
+von	29
+des	25
+und	25
+et	22
+zur	19
+la	17
+:	15
+dans	13
+---
+1980
+der	91
+und	77
+von	64
+zur	50
+de	47
+des	44
+fr	36
+mit	25
+die	24
+en	7
+---
+1981
+der	260
+und	217
+von	182
+zur	140
+fr	82
+des	75
+mit	60
+auf	44
+Beitrag	41
+de	41
+---
+1982
+der	237
+und	213
+von	192
+zur	163
+fr	95
+des	85
+mit	65
+Ein	58
+eines	51
+de	42
+---
+1983
+der	264
+und	242
+von	210
+zur	168
+fr	88
+des	84
+mit	65
+de	63
+die	47
+et	29
+---
+1984
+der	332
+und	313
+von	252
+zur	219
+fr	146
+mit	100
+des	90
+Ein	84
+eines	79
+de	70
+---
+1985
+der	266
+und	255
+von	245
+zur	212
+fr	131
+des	98
+mit	93
+Ein	61
+Beitrag	60
+de	46
+---
+1986
+der	241
+und	205
+von	177
+zur	149
+fr	115
+des	74
+de	59
+mit	55
+die	45
+et	20
+---
+1987
+und	319
+der	284
+von	237
+zur	194
+fr	161
+des	93
+eines	78
+mit	76
+im	69
+Analysis	4
+---
+1988
+und	289
+der	281
+von	231
+fr	178
+zur	178
+mit	78
+eines	77
+des	75
+die	67
+de	48
+---
+1989
+und	432
+der	375
+von	283
+zur	238
+fr	224
+des	110
+eines	92
+die	82
+de	71
+Systems	9
+---
+1990
+und	372
+der	319
+von	242
+zur	204
+fr	169
+des	103
+eines	93
+de	87
+mit	77
+:	53
+---
+1991
+und	307
+der	265
+von	238
+zur	198
+fr	171
+des	89
+de	84
+eines	71
+mit	71
+:	56
+---
+1992
+und	307
+von	232
+der	226
+zur	195
+fr	155
+de	99
+des	92
+mit	73
+eines	69
+einem	16
+---
+1993
+und	335
+der	265
+von	239
+zur	193
+fr	185
+de	105
+eines	89
+mit	86
+des	84
+komplexer	7
+---
+1994
+und	338
+von	247
+der	243
+zur	200
+fr	166
+des	111
+de	99
+mit	92
+eines	80
+software	16
+---
+1995
+und	338
+von	245
+der	206
+zur	185
+fr	163
+de	115
+des	108
+mit	105
+eines	76
+Management	5
+---
+1996
+und	243
+de	166
+der	163
+von	157
+fr	117
+zur	112
+mit	79
+des	62
+et	61
+application	22
+---
+1997
+und	471
+von	328
+der	315
+zur	235
+fr	212
+de	183
+mit	137
+des	120
+eines	85
+:	63
+---
+1998
+de	189
+und	134
+von	85
+fr	74
+:	73
+der	61
+zur	58
+des	55
+et	43
+framework	16
+---
+1999
+und	366
+von	258
+der	225
+de	213
+zur	189
+fr	156
+des	98
+mit	84
+im	77
+:	71
+---
+2000
+de	207
+und	150
+von	104
+:	81
+fr	79
+der	72
+zur	68
+systems.	55
+et	48
+Verwaltung	4
+---
+2001
+de	257
+und	107
+von	86
+fr	70
+:	66
+et	61
+systems.	52
+des	50
+mit	45
+information	24
+---
+2002
+de	323
+und	104
+:	89
+et	86
+des	79
+fr	69
+la	62
+von	59
+e	58
+im	26
+---
+2003
+de	468
+und	337
+von	244
+der	175
+fr	161
+des	153
+zur	151
+:	118
+et	110
+distributed	31
+---
+2004
+de	498
+und	172
+:	133
+von	117
+et	114
+des	110
+der	107
+la	104
+fr	93
+systems.	61
+---
+2005
+de	560
+et	146
+la	136
+:	133
+des	133
+und	131
+pour	114
+von	110
+fr	97
+analysis	62
+---
+2006
+de	643
+:	186
+et	176
+des	170
+la	141
+und	128
+pour	120
+von	98
+systems.	89
+---
+2007
+de	708
+:	240
+et	224
+des	190
+la	188
+und	140
+pour	133
+von	95
+en	73
+Ein	10
+---
+2008
+de	825
+:	255
+la	255
+et	251
+des	214
+pour	169
+und	109
+von	105
+systems.	97
+analysis	90
+---
+2009
+de	915
+et	259
+:	242
+des	228
+la	213
+pour	182
+und	126
+en	115
+les	113
+analysis	90
+---
+2010
+de	985
+et	338
+:	307
+la	282
+des	253
+pour	232
+und	142
+les	126
+von	113
+dans	112
+---
+2011
+de	1198
+:	392
+et	383
+la	318
+des	308
+pour	253
+und	160
+von	138
+en	134
+systems.	98
+---
+2012
+de	1270
+et	395
+:	365
+des	361
+la	339
+pour	276
+und	164
+les	151
+dans	149
+systems.	122
+---
+2013
+de	1620
+et	461
+:	451
+des	422
+la	416
+pour	336
+les	224
+dans	204
+en	169
+data	106
+---
+2014
+de	1748
+et	561
+des	496
+:	477
+la	450
+pour	360
+les	212
+en	198
+dans	183
+3D	86
+---
+2015
+de	1758
+et	596
+la	508
+des	505
+:	472
+pour	379
+les	243
+en	194
+dans	193
+data	113
+---
+2016
+de	1795
+et	590
+des	574
+la	469
+pour	427
+:	415
+les	225
+dans	206
+en	189
+systems.	109
+---
+2017
+de	1678
+et	585
+la	553
+des	538
+pour	464
+:	344
+les	255
+dans	239
+en	194
+Data	118
+---
+2018
+de	1374
+et	518
+des	487
+la	464
+pour	410
+les	231
+dans	194
+:	181
+en	169
+Learning	126
+---
+2019
+de	519
+et	208
+la	202
+des	200
+pour	167
+les	103
+:	98
+Learning	98
+dans	88
+Image	20
+---
+2020
+Analysis,	1
+Introspection	1
+Large-Scale	1
+Monitoring,	1
+Parallel	1
+Performance	1
+Real-Time	1
+Systems.	1
+---
