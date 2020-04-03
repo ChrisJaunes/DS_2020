@@ -45,6 +45,10 @@ Author::~Author() {
 	delete collaborators;
 }
 
+std::pair<OPRESULT, STR > Author::GetName() const {
+	return std::make_pair(true, name);
+}
+
 OPRESULT Author::AddArticle(STR& _name, std::vector<STR>& _author)
 {
 	if (articles->count(_name)) {
@@ -94,6 +98,14 @@ std::pair<OPRESULT, std::vector<pair<W, STR> > > Author::GetCollaborators() {
 	}
 	std::sort(res.begin(), res.end());
 	std::reverse(res.begin(), res.end());
+	return make_pair(true, res);
+}
+
+std::pair<OPRESULT, std::vector<STR> > Author::GetCollaboratorsNoWeight() {
+	vector<STR> res;
+	for (auto& it : *collaborators) {
+		res.push_back(it.first);
+	}
 	return make_pair(true, res);
 }
 

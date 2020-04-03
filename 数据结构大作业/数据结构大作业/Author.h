@@ -30,6 +30,8 @@ public:
 	Author& operator = (Author&);
 	~Author();
 
+	std::pair<OPRESULT, STR > GetName() const ;
+
 	OPRESULT AddArticle(STR&, std::vector<STR>&);
 	std::pair<OPRESULT, std::vector<STR> > GetTitleOfArticles();
 	std::pair<OPRESULT, std::map<STR, std::vector<STR> > > GetArticles();
@@ -37,7 +39,7 @@ public:
 
 	OPRESULT GetCollaboratorByArticle(const STR&, std::map<STR, int>&);
 	std::pair<OPRESULT, std::vector<std::pair<int, STR> > > GetCollaborators();
-
+	std::pair<OPRESULT, std::vector<STR> > GetCollaboratorsNoWeight();
 };
 
 
