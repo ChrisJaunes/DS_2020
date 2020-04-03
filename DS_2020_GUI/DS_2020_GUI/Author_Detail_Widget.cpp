@@ -107,17 +107,22 @@ Author_Detail_Widget::Author_Detail_Widget(QString parameter, QWidget *parent)
 	ui->setupUi(this);
     
     initData(parameter);
-    
+
+    ui->lvw_collaborator->setModel(collaborator_model);
+    ui->lvw_collaborator->setSpacing(1);
+
     author_delegate = new AuthorDelegate(this);
-    ui->listView->setItemDelegate(author_delegate);
-    ui->listView->setSpacing(15);
-    author_proxyModel = new QSortFilterProxyModel(ui->listView);
+    ui->lvw_info->setItemDelegate(author_delegate);
+    ui->lvw_info->setSpacing(15);
+    author_proxyModel = new QSortFilterProxyModel(ui->lvw_info);
     author_proxyModel->setSourceModel(author_model);
     author_proxyModel->setFilterRole(Qt::UserRole);
     author_proxyModel->setDynamicSortFilter(true);
-    ui->listView->setModel(author_proxyModel);
-    ui->listView->setViewMode(QListView::IconMode);
-    ui->listView->setDragEnabled(false);
+    ui->lvw_info->setModel(author_proxyModel);
+    ui->lvw_info->setViewMode(QListView::IconMode);
+    ui->lvw_info->setDragEnabled(false);
+
+    connect(ui->lvw_collaborator, SIGNAL(clicked(QModelIndex)), this, SLOT(showInfo(QModelIndex)));
 }
 
 Author_Detail_Widget::~Author_Detail_Widget()
@@ -126,26 +131,24 @@ Author_Detail_Widget::~Author_Detail_Widget()
     delete author_model;
     delete author_delegate;
     delete author_proxyModel;
+    delete collaborator_model;
 }
 
 void Author_Detail_Widget::initData(QString& parameter) {
-#ifndef TEST_DEBUG
+#ifndef TEST_DEBUG_AUTHOR
     author = Author::getAuthorByName(bstr_t(parameter.toStdWString().c_str()));
 #else
     author = *FST::AUTHORS[0];
 #endif
+    ui->name->setFont(QFont("Times", 20, QFont::Bold));
+    ui->name->setText("Detail about " + parameter);
     QString tmp_STR;
     auto collaborator = author.GetCollaborators().second;
-    std::map<QString, char> main_collaborator;
-    ui->allBtn->setText(tr("all"));
-    for (int i = min((int)collaborator.size(), 4); i >= 0; i--) {
+    collaborator_model = new QStandardItemModel(collaborator.size() + 1, 1);
+    collaborator_model->setData(collaborator_model->index(0, 0), QString("ALL"));
+    for (int i = (int)collaborator.size() - 1; i >= 0; i--) {
         tmp_STR = QString((QChar*)(wchar_t*)collaborator[i].second, wcslen(collaborator[i].second));
-        main_collaborator[tmp_STR] = char(i + 48);
-        if (i == 0) ui->collaboratorBtn0->setText(tmp_STR);
-        if (i == 1) ui->collaboratorBtn1->setText(tmp_STR);
-        if (i == 2) ui->collaboratorBtn2->setText(tmp_STR);
-        if (i == 3) ui->collaboratorBtn3->setText(tmp_STR);
-        if (i == 4) ui->collaboratorBtn4->setText(tmp_STR);
+        collaborator_model->setData(collaborator_model->index(i + 1, 0), tmp_STR);
     }
 
     auto articles = author.GetArticles().second;
@@ -161,36 +164,20 @@ void Author_Detail_Widget::initData(QString& parameter) {
             tmp_STR = QString((QChar*)(wchar_t*)jt, wcslen(jt));
             if (fg) tmp_API.addAuthor("\n"); else fg = 1;
             tmp_API.addAuthor(tmp_STR);
-            if (main_collaborator.count(tmp_STR)) tmp_FG += main_collaborator[tmp_STR];
+            tmp_FG += tmp_STR + "|";
         }
         author_model->setData(author_model->index(i, 0), tmp_FG, Qt::UserRole);  // 单一存取
         author_model->setData(author_model->index(i, 0), QVariant::fromValue(tmp_API), Qt::UserRole + 1); //整体存取
         i++;
     }
+}
 
-
-}
-void Author_Detail_Widget::on_allBtn_clicked()
-{
-    author_proxyModel->setFilterFixedString(QString());
-}
-void Author_Detail_Widget::on_collaboratorBtn0_clicked()
-{
-    author_proxyModel->setFilterFixedString(QString("0"));
-}
-void Author_Detail_Widget::on_collaboratorBtn1_clicked()
-{
-    author_proxyModel->setFilterFixedString(QString("1"));
-}
-void Author_Detail_Widget::on_collaboratorBtn2_clicked()
-{
-    author_proxyModel->setFilterFixedString(QString("2"));
-}
-void Author_Detail_Widget::on_collaboratorBtn3_clicked()
-{
-    author_proxyModel->setFilterFixedString(QString("3"));
-}
-void Author_Detail_Widget::on_collaboratorBtn4_clicked()
-{
-    author_proxyModel->setFilterFixedString(QString("4"));
+void Author_Detail_Widget::showInfo(QModelIndex index) {
+    QString tmp = index.data().toString();
+    if (tmp == "ALL") {
+        author_proxyModel->setFilterFixedString(QString());
+    }
+    else {
+        author_proxyModel->setFilterFixedString(QString(tmp));
+    }
 }

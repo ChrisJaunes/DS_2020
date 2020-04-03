@@ -98,7 +98,7 @@ QSize InfoDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelInd
 #ifdef TEST_DEBUG
     //qDebug() << "sizeHint" << option.rect.width() << '\n';
 #endif
-    return QSize(option.rect.width(), 50);
+    return QSize(option.rect.width(), 75);
 }
 
 Info_Detail_Widget::Info_Detail_Widget(QString& parameter, QWidget *parent)
@@ -109,7 +109,7 @@ Info_Detail_Widget::Info_Detail_Widget(QString& parameter, QWidget *parent)
 
 	initData(parameter);
     info_delegate = new InfoDelegate(this);
-    ui->listView->setSpacing(10);
+    ui->listView->setSpacing(5);
     ui->listView->setItemDelegate(info_delegate);
     ui->listView->setModel(info_model);
     ui->listView->setDragEnabled(false);
@@ -127,7 +127,7 @@ Info_Detail_Widget::~Info_Detail_Widget()
 }
 
 void Info_Detail_Widget::initData(const QString& parameter) {
-#ifndef TEST_DEBUG
+#ifndef TEST_DEBUG_INFO
 	
 #else:
     Info data = *FST::INFO[0];

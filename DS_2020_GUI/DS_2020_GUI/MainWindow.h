@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include "ui_MainWindow.h"
 
+namespace Ui { class MainWindow; };
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT

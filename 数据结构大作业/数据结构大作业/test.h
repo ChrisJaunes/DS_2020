@@ -3,6 +3,8 @@
 #ifndef TEST_H
 #define TEST_H
 #define TEST_DEBUG
+#define TEST_DEBUG_INFO
+#define TEST_DEBUG_AUTHOR
 #include "Author.h"
 #include "Info.h"
 #include <qstring.h>

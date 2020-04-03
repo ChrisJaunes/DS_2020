@@ -45,17 +45,13 @@ public:
 	void initData(QString&);
 
 private slots:
-	void on_allBtn_clicked();
-	void on_collaboratorBtn0_clicked();
-	void on_collaboratorBtn1_clicked();
-	void on_collaboratorBtn2_clicked();
-	void on_collaboratorBtn3_clicked();
-	void on_collaboratorBtn4_clicked();
+	void showInfo(QModelIndex index);
 
 private:
 	Author                    author;
 	Ui::Author_Detail_Widget  *ui;
 	QStandardItemModel        *author_model;
+	QStandardItemModel        *collaborator_model;
 	AuthorDelegate            *author_delegate;
 	QSortFilterProxyModel     *author_proxyModel;
 };
