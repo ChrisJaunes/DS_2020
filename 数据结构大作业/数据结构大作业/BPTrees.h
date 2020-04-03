@@ -4,8 +4,8 @@
 #ifndef BPTree_H
 #define BPTree_H
 #define NULLSTR L""
-#define m 15 //internal的限制
-#define n 50 //leaf的限制
+#define m 100 //internal的限制
+#define n 500 //leaf的限制
 //E--Article类 KEY--字符类型(eg宽字符)
 //B+树默认阶为15，也可自定义
 //树叶默认record数目50（vector只是为了省事）
@@ -141,6 +141,7 @@ public:
 	bool search(std::vector<E> &, KEY);
 	BPLeaf<E, KEY>* begin();//第一个BPLeaf
 	BPLeaf<E, KEY>* end();//最后一个BPLeaf
+	int testnum;//测试使用
 };
 
 #endif
@@ -149,7 +150,7 @@ using namespace std;
 //具体实现
 
 //bpnode
-//return第一个>=key的位置
+//return第一个>key的位置
 template<typename E, typename KEY>
 void BPNode<E, KEY>::findpos(KEY str, int& pos)
 {
@@ -160,7 +161,7 @@ void BPNode<E, KEY>::findpos(KEY str, int& pos)
 		int mid = start + (end - start) / 2;
 		if (comp(this->key.at(mid), str) == 0)
 		{
-			pos = mid + 1;
+			pos = mid + 1;//pos=mid;
 			return;
 		}
 		else if (comp(this->key.at(mid), str) < 0)
@@ -195,7 +196,7 @@ void BPInternal<E, KEY>::add(E x, KEY str, BPNode<E, KEY>*node_new)
 	p->findpos(str, i);
 	for (int j = this->num - 1; j >= i; j--) {
 		p->key.at(j + 1) = p->key.at(j);
-		p->pointer.at(j + 1) = p->pointer.at(j);
+		p->pointer.at(j + 2) = p->pointer.at(j + 1);
 	}
 	p->key.at(i) = str;
 	p->pointer.at(i + 1) = node_new;
@@ -317,8 +318,16 @@ template<typename E, typename KEY>
 void BPLeaf<E, KEY>::add(E x, KEY str)
 {
 	BPNode<E, KEY>*p = this;
-	int number = ++this->num;
 	int i;
+	p->findpos(str, i);
+	int number = this->num++;
+	if (i > 0 && comp(str, p->key.at(i - 1)) == 0) {
+		std::vector<E>&temp = this->value.at(i - 1);
+		temp.push_back(x);
+		this->num--;
+		return;
+	}
+	/*费时版
 	for (i = 0; i < number; i++) {
 		if (comp(str, p->key.at(i)) == 0) {
 			std::vector<E>&temp = this->value.at(i);
@@ -333,17 +342,20 @@ void BPLeaf<E, KEY>::add(E x, KEY str)
 		else if (i == number - 1 && comp(str, p->key.at(number - 1)) >= 0)
 			break;
 	}
-	for (int j = number - 2; j >= i; j--) {
+	*/
+	for (int j = number - 1; j >= i; j--) {
 		p->key.at(j + 1) = p->key.at(j);
-		this->value.at(j + 1) = this->value.at(j);
+		std::vector<E>&temp = this->value.at(j);
+		temp.swap(this->value.at(j + 1));
+		//this->value.at(j + 1) = this->value.at(j);
 	}
 	p->key.at(i) = str;
 	/*std::vector<E>*temp = &this->value.at(i);
 	temp->clear();
 	temp->push_back(x);*/
-	std::vector<E> temp;
-	temp.push_back(x);
-	this->value.at(i) = temp;
+	std::vector<E>*temp = new std::vector<E>;
+	temp->push_back(x);
+	this->value.at(i) = *temp;
 }
 template<typename E, typename KEY>
 bool BPLeaf<E, KEY>::find(vector<E> &p, KEY str)//二分查找
@@ -373,56 +385,91 @@ void BPLeaf<E, KEY>::split(KEY& k, BPLeaf<E, KEY>* &leaf_new, BPLeaf<E, KEY>* &l
 	leaf_new->parent = leaf->parent;//连接的是老parent???
 	int i;//x插入位置
 	BPNode<E, KEY>*lfnode = (BPNode<E, KEY>*)leaf;
-	for (i = 0; i < n; i++) {
+	/*for (i = 0; i < n; i++) {
 		if (comp(str, lfnode->key.at(i)) <= 0)
 			break;
 		if (i == n - 1) {
 			i++;
 			break;
 		}
-	}
+	}*/
+	lfnode->findpos(str, i);
 	BPNode<E, KEY>*temp1 = leaf_new;
 	BPNode<E, KEY>*temp2 = leaf;
 	leaf->num = n / 2 + 1;
 	leaf_new->num = n - n / 2;
 	if (i <= n / 2) {
 		for (int j = n / 2; j < n; j++) {
-			leaf_new->value.at(j - n / 2) = leaf->value.at(j);
+			/*leaf_new->value.at(j - n / 2) = leaf->value.at(j);
 			std::vector<E>&t = leaf->value.at(j);
-			t.clear();
+			t.clear();*/
+			std::vector<E>&temp = leaf->value.at(j);
+			temp.swap(leaf_new->value.at(j - n / 2));
 			temp1->key.at(j - n / 2) = temp2->key.at(j);
 			temp2->key.at(j) = NULLSTR;
 		}
 		for (int j = leaf->num - 2; j >= i; j--) {
 			temp2->key.at(j + 1) = temp2->key.at(j);
-			leaf->value.at(j + 1) = leaf->value.at(j);
+			//leaf->value.at(j + 1) = leaf->value.at(j);
+			std::vector<E>&temp = leaf->value.at(j);
+			temp.swap(leaf->value.at(j + 1));
 		}
 		temp2->key.at(i) = str;
-		std::vector<E> temp = leaf->value.at(i);
+		/*std::vector<E> temp = leaf->value.at(i);
 		temp.push_back(x);
-		leaf->value.at(i) = temp;
+		leaf->value.at(i) = temp;*/
+		std::vector<E>*temp = new std::vector<E>;
+		temp->push_back(x);
+		leaf->value.at(i) = *temp;
 	}
-	else {//此处尝试vector指针，有待测试
-		for (int j = n / 2 + 1; j < n; j++) {
-			if (j == i) {
-				temp1->key.at(j - n / 2 - 1) = str;
-				std::vector<E>*temp = &leaf_new->value.at(j - n / 2 - 1);
-				temp->push_back(x);
-			}
-			leaf_new->value.at(j - n / 2 - 1) = leaf->value.at(j);
-			std::vector<E>*t = &leaf->value.at(j);
-			t->clear();
+	else {
+		//for (int j = n / 2 + 1; j < n; j++) {
+		//	if (j == i) {
+		//		temp1->key.at(j - n / 2 - 1) = str;
+		//		std::vector<E>*temp = &leaf_new->value.at(j - n / 2 - 1);
+		//		temp->push_back(x);
+		//		/*std::vector<E>*temp = new std::vector<E>;
+		//		temp->push_back(x);
+		//		leaf_new->value.at(j - n / 2 - 1) = *temp;*/
+		//	}
+		//	leaf_new->value.at(j - n / 2 - 1) = leaf->value.at(j);
+		//	std::vector<E>*t = &leaf->value.at(j);
+		//	t->clear();
+		//	temp1->key.at(j - n / 2 - 1) = temp2->key.at(j);
+		//	temp2->key.at(j) = NULLSTR;
+		//}
+		//if (i == n) {
+		//	temp1->key.at(n - n / 2 - 1) = str;
+		//	std::vector<E>*temp = &leaf_new->value.at(n - n / 2 - 1);
+		//	temp->push_back(x);
+		//	/*std::vector<E>*temp = new std::vector<E>;
+		//	temp->push_back(x);
+		//	leaf->value.at(n - n / 2 - 1) = *temp;*/
+		//}
+		for (int j = n / 2 + 1; j < i; j++) {
 			temp1->key.at(j - n / 2 - 1) = temp2->key.at(j);
 			temp2->key.at(j) = NULLSTR;
+			//leaf_new->value.at(j - n / 2 - 1) = leaf->value.at(j);
+			std::vector<E>&temp = leaf->value.at(j);
+			temp.swap(leaf_new->value.at(j - n / 2 - 1));
+			//std::vector<E>*t = &leaf->value.at(j);
+			//t->clear();
 		}
-		if (i == n) {
-			temp1->key.at(n - n / 2 - 1) = str;
-			std::vector<E>*temp = &leaf_new->value.at(n - n / 2 - 1);
-			temp->push_back(x);
+		temp1->key.at(i - n / 2 - 1) = str;
+		std::vector<E>*temp = new std::vector<E>;
+		temp->push_back(x);
+		leaf_new->value.at(i - n / 2 - 1) = *temp;
+		for (int j = i; j < n; j++) {
+			temp1->key.at(j - n / 2) = temp2->key.at(j);
+			temp2->key.at(j) = NULLSTR;
+			/*leaf_new->value.at(j - n / 2) = leaf->value.at(j);
+			std::vector<E>*t = &leaf->value.at(j);
+			t->clear();*/
+			std::vector<E>&temp = leaf->value.at(j);
+			temp.swap(leaf_new->value.at(j - n / 2));
 		}
-		if (i == n / 2 + 1) k = str;
-		else k = temp1->key.at(0);
 	}
+	k = temp1->key.at(0);
 	//处理leaf连成串
 	if (leaf->nextNode == nullptr)
 		leaf->nextNode = leaf_new;
@@ -438,6 +485,7 @@ BPTree<E, KEY>::BPTree()
 {
 	order = 5;
 	root = new BPInternal<E, KEY>;
+	testnum = 0;//测试用
 }
 template<typename E, typename KEY>
 BPTree<E, KEY>::~BPTree()
@@ -448,6 +496,9 @@ template<typename E, typename KEY>
 void BPTree<E, KEY>::insert(E x, KEY str)
 {
 	//one leaf or just two leaves
+	testnum++;
+	if (this->testnum == 200000)
+		cin >> this->testnum;
 	if (root->num == 0) {
 		BPNode<E, KEY>* curr = root->pointer.at(0);
 		if (curr == nullptr) {
@@ -477,14 +528,15 @@ void BPTree<E, KEY>::insert(E x, KEY str)
 		}
 	}
 	else {
-		BPNode<E, KEY>* curr = root;
+		BPNode<E, KEY>* curr = (BPNode<E, KEY>*)root;
 		while (curr->isLeaf() == false) {
 			auto p = (BPInternal<E, KEY>*)curr;
 			curr = p->find(str);
 		}
 		BPLeaf<E, KEY>*leaf = (BPLeaf<E, KEY>*)curr;
-		if (leaf->num < n)
+		if (leaf->num < n) {
 			leaf->add(x, str);
+		}
 		else {
 			BPLeaf<E, KEY>* lf_new = new BPLeaf<E, KEY>;
 			BPInternal<E, KEY>*internode_new = nullptr;
