@@ -13,6 +13,7 @@ public:
 private slots:
 	void on_btn_search_clicked();
 	void on_btn_F3_clicked();
+	void on_F2_TopAuthor_clicked();
 
 private:
 	Ui::MainWindow* ui;

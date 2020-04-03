@@ -118,14 +118,14 @@
    <widget class="QPushButton" name="F2_TopAuthor">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>10</y>
-      <width>93</width>
+      <x>670</x>
+      <y>40</y>
+      <width>103</width>
       <height>28</height>
      </rect>
     </property>
     <property name="text">
-     <string>F2_TOP</string>
+     <string>作者(Top100)</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_F3">

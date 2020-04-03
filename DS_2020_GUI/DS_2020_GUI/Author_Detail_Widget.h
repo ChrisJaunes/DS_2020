@@ -7,8 +7,6 @@
 #include <QModelIndex>
 #include <QSortFilterProxyModel>
 #include "pch.h"
-#include "Info.h"
-#include "Author.h"
 
 struct Author_Property_Item{
 	QString title;
@@ -48,7 +46,6 @@ private slots:
 	void showInfo(QModelIndex index);
 
 private:
-	Author                    author;
 	Ui::Author_Detail_Widget  *ui;
 	QStandardItemModel        *author_model;
 	QStandardItemModel        *collaborator_model;

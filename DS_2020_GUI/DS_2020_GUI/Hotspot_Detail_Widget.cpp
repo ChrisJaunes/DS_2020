@@ -125,6 +125,9 @@ Hotspot_Detail_Widget::Hotspot_Detail_Widget(QWidget* parent)
 Hotspot_Detail_Widget::~Hotspot_Detail_Widget()
 {
     delete ui;
+    delete hotspot_model;
+    delete hotspot_delegate;
+    delete hotspot_proxyModel;
 }
 
 

@@ -34,7 +34,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QListView" name="lvw_info"/>
+     <widget class="QListView" name="lvw_info">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>

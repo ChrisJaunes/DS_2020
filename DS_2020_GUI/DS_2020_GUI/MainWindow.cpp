@@ -6,6 +6,7 @@
 #include "Info_Detail_Widget.h"
 #include "Author_Detail_Widget.h"
 #include "Hotspot_Detail_Widget.h"
+#include "Author_Top_Widget.h"
 #include "test.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -43,6 +44,13 @@ void MainWindow::on_btn_search_clicked() {
 void MainWindow::on_btn_F3_clicked()
 {
 	Hotspot_Detail_Widget* tmp = new Hotspot_Detail_Widget();
+	tmp->show();
+	tmp->setAttribute(Qt::WA_DeleteOnClose);
+}
+
+void MainWindow::on_F2_TopAuthor_clicked()
+{
+	Author_Top_Widget* tmp = new Author_Top_Widget();
 	tmp->show();
 	tmp->setAttribute(Qt::WA_DeleteOnClose);
 }

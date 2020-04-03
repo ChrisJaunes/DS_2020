@@ -3,6 +3,7 @@
 #include <QStyle>
 #include <QEvent>
 #include <QDebug>
+#include "Author.h"
 #include "Author_Detail_Widget.h"
 #include "ui_Author_Detail_Widget.h"
 
@@ -10,7 +11,8 @@
 
 Author_Property_Item::Author_Property_Item()
 {
-
+    title = QString();
+    authors = QString();
 }
 Author_Property_Item::Author_Property_Item(QString& _title, QString& _authors) 
     : title(_title)
@@ -138,7 +140,7 @@ void Author_Detail_Widget::initData(QString& parameter) {
 #ifndef TEST_DEBUG_AUTHOR
     author = Author::getAuthorByName(bstr_t(parameter.toStdWString().c_str()));
 #else
-    author = *FST::AUTHORS[0];
+    Author author = *FST::AUTHORS[0];
 #endif
     ui->name->setFont(QFont("Times", 20, QFont::Bold));
     ui->name->setText("Detail about " + parameter);
