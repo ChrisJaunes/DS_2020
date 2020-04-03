@@ -2,62 +2,93 @@
 #include "Author.h"
 #include "CliquesCounting.h"
 
-OPRESULT CliquesCounting::StartCount(Author FirstOne) {
-	std::vector<Author> Collaborators = FirstOne.GetCollaborator().second;
+#define STR bstr_t
+#define W int
+
+OPRESULT CliquesCounting::StartCount(Author* st) {
+	std::vector<STR>* Collaborators;
+	*Collaborators = st->GetCollaboratorsNoWeight().second;
+
 	CliquesCount[1]++;
-	std::vector<Author> Q; Q.push_back(FirstOne);
-	uint64_t l = 0, r = Collaborators.size - 1 , st = 0;
+
+	std::vector<Author* > Q; 
+	Q.push_back(st);
+
+	uint64_t l = 0, r = Collaborators->size - 1 , ret = 0;
 	while (l <= r)
 	{
 		uint16_t mid = (l + r) >> 1;
-		if (FirstOne.GetName() < Collaborators[mid].GetName()) {
-			st = mid;
+		if (st->GetName().second < Collaborators->at(mid)) {
+			ret = mid;
 			r = mid - 1;
 		}
 		else l = mid + 1;
 	}
-	for (uint64_t i = st; i < Collaborators.size; i++)
+
+	for (uint64_t i = ret; i < Collaborators->size; i++)
 	{
-		Q[1]=Collaborators[i];
-		Counting(Q, 2, Collaborators, i+1);
+		Q[1]= &(st->getAuthorByName(Collaborators->at(i)));
+		Counting(Q, 2, i+1);
 	}
 }
-OPRESULT CliquesCounting::Counting(std::vector<Author> Clique, uint64_t Size, std::vector<Author> Collaborators, uint64_t st) {
+
+//判断x是否在cot中
+bool CliquesCounting::Check(std::vector<STR>* cot,STR x) {
+
+	std::vector<STR>::iterator it = find(cot->begin(), cot->end(), x);
+
+	if (it != cot->end()) return true;
+	return false;
+	/* l = 0, r = cot->size - 1, ret = 0;
+	while (l <= r)
+	{
+		uint16_t mid = (l + r) >> 1;
+		if (cot->at(mid) >= x) {
+			ret = mid;
+			r = mid - 1;
+		}
+		else l = mid + 1;
+	}
+	if (cot->at(ret) != x) return false;
+	return true;*/
+}
+
+OPRESULT CliquesCounting::Counting(std::vector<Author* > Clique, uint64_t Size, uint64_t st) {
+	std::vector<STR>* Collaborators;
+	*Collaborators = Clique[0]->GetCollaboratorsNoWeight().second;
+
 	CliquesCount[Size]++;
 	MaxSize = (MaxSize < Size) ? Size : MaxSize;
-	for (uint64_t i = st; i < Collaborators.size; i++)
+
+	for (uint64_t i = st; i < Collaborators->size; i++)
 	{
-		Author now = Collaborators[i];
+		Author now;
+		now = now.getAuthorByName(Collaborators->at(i));
+		
+		STR name = now.GetName().second;
 		bool bk = true;
 		for (uint64_t j = 0; j < Size; j++)
 		{
-			uint16_t l = 0, r = Clique[j].GetCollaborator().second.size - 1, st;
-			//这里是想判断能否在集团中加入新成员
-			//所以要遍历集团中的点 并找到其合作关系的vector来查找
-			//所以觉得每次GetCollaborator都for一遍对应文章会很慢
-			while (l <= r)
-			{
-				uint16_t mid = (l + r) >> 1;
-				if (Clique[j].GetCollaborator().second[mid].GetName() >= now.GetName()) {
-					st = mid;
-					r = mid - 1;
-				}
-				else l = mid + 1;
-			}
-			if (Clique[st].GetCollaborator().second[mid].GetName() != now.GetName()) {
+			std::vector<STR>* cot;
+			*cot = Clique[j]->GetCollaboratorsNoWeight().second;
+
+			if (!Check(cot, name)) {
 				bk = false;
 				break;
 			}
 		}
+
 		if (bk) {
-			Q[Size] = now;
-			Counting(Q, Size + 1, Collaborators, i + 1);
+			Clique[Size] = &now;
+			Counting(Clique, Size + 1, i + 1);
 		}
 	}
 }
+
 uint64_t CliquesCounting::GetSize() {
 	return MaxSize;
 }
-uint64_t CliquesCounting::GetResult(uint64_t id) {
-	return CliquesCount[id];
+
+std::map<uint64_t, uint64_t> CliquesCounting::GetResult() {
+	return CliquesCount;
 }
