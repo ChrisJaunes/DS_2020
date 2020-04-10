@@ -6,6 +6,7 @@
 #define TEST_DEBUG_INFO
 #define TEST_DEBUG_AUTHOR
 #define TEST_DEBUG_TOP
+#define TEST_DEBUG_INFO_TITLE
 //#define TEST_DEBUG_HOTSPOT
 #include "Author.h"
 #include "Info.h"

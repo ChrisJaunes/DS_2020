@@ -93,9 +93,11 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="Author_Top_Widget.ui" />
+    <QtUic Include="Help.ui" />
     <QtUic Include="Info_Detail_Widget.ui" />
     <QtUic Include="Author_Detail_Widget.ui" />
     <QtUic Include="Hotspot_Detail_Widget.ui" />
+    <QtUic Include="Info_Title_Widget.ui" />
     <QtUic Include="MainWindow.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -109,9 +111,11 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp" />
     <ClCompile Include="Author_Top_Widget.cpp" />
+    <ClCompile Include="Help.cpp" />
     <ClCompile Include="Info_Detail_Widget.cpp" />
     <ClCompile Include="Author_Detail_Widget.cpp" />
     <ClCompile Include="Hotspot_Detail_Widget.cpp" />
+    <ClCompile Include="Info_Title_Widget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="test.cpp" />
@@ -130,6 +134,8 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Solver.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
+    <QtMoc Include="Help.h" />
+    <QtMoc Include="Info_Title_Widget.h" />
     <QtMoc Include="Author_Top_Widget.h" />
     <QtMoc Include="Hotspot_Detail_Widget.h" />
     <QtMoc Include="Author_Detail_Widget.h" />

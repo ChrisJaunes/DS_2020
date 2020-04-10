@@ -76,7 +76,7 @@ font: 75 20pt &quot;Consolas&quot;;</string>
       <string>作者查询</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="rbn_F4">
+    <widget class="QRadioButton" name="rbn_Title">
      <property name="geometry">
       <rect>
        <x>120</x>
@@ -132,13 +132,13 @@ font: 75 28pt &quot;Consolas&quot;;</string>
      </property>
     </widget>
    </widget>
-   <widget class="QPushButton" name="F5">
+   <widget class="QPushButton" name="btn_F5">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>0</y>
-      <width>125</width>
-      <height>125</height>
+      <x>225</x>
+      <y>-10</y>
+      <width>100</width>
+      <height>100</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -150,11 +150,11 @@ font: 75 12pt &quot;Consolas&quot;;</string>
      <string>F5</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="F2_TopAuthor">
+   <widget class="QPushButton" name="btn_F2_TopAuthor">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>14</y>
+      <y>15</y>
       <width>125</width>
       <height>125</height>
      </rect>
@@ -173,8 +173,8 @@ font: 75 12pt &quot;Consolas&quot;;</string>
      <rect>
       <x>120</x>
       <y>0</y>
-      <width>100</width>
-      <height>100</height>
+      <width>110</width>
+      <height>110</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -190,10 +190,15 @@ font: 75 12pt &quot;Consolas&quot;;</string>
     <property name="geometry">
      <rect>
       <x>690</x>
-      <y>510</y>
-      <width>93</width>
-      <height>28</height>
+      <y>460</y>
+      <width>81</width>
+      <height>121</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url(:/DS_2020_GUI/image/feather-pen.png);
+color:rgb(255, 255, 255);
+font: 75 12pt &quot;Consolas&quot;;</string>
     </property>
     <property name="text">
      <string>help</string>

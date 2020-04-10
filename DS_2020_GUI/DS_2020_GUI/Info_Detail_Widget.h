@@ -41,7 +41,7 @@ public:
 	void initData(const QString&);
 
 private:
-	Ui::Info_Detail_Widget *ui;
-	QStandardItemModel     *info_model;
-	Info_Property_Delegate           *info_delegate;
+	Ui::Info_Detail_Widget  *ui;
+	QStandardItemModel      *info_model;
+	Info_Property_Delegate  *info_delegate;
 };
