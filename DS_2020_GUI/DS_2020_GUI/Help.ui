@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Help</string>
+   <string>帮助</string>
   </property>
   <widget class="QTextBrowser" name="txb_help">
    <property name="geometry">

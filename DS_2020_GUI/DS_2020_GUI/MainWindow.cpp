@@ -65,7 +65,7 @@ void MainWindow::on_btn_F2_TopAuthor_clicked()
 
 void MainWindow::on_btn_F5_clicked()
 {
-	QMessageBox::information(NULL, "Title", "Content", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+	QMessageBox::information(NULL, "F5", "F5", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 }
 
 void MainWindow::on_btn_help_clicked()

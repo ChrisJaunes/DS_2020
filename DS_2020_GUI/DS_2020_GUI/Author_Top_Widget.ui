@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Author_Top_Widget</string>
+   <string>写文章最多作者排名</string>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">

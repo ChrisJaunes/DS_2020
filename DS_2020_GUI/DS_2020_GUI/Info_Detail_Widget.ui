@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>F1:根据文章名查询</string>
+   <string>F1:根据标题精确查询</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Hotspot_Detail_Widget</string>
+   <string>热点分析</string>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
