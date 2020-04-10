@@ -11,37 +11,32 @@
 
 Author_Property_Item::Author_Property_Item()
 {
-    title = QString();
-    authors = QString();
 }
 Author_Property_Item::Author_Property_Item(QString& _title, QString& _authors) 
     : title(_title)
     , authors(_authors)
 {
-
 }
 Author_Property_Item::~Author_Property_Item()
 {
-
 }
 void Author_Property_Item::addAuthor(const QString& _author)
 {
     authors += _author;
 }
 
-AuthorDelegate::AuthorDelegate(QObject *parent)
+Author_Property_Delegate::Author_Property_Delegate(QObject *parent)
     : QStyledItemDelegate(parent)
 {
 }
-AuthorDelegate::~AuthorDelegate()
+Author_Property_Delegate::~Author_Property_Delegate()
 {
 }
-void AuthorDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void Author_Property_Delegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if (index.isValid()) {
         painter->save();
 
-        //ItemStatus status = (ItemStatus)(index.data(Qt::UserRole).toInt());
         QVariant variant = index.data(Qt::UserRole + 1);
         Author_Property_Item data = variant.value<Author_Property_Item>();
 
@@ -82,22 +77,22 @@ void AuthorDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option
         }
 
         //绘制数据位置
-        QRect titleRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 30, 20);
-        QRect authorsRect = QRect(rect.left() + 30, rect.top() + 30, rect.width() - 10, 200);
+        QRect titleRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 10, 25);
+        QRect authorsRect = QRect(rect.left() + 10, rect.top() + 50, rect.width() - 10, 200);
 
         painter->setPen(QPen(Qt::black));
-        painter->setFont(QFont("Times", 14, QFont::Bold));
-        painter->drawText(titleRect, Qt::AlignLeft, data.title);
+        painter->setFont(QFont("Consolas", 14, QFont::Bold));
+        painter->drawText(titleRect, Qt::AlignCenter, data.title);
 
-        painter->setPen(QPen(Qt::gray));
-        painter->setFont(QFont("Times", 12));
-        painter->drawText(authorsRect, Qt::AlignLeft, data.authors);
+        painter->setPen(QPen(Qt::black));
+        painter->setFont(QFont("Consolas", 12));
+        painter->drawText(authorsRect, Qt::AlignHCenter, data.authors);
 
         painter->restore();
     }
 }
 
-QSize AuthorDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize Author_Property_Delegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     return QSize(200, 300);
 }
@@ -113,7 +108,7 @@ Author_Detail_Widget::Author_Detail_Widget(QString parameter, QWidget *parent)
     ui->lvw_collaborator->setModel(collaborator_model);
     ui->lvw_collaborator->setSpacing(1);
 
-    author_delegate = new AuthorDelegate(this);
+    author_delegate = new Author_Property_Delegate(this);
     ui->lvw_info->setItemDelegate(author_delegate);
     ui->lvw_info->setSpacing(15);
     author_proxyModel = new QSortFilterProxyModel(ui->lvw_info);
@@ -142,7 +137,7 @@ void Author_Detail_Widget::initData(QString& parameter) {
 #else
     Author author = *FST::AUTHORS[0];
 #endif
-    ui->name->setFont(QFont("Times", 20, QFont::Bold));
+    ui->name->setFont(QFont("Consolas", 20, QFont::Bold));
     ui->name->setText("Detail about " + parameter);
     QString tmp_STR;
     auto collaborator = author.GetCollaborators().second;

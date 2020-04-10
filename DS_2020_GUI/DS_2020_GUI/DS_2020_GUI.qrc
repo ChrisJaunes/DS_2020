@@ -1,15 +1,10 @@
 <RCC>
     <qresource prefix="/DS_2020_GUI">
-        <file>html/Hotspot_Analysis_Web.html</file>
-        <file>html/js/d3.js</file>
-        <file>html/js/d3.min.js</file>
-        <file>database/f3/F3_articles.txt</file>
-        <file>database/f3/F3_books.txt</file>
-        <file>database/f3/F3_incollection.txt</file>
-        <file>database/f3/F3_inproceedings.txt</file>
-        <file>database/f3/F3_mastersthesis.txt</file>
-        <file>database/f3/F3_phdthesis.txt</file>
-        <file>database/f3/F3_proceedings.txt</file>
-        <file>database/f3/F3_www.txt</file>
+        <file>image/astronomy-atmosphere-earth-exploration.jpg</file>
+        <file>image/search.png</file>
+        <file>image/astronomy-clouds-dark-evening.jpg</file>
+        <file>image/astronomy-beautiful-clouds-constellation.jpg</file>
+        <file>image/feather-pen.png</file>
+        <file>image/planet.png</file>
     </qresource>
 </RCC>

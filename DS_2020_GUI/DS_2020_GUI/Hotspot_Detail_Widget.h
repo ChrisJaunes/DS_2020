@@ -7,7 +7,7 @@
 #include <QModelIndex>
 #include <QSortFilterProxyModel>
 #define STR QString
-#define W int
+#define W ULONG64
 struct Hotspot_Property_Item {
 	QString hotspot_word;
 	W hotspot_number;

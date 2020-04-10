@@ -13,23 +13,23 @@ namespace FST {
 		tmp.push_back(L"B01");
 		tmp.push_back(L"B02");
 		tmp.push_back(L"B03");
-		tmp.push_back(L"B04");
+		tmp.push_back(L"数据结构");
 		AUTHORS[0]->AddArticle(bstr_t(L"A1"), tmp);
 		tmp.clear();
 		tmp.push_back(L"B01");
-		tmp.push_back(L"C02");
+		tmp.push_back(L"张三");
 		tmp.push_back(L"C03");
 		tmp.push_back(L"C04");
 		AUTHORS[0]->AddArticle(bstr_t(L"A2"), tmp);
 		tmp.clear();
 		tmp.push_back(L"B01");
-		tmp.push_back(L"C02");
+		tmp.push_back(L"张三");
 		tmp.push_back(L"D03");
 		tmp.push_back(L"D04");
 		AUTHORS[0]->AddArticle(bstr_t(L"A3"), tmp);
 		tmp.clear();
 		tmp.push_back(L"B01");
-		tmp.push_back(L"C02");
+		tmp.push_back(L"张三");
 		tmp.push_back(L"D03");
 		tmp.push_back(L"E04");
 		AUTHORS[0]->AddArticle(bstr_t(L"A4"), tmp);
@@ -51,7 +51,7 @@ namespace FST {
 		INFO[0]->AddProperty("title", "abc");
 		INFO[0]->AddProperty("date", "20200329");
 		INFO[0]->AddProperty("author", "AA");
-		INFO[0]->AddProperty("author", "BB");
+		INFO[0]->AddProperty("author", "张三");
 		INFO[0]->AddProperty("author", "CC");
 		for (int i = 1; i < INFON; i++) {
 			INFO[i] = new Info();

@@ -16,14 +16,14 @@ struct Info_Property_Item {
 };
 Q_DECLARE_METATYPE(Info_Property_Item)
 
-class InfoDelegate : public QStyledItemDelegate
+class Info_Property_Delegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 signals:
 
 public:
-	explicit InfoDelegate(QObject* parent = 0);
-	~InfoDelegate();
+	explicit Info_Property_Delegate(QObject* parent = 0);
+	~Info_Property_Delegate();
 
 	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
@@ -43,5 +43,5 @@ public:
 private:
 	Ui::Info_Detail_Widget *ui;
 	QStandardItemModel     *info_model;
-	InfoDelegate           *info_delegate;
+	Info_Property_Delegate           *info_delegate;
 };

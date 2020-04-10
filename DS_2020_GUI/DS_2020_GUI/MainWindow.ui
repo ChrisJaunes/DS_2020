@@ -11,17 +11,23 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>DBLP</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">border-image:url(:/DS_2020_GUI/image/astronomy-atmosphere-earth-exploration.jpg)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>140</y>
-      <width>581</width>
-      <height>211</height>
+      <x>100</x>
+      <y>150</y>
+      <width>600</width>
+      <height>300</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url();</string>
     </property>
     <property name="title">
      <string/>
@@ -29,47 +35,59 @@
     <widget class="QTextEdit" name="tet_inputParameter">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>80</y>
-       <width>351</width>
-       <height>31</height>
+       <x>125</x>
+       <y>100</y>
+       <width>350</width>
+       <height>30</height>
       </rect>
      </property>
     </widget>
     <widget class="QRadioButton" name="rbn_Info">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>130</y>
-       <width>115</width>
-       <height>19</height>
+       <x>120</x>
+       <y>150</y>
+       <width>175</width>
+       <height>30</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);
+font: 75 20pt &quot;Consolas&quot;;</string>
+     </property>
      <property name="text">
-      <string>标题</string>
+      <string>标题查询</string>
      </property>
     </widget>
     <widget class="QRadioButton" name="rbn_Author">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>130</y>
-       <width>115</width>
-       <height>19</height>
+       <x>120</x>
+       <y>230</y>
+       <width>175</width>
+       <height>30</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(255, 255, 255);
+font: 75 20pt &quot;Consolas&quot;;</string>
+     </property>
      <property name="text">
-      <string>作者</string>
+      <string>作者查询</string>
      </property>
     </widget>
     <widget class="QRadioButton" name="rbn_F4">
      <property name="geometry">
       <rect>
-       <x>300</x>
-       <y>130</y>
-       <width>115</width>
-       <height>19</height>
+       <x>120</x>
+       <y>190</y>
+       <width>175</width>
+       <height>30</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(255, 255, 255);
+font: 75 20pt &quot;Consolas&quot;;</string>
      </property>
      <property name="text">
       <string>模糊查询</string>
@@ -78,38 +96,55 @@
     <widget class="QPushButton" name="btn_search">
      <property name="geometry">
       <rect>
-       <x>440</x>
-       <y>80</y>
-       <width>93</width>
-       <height>28</height>
+       <x>310</x>
+       <y>140</y>
+       <width>181</width>
+       <height>141</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">border-image:url(:/DS_2020_GUI/image/search.png);
+color:rgb(255, 255, 255);
+font: 75 28pt &quot;Consolas&quot;;</string>
+     </property>
      <property name="text">
-      <string>search</string>
+      <string>搜索</string>
      </property>
     </widget>
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>30</y>
-       <width>131</width>
-       <height>31</height>
+       <x>125</x>
+       <y>10</y>
+       <width>350</width>
+       <height>70</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color:rgb(255, 255, 255);
+font: 75 28pt &quot;Consolas&quot;;</string>
      </property>
      <property name="text">
       <string>DBLP 数据查询</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>
    <widget class="QPushButton" name="F5">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>10</y>
-      <width>93</width>
-      <height>28</height>
+      <x>680</x>
+      <y>0</y>
+      <width>125</width>
+      <height>125</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url(:/DS_2020_GUI/image/planet.png);
+color:rgb(255, 255, 255);
+font: 75 12pt &quot;Consolas&quot;;</string>
     </property>
     <property name="text">
      <string>F5</string>
@@ -118,11 +153,16 @@
    <widget class="QPushButton" name="F2_TopAuthor">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>40</y>
-      <width>103</width>
-      <height>28</height>
+      <x>0</x>
+      <y>14</y>
+      <width>125</width>
+      <height>125</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url(:/DS_2020_GUI/image/planet.png);
+color:rgb(255, 255, 255);
+font: 75 12pt &quot;Consolas&quot;;</string>
     </property>
     <property name="text">
      <string>作者(Top100)</string>
@@ -131,11 +171,16 @@
    <widget class="QPushButton" name="btn_F3">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>10</y>
-      <width>93</width>
-      <height>28</height>
+      <x>120</x>
+      <y>0</y>
+      <width>100</width>
+      <height>100</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url(:/DS_2020_GUI/image/planet.png);
+color:rgb(255, 255, 255);
+font: 75 12pt &quot;Consolas&quot;;</string>
     </property>
     <property name="text">
      <string>历年热词</string>
@@ -155,19 +200,10 @@
     </property>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>26</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="DS_2020_GUI.qrc"/>
+ </resources>
  <connections/>
  <slots>
   <slot>on_btn_loadfile_clicked()</slot>

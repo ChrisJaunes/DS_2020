@@ -10,29 +10,26 @@
 #define W int
 Author_Top_Item::Author_Top_Item()
 {
-    name = QString();
-    number = 0;
 }
 
 Author_Top_Item::Author_Top_Item(QString& _name, W& _number)
     : name(_name)
     , number(_number)
 {
-
 }
 
 Author_Top_Item::~Author_Top_Item()
 {
 }
 
-TopDelegate::TopDelegate(QObject* parent)
+AuthorTopDelegate::AuthorTopDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
 {
 }
-TopDelegate::~TopDelegate()
+AuthorTopDelegate::~AuthorTopDelegate()
 {
 }
-void TopDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void AuthorTopDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if (index.isValid()) {
         painter->save();
@@ -77,12 +74,12 @@ void TopDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, c
         }
 
         //绘制数据位置
-        QRect wordRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 10, 20);
-        QRect numberRect = QRect(rect.left() + 50, rect.top() + 10, rect.width() - 60, 20);
+        QRect nameRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 10, 25);
+        QRect numberRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 20, 25);
 
         painter->setPen(QPen(Qt::black));
-        painter->setFont(QFont("Times", 14, QFont::Bold));
-        painter->drawText(wordRect, Qt::AlignLeft, data.name);
+        painter->setFont(QFont("Consolas", 14, QFont::Bold));
+        painter->drawText(nameRect, Qt::AlignLeft, data.name);
 
         painter->setPen(QPen(Qt::black));
         painter->setFont(QFont("Times", 14));
@@ -92,7 +89,7 @@ void TopDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, c
     }
 }
 
-QSize TopDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize AuthorTopDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     return QSize(option.rect.width(), 50);
 }
@@ -109,7 +106,7 @@ Author_Top_Widget::Author_Top_Widget(QWidget* parent)
 
     initData();
 
-    top_delegate = new TopDelegate(this);
+    top_delegate = new AuthorTopDelegate(this);
     ui->listView->setItemDelegate(top_delegate);
     ui->listView->setModel(top_model);
     ui->listView->setSpacing(5);

@@ -10,7 +10,6 @@
 
 Info_Property_Item::Info_Property_Item()
 {
-
 }
 void Info_Property_Item::setProperty(const QString& _name, const QString& _data)
 {
@@ -26,14 +25,14 @@ Info_Property_Item::~Info_Property_Item()
 
 }
 
-InfoDelegate::InfoDelegate(QObject* parent)
+Info_Property_Delegate::Info_Property_Delegate(QObject* parent)
     : QStyledItemDelegate(parent)
 {
 }
-InfoDelegate::~InfoDelegate()
+Info_Property_Delegate::~Info_Property_Delegate()
 {
 }
-void InfoDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void Info_Property_Delegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if (index.isValid()) {
         painter->save();
@@ -78,22 +77,22 @@ void InfoDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, 
         }
 
         //绘制数据位置
-        QRect NameRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 10, 20);
-        QRect dataRect = QRect(rect.left() + 100, rect.top() + 10, rect.width() - 10, 20);
+        QRect NameRect = QRect(rect.left() + 10, rect.top() + 25, rect.width() - 10, 25);
+        QRect dataRect = QRect(rect.left() + 150, rect.top() + 25, rect.width(), 25);
         
         painter->setPen(QPen(Qt::black));
-        painter->setFont(QFont("Times", 14, QFont::Bold));
+        painter->setFont(QFont("Consolas", 14, QFont::Bold));
         painter->drawText(NameRect, Qt::AlignLeft, data.property_name);
         
         painter->setPen(QPen(Qt::black));
-        painter->setFont(QFont("Times", 14));
+        painter->setFont(QFont("Consolas", 14));
         painter->drawText(dataRect, Qt::AlignLeft, data.property_data);
 
         painter->restore();
     }
 }
 
-QSize InfoDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+QSize Info_Property_Delegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 #ifdef TEST_DEBUG
     //qDebug() << "sizeHint" << option.rect.width() << '\n';
@@ -108,7 +107,7 @@ Info_Detail_Widget::Info_Detail_Widget(QString& parameter, QWidget *parent)
 	ui->setupUi(this);
 
 	initData(parameter);
-    info_delegate = new InfoDelegate(this);
+    info_delegate = new Info_Property_Delegate(this);
     ui->listView->setSpacing(5);
     ui->listView->setItemDelegate(info_delegate);
     ui->listView->setModel(info_model);
@@ -132,7 +131,7 @@ void Info_Detail_Widget::initData(const QString& parameter) {
 #else:
     Info data = *FST::INFO[0];
 #endif
-    ui->title->setFont(QFont("Times", 20, QFont::Bold));
+    ui->title->setFont(QFont("Consolas", 20, QFont::Bold));
     ui->title->setText("Detail about " + parameter);
 	auto tmp_mp = data.GetProperties();
     Info_Property_Item tmp_IPI;

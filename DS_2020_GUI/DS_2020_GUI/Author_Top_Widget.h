@@ -17,14 +17,14 @@ struct Author_Top_Item {
 };
 Q_DECLARE_METATYPE(Author_Top_Item)
 
-class TopDelegate : public QStyledItemDelegate
+class AuthorTopDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 signals:
 
 public:
-	explicit TopDelegate(QObject* parent = Q_NULLPTR);
-	~TopDelegate();
+	explicit AuthorTopDelegate(QObject* parent = Q_NULLPTR);
+	~AuthorTopDelegate();
 
 	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
@@ -44,6 +44,6 @@ public:
 private:
 	Ui::Author_Top_Widget *ui;
 	QStandardItemModel    *top_model;
-	TopDelegate           *top_delegate;
+	AuthorTopDelegate     *top_delegate;
 };
 #undef W

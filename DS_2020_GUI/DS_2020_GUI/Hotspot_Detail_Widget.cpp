@@ -7,16 +7,16 @@
 #include "ui_Hotspot_Detail_Widget.h"
 #include "test.h"
 #include "Solver.h"
-#define W int
+#define W ULONG64
 Hotspot_Property_Item::Hotspot_Property_Item()
 {
+    hotspot_number = 0;
 }
 
 Hotspot_Property_Item::Hotspot_Property_Item(QString _hotspot_word, W _hotspot_number)
     : hotspot_word(_hotspot_word)
     , hotspot_number(_hotspot_number)
 {
-
 }
 
 Hotspot_Property_Item::~Hotspot_Property_Item()
@@ -27,6 +27,7 @@ HotspotDelegate::HotspotDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
 {
 }
+
 HotspotDelegate::~HotspotDelegate()
 {
 }
@@ -75,11 +76,11 @@ void HotspotDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
         }
 
         //绘制数据位置
-        QRect wordRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 10, 20);
-        QRect numberRect = QRect(rect.left() + 50, rect.top() + 10, rect.width() - 60, 20);
+        QRect wordRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 10, 25);
+        QRect numberRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 25, 25);
 
         painter->setPen(QPen(Qt::black));
-        painter->setFont(QFont("Times", 14, QFont::Bold));
+        painter->setFont(QFont("Consolas", 14, QFont::Bold));
         painter->drawText(wordRect, Qt::AlignLeft, data.hotspot_word);
 
         painter->setPen(QPen(Qt::black));
@@ -137,7 +138,7 @@ void Hotspot_Detail_Widget::initData()
 #ifndef TEST_DEBUG_HOTSPOT
     QStringList years, types;
     int i = 0;
-    std::map < STR, std::map<STR, ULONG64> > hotspot[HOTSPOTTYPEN];
+    std::map < STR, std::map<STR, W> > hotspot[HOTSPOTTYPEN];
     for (int j = 0; j < HOTSPOTTYPEN; j++) {
         hotspot[j] = F3Solver::ImportFromFile(L"database/f3/F3_" + HOTSPOTTYPE[j] + L".txt");
         types.push_back(QString(HOTSPOTTYPE[j]));

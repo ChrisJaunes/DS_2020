@@ -18,14 +18,14 @@ struct Author_Property_Item{
 };
 Q_DECLARE_METATYPE(Author_Property_Item)
 
-class AuthorDelegate : public QStyledItemDelegate
+class Author_Property_Delegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 signals:
 
 public:
-	explicit AuthorDelegate(QObject* parent = Q_NULLPTR);
-	~AuthorDelegate();
+	explicit Author_Property_Delegate(QObject* parent = Q_NULLPTR);
+	~Author_Property_Delegate();
 
 	void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 	QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
@@ -49,6 +49,6 @@ private:
 	Ui::Author_Detail_Widget  *ui;
 	QStandardItemModel        *author_model;
 	QStandardItemModel        *collaborator_model;
-	AuthorDelegate            *author_delegate;
+	Author_Property_Delegate            *author_delegate;
 	QSortFilterProxyModel     *author_proxyModel;
 };

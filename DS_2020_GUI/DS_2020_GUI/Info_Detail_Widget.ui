@@ -6,44 +6,77 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>598</width>
-    <height>733</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Article_Detail_Widget</string>
+   <string>F1:根据文章名查询</string>
   </property>
-  <widget class="QLabel" name="title">
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>30</y>
-     <width>351</width>
-     <height>51</height>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>600</height>
     </rect>
    </property>
-   <property name="text">
-    <string>TextLabel</string>
+   <property name="styleSheet">
+    <string notr="true">border-image:url(:/DS_2020_GUI/image/astronomy-clouds-dark-evening.jpg)</string>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
-  </widget>
-  <widget class="QListView" name="listView">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>100</y>
-     <width>481</width>
-     <height>581</height>
-    </rect>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
-   <property name="editTriggers">
-    <set>QAbstractItemView::NoEditTriggers</set>
-   </property>
+   <widget class="QLabel" name="title">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>30</y>
+      <width>600</width>
+      <height>50</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url();
+color:rgb(255, 255, 255);
+font: 75 20pt &quot;Consolas&quot;;</string>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QListView" name="listView">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>100</y>
+      <width>600</width>
+      <height>420</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url();
+background-color:rgba(244,244,244,100)</string>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="DS_2020_GUI.qrc"/>
+ </resources>
  <connections/>
 </ui>
