@@ -1,9 +1,5 @@
 #include "pch.h"
 #include "CommUtils.h"
-
-_ImportData ImportData;
-
-
 wchar_t* charToWChar(const char* text)
 {
 	size_t size = strlen(text) + 1;
@@ -11,14 +7,12 @@ wchar_t* charToWChar(const char* text)
 	mbstowcs(wa, text, size);
 	return wa;
 }
-
 CalcTime::CalcTime()
 {
 	std::cout << "CalcTime start" << std::endl;
 	start_time = GetTickCount64();
 
 }
-
 CalcTime::~CalcTime()
 {
 	DWORD end_time = GetTickCount64();
