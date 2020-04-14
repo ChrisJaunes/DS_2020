@@ -5,25 +5,25 @@
 
 #include "BPTrees.h"
 
-F1Solver::F1Solver(const TCHAR* xmlfile)
-{
-    // Ä¬ÈÏÖ»½âÎöarticle
-    ImportDataWrapper(xmlfile, this);
-}
-
 F1Solver::F1Solver(const TCHAR* xmlfile, DWORD parseInfo)
 {
-    ImportDataWrapperEx(xmlfile, this, parseInfo);
+	pParser = new XMLParser(parseInfo);
+	pParser->ParseFile(xmlfile, this);
+	delete pParser;
+}
+
+F1Solver::~F1Solver()
+{
+	delete pF1;
 }
 
 void F1Solver::InitMemory()
 {
-    ImportData.authorTree = new BPTree<Info, STR>;
-    ImportData.titleTree = new BPTree<Info, STR>;
+    pF1 = new BPTree<Info, STR>;
 }
 
 void F1Solver::InsertObject(Info temp)
 {
-	ImportData.titleTree->insert(temp, STR(temp.GetProperty(STR(L"title")).at(0)));
+	pF1->insert(temp, STR(temp.GetProperty(STR(L"title")).at(0)));
 }
 

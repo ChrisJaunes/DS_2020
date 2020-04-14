@@ -1,6 +1,7 @@
 #pragma once
 #include "Info.h"
 
+
 /*
 ISolver接口, 实现对具体问题的解决方案
 
@@ -29,33 +30,7 @@ public:
 #define phdthesis 32
 #define proceedings 64
 #define www 128
+#define alltypes (article|book|incollection|inproceedings|mastersthesis|phdthesis|proceedings|www)
 #endif // !ENUMPARSEINFO
 
-/*
-eg:
-	#include "CommUtils.h"
-	#include "Solver.h"
-	int _tmain()
-	{
-		CalcTime timer;
-		F3Solver f3solver(L"D:\\Code\\ds_hw\\dblp.xml");
-		// F3Solver f3solver(L"D:\\Code\\ds_hw\\dblp.xml", article | book );
-		f3solver.ExportToFile(L"f3_out.txt");
-		return 0;
-	}
-*/
-class F3Solver : public ISolver{
-public:
-	// 构造函数, 这个不要变动 按照F3Solver的构造函数来实现(copy一下)
-	F3Solver(const TCHAR* xmlfile);
-	F3Solver(const TCHAR* xmlfile, DWORD parseInfo);
 
-	// 接口的声明, 这两个接口一定要实现, 主要是对全局变量ImportData的初始化
-	// 还有对对象插入Info结构体的操作
-	void InitMemory();
-	void InsertObject(Info temp);
-
-	// 这个是自己拓展的
-	void ExportToFile(const TCHAR*);
-	static std::map < STR, std::map<STR, ULONG64> > ImportFromFile(const TCHAR*);
-};

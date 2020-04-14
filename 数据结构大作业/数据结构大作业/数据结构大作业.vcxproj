@@ -23,7 +23,7 @@
     <ProjectGuid>{4D66B971-5117-4E9D-8A98-44A11C71CDF2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>数据结构大作业</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>false</SpectreMitigation>
   </PropertyGroup>
@@ -108,6 +108,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>D:\Code\ds_hw\new\DS_2020\数据结构大作业\数据结构大作业;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,10 +155,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BPTrees.h" />
-    <ClInclude Include="CliquesCounting.h" />
     <ClInclude Include="CommUtils.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="F1Solver.h" />
+    <ClInclude Include="F3Solver.h" />
     <ClInclude Include="FrequencyRanking.h" />
     <ClInclude Include="Info.h" />
     <ClInclude Include="pch.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="CliquesCounting.cpp" />
     <ClCompile Include="CommUtils.cpp" />
     <ClCompile Include="F1Solver.cpp" />
+    <ClCompile Include="F3Solver.cpp" />
     <ClCompile Include="FrequencyRanking.cpp" />
     <ClCompile Include="Info.cpp" />
     <ClCompile Include="main.cpp" />

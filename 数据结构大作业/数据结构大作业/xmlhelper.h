@@ -6,6 +6,7 @@
 #pragma comment(lib,"Shlwapi.lib")
 
 #include "Solver.h"
+#include "Info.h"
 
 /*
 打开文件
@@ -24,6 +25,7 @@
 #define phdthesis 32
 #define proceedings 64
 #define www 128
+#define alltypes (article|book|incollection|inproceedings|mastersthesis|phdthesis|proceedings|www)
 #endif // !ENUMPARSEINFO
 
 
@@ -39,11 +41,14 @@ public:
 	// 多个flag通过|进行连接
 	XMLParser(DWORD flag);
 	~XMLParser();
+
+	// 从文件的某个position解析单个对象
+	// TODO:
+	Info ParseSingle(size_t position);
+
+	// 解析一个dblp.xml文件的所有对象
+	OPRESULT ParseFile(LPCWSTR filename, ISolver *pSolver);
+protected:
 	OPRESULT OpenFile(LPCWSTR);
 	OPRESULT ParseAll(ISolver *);
-
 };
-
-
-DWORD WINAPI ImportDataWrapper(LPCWSTR filename,ISolver *);
-DWORD WINAPI ImportDataWrapperEx(LPCWSTR filename, ISolver* psolver, DWORD parseInfo);

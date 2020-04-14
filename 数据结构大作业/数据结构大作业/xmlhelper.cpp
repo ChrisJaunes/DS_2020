@@ -40,6 +40,22 @@ XMLParser::~XMLParser()
 {
 	delete parseInfo;
 }
+Info XMLParser::ParseSingle(size_t position)
+{
+
+	//LARGE_INTEGER a;
+	//a.QuadPart = 0x100;
+	//pFileStream->Seek(a,STREAM_SEEK_SET, NULL);
+
+	return Info();
+}
+OPRESULT XMLParser::ParseFile(LPCWSTR filename, ISolver* pSolver)
+{
+	OPRESULT hr = OpenFile(filename);
+	if (FAILED(hr)) { return hr; }
+	hr = ParseAll(pSolver);
+	return OPRESULT(hr);
+}
 /*
 打开xml, 设置权限
 */
@@ -50,6 +66,7 @@ OPRESULT XMLParser::OpenFile(LPCWSTR filename)
 		filename,
 		STGM_READ,
 		&pFileStream);
+
 	CreateXmlReader(__uuidof(IXmlReader), (void**)&pReader, NULL);
 	pReader->SetInput(pFileStream);
 	pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
@@ -122,23 +139,3 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 	}
 	return 0;
 }
-
-DWORD WINAPI ImportDataWrapper(LPCWSTR filename, ISolver *psolver) {
-	XMLParser parser;
-	OPRESULT hr = parser.OpenFile(filename);
-	if (FAILED(hr)) { ImportData.isDone = false; return 0; }
-	// 这里将写入到ImportData中
-	parser.ParseAll(psolver);
-	ImportData.isDone = true;
-	return 0;
-}
-
-DWORD WINAPI ImportDataWrapperEx(LPCWSTR filename, ISolver* psolver, DWORD parseInfo) {
-	XMLParser parser(parseInfo);
-	OPRESULT hr = parser.OpenFile(filename);
-	if (FAILED(hr)) { ImportData.isDone = false; return 0; }
-	parser.ParseAll(psolver);
-	ImportData.isDone = true;
-	return 0;
-}
-

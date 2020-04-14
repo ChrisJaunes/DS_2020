@@ -22,6 +22,7 @@ public:
 	std::vector<STR> GetProperty(STR);
 	std::map<STR, std::vector<STR>> GetProperties();
 
-	// 支持以前的接口
-
+	// 序列化和反序列化
+	STR Marshal();
+	STR Unmarshal();
 };
