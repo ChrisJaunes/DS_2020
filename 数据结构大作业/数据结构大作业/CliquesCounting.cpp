@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "Author.h"
+#include "BPTrees.h"
 #include "CliquesCounting.h"
 
 #define STR bstr_t
 #define W int
+extern BPTree<Author, bstr_t> Author_BPtree;
 
 OPRESULT CliquesCounting::StartCount(Author* st) {
 	std::vector<STR>* Collaborators;
@@ -14,10 +16,10 @@ OPRESULT CliquesCounting::StartCount(Author* st) {
 	std::vector<Author* > Q; 
 	Q.push_back(st);
 
-	uint64_t l = 0, r = Collaborators->size - 1 , ret = 0;
+	W l = 0, r = Collaborators->size()-1, ret = 0;
 	while (l <= r)
 	{
-		uint16_t mid = (l + r) >> 1;
+		W mid = (l + r) >> 1;
 		if (st->GetName().second < Collaborators->at(mid)) {
 			ret = mid;
 			r = mid - 1;
@@ -25,9 +27,9 @@ OPRESULT CliquesCounting::StartCount(Author* st) {
 		else l = mid + 1;
 	}
 
-	for (uint64_t i = ret; i < Collaborators->size; i++)
+	for (W i = ret; i < Collaborators->size(); i++)
 	{
-		Q[1]= &(st->getAuthorByName(Collaborators->at(i)));
+		Q[1]= &(Author_BPtree.getAuthorByName(Collaborators->at(i)));
 		Counting(Q, 2, i+1);
 	}
 }
@@ -39,7 +41,7 @@ bool CliquesCounting::Check(std::vector<STR>* cot,STR x) {
 
 	if (it != cot->end()) return true;
 	return false;
-	/* l = 0, r = cot->size - 1, ret = 0;
+	/* l = 0, r = cot->size() - 1, ret = 0;
 	while (l <= r)
 	{
 		uint16_t mid = (l + r) >> 1;
@@ -53,21 +55,21 @@ bool CliquesCounting::Check(std::vector<STR>* cot,STR x) {
 	return true;*/
 }
 
-OPRESULT CliquesCounting::Counting(std::vector<Author* > Clique, uint64_t Size, uint64_t st) {
+OPRESULT CliquesCounting::Counting(std::vector<Author* > Clique, W Size, W st) {
 	std::vector<STR>* Collaborators;
 	*Collaborators = Clique[0]->GetCollaboratorsNoWeight().second;
 
 	CliquesCount[Size]++;
 	MaxSize = (MaxSize < Size) ? Size : MaxSize;
 
-	for (uint64_t i = st; i < Collaborators->size; i++)
+	for (W i = st; i < Collaborators->size(); i++)
 	{
 		Author now;
-		now = now.getAuthorByName(Collaborators->at(i));
+		now = Author_BPtree.getAuthorByName(Collaborators->at(i));
 		
 		STR name = now.GetName().second;
 		bool bk = true;
-		for (uint64_t j = 0; j < Size; j++)
+		for (W j = 0; j < Size; j++)
 		{
 			std::vector<STR>* cot;
 			*cot = Clique[j]->GetCollaboratorsNoWeight().second;
@@ -85,10 +87,10 @@ OPRESULT CliquesCounting::Counting(std::vector<Author* > Clique, uint64_t Size, 
 	}
 }
 
-uint64_t CliquesCounting::GetSize() {
+W CliquesCounting::GetSize() {
 	return MaxSize;
 }
 
-std::map<uint64_t, uint64_t> CliquesCounting::GetResult() {
+std::map<W, W> CliquesCounting::GetResult() {
 	return CliquesCount;
 }

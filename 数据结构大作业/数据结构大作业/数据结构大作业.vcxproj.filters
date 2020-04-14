@@ -45,6 +45,9 @@
     <ClInclude Include="F1Solver.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CliquesCounting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -72,6 +75,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="F1Solver.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CliquesCounting.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
