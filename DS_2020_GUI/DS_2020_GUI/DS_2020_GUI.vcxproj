@@ -113,6 +113,7 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp" />
     <ClCompile Include="Author_Top_Widget.cpp" />
+    <ClCompile Include="BPIO.cpp" />
     <ClCompile Include="BPlusTree.cpp" />
     <ClCompile Include="Help.cpp" />
     <ClCompile Include="Info_Detail_Widget.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Solver.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
+    <ClInclude Include="BPIO.h" />
     <ClInclude Include="BPlusTree.h" />
     <QtMoc Include="Help.h" />
     <QtMoc Include="Info_Title_Widget.h" />
