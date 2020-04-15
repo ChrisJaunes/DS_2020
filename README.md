@@ -3,6 +3,22 @@
 合作文档地址:
 https://shimo.im/docs/CGcDQKCrhvkCGvQj
 
+### 关于测试环节
+@ChrisJaunes
+GUI目录下新添加了DS_console、DS_gui、DS_test三个目录, 按照测试进度可以渐渐移入
+DS_test用于管理测试文件和测试程序, test.h 和test.cpp可以作为参考
+测试程序应该放在DS_test, 为程序编写的测试函数应该导入test.cpp, 然后在test.cpp的tmain里面调用
+作为参考程序的对拍程序和数据生成器按照需要选择时候导入项目
+导入项目的test文件请利用宏TEST_DEBUG
+```cpp
+#ifndef TEST_DEBUG
+    //测试代码
+#endif
+```
+test.h禁止放到其他.h文件里，容易出现问题
+DS_test目录下的readme.md按照实际情况填写
+**时间紧迫，大家加油**
+
 ### F3: parseInfo大致的用时和内存消耗
 
 @Q4n:
@@ -50,6 +66,8 @@ www 132.031s 16G
 
 2. 解决代码共用的问题
 `项目 右键 -> vc++目录 --> 包含目录` 这个项添加console文件的路径
+
+3. GUI目录下新添加了DS_console、DS_gui、DS_test三个目录, `项目 右键 -> vc++目录 --> 包含目录` 这个项添加这三个目录的路径，建议使用相对路径，相对路径相对于DS_2020_GUI.vcxproj
 
 但是, 只是添加这个地方是不行的, 你会发现 `未解析的符号` 啥的错误
 
