@@ -248,3 +248,102 @@ STR XMLMarshal::Marshal(Info inobj)
 	delete pWchar;
 	return STR(res);
 }
+
+Info XMLMarshal::Unmarshal(STR xmlcode, DWORD flag)
+{
+	std::vector<STR> *parseInfo = new std::vector<STR>;
+	if (flag & article) {
+		parseInfo->push_back(STR(L"article"));
+	}
+	if (flag & book) {
+		parseInfo->push_back(STR(L"book"));
+	}
+	if (flag & incollection) {
+		parseInfo->push_back(STR(L"incollection"));
+	}
+	if (flag & inproceedings) {
+		parseInfo->push_back(STR(L"inproceedings"));
+	}
+	if (flag & mastersthesis) {
+		parseInfo->push_back(STR(L"mastersthesis"));
+	}
+	if (flag & phdthesis) {
+		parseInfo->push_back(STR(L"phdthesis"));
+	}
+	if (flag & proceedings) {
+		parseInfo->push_back(STR(L"proceedings"));
+	}
+	if (flag & www) {
+		parseInfo->push_back(STR(L"www"));
+	}
+
+	CComPtr<IStream> pStream;
+	CComPtr<IXmlReader> m_pReader;
+	HRESULT hr=::CreateStreamOnHGlobal(0, TRUE, &pStream);
+	ULONG written;
+	char* pv = (char*)xmlcode;
+	pStream->Write(pv, strlen(pv), &written);
+	LARGE_INTEGER move;
+	move.QuadPart = 0;
+	pStream->Seek(move, STREAM_SEEK_SET, NULL);
+
+	CreateXmlReader(__uuidof(IXmlReader), (void**)&m_pReader, NULL);
+	m_pReader->SetInput(pStream);
+	m_pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
+
+	LPCWSTR szValue = NULL, curSection = NULL, localName = NULL;
+	XmlNodeType nodeType;
+	Info temp;
+
+	while (S_OK == (hr = m_pReader->Read(&nodeType))) {
+		if (nodeType == XmlNodeType_Element) {
+			m_pReader->GetLocalName(&localName, NULL);
+
+			// 解析类型
+			vector<STR>::iterator ret;
+			ret = std::find(parseInfo->begin(), parseInfo->end(), STR(localName));
+			if (ret == parseInfo->end()) {
+				continue;
+			}
+
+			// 看成是进入一个section
+			curSection = localName;
+			temp.SetClsid(STR(curSection));
+
+			if (S_OK == m_pReader->MoveToFirstAttribute()) {
+				m_pReader->GetLocalName(&localName, NULL);
+				m_pReader->GetValue(&szValue, NULL);
+				temp.AddProperty(STR(localName), STR(szValue));
+				while (S_OK == (hr = m_pReader->MoveToNextAttribute())) {
+					m_pReader->GetLocalName(&localName, NULL);
+					m_pReader->GetValue(&szValue, NULL);
+					temp.AddProperty(STR(localName), STR(szValue));
+				}
+				m_pReader->MoveToElement();
+			}
+
+			while (lstrcmpW(localName, curSection) || nodeType != XmlNodeType_EndElement) {
+				m_pReader->Read(&nodeType);
+				m_pReader->GetLocalName(&localName, NULL);
+				if (nodeType == XmlNodeType_Element) {
+					if (!lstrcmpW(localName, curSection))
+						break;
+					while (nodeType != XmlNodeType_Text) {
+						m_pReader->Read(&nodeType);
+					}
+					m_pReader->GetValue(&szValue, NULL);
+					temp.AddProperty(STR(localName), STR(szValue));
+					while (nodeType != XmlNodeType_EndElement) {
+						m_pReader->Read(&nodeType);
+					}
+				}
+			}
+			// 假如没有title的, 将会被忽略
+			if (temp.GetProperty(L"title").size()) {
+				break;
+			}
+		}
+	}
+	delete parseInfo;
+	return temp;
+}

@@ -19,11 +19,13 @@ F1Solver::~F1Solver()
 
 void F1Solver::InitMemory()
 {
+	// TODO
     pF1 = new BPTree<Info, STR>;
 }
 
 void F1Solver::InsertObject(Info temp)
 {
+	// TODO
 	pF1->insert(temp, STR(temp.GetProperty(STR(L"title")).at(0)));
 }
 

@@ -23,7 +23,7 @@ class F3Solver : public ISolver {
 	FrequencyRanking* pF3;
 public:
 	// 构造函数, 这个不要变动 按照F3Solver的构造函数来实现(copy一下)
-	F3Solver(const TCHAR* xmlfile, DWORD parseInfo);
+	F3Solver(const TCHAR* xmlfile, DWORD parseInfo=article);
 	~F3Solver();
 
 	// 接口的声明, 这两个接口一定要实现, 主要是对要插入Info位置的初始化

@@ -28,8 +28,6 @@
 #define alltypes (article|book|incollection|inproceedings|mastersthesis|phdthesis|proceedings|www)
 #endif // !ENUMPARSEINFO
 
-
-
 class XMLParser {
 protected:
 	CComPtr<IStream> pFileStream;
@@ -55,5 +53,6 @@ protected:
 // 序列化info对象为STR类型, 写入文件操作可能需要自己实现一个wrapper
 class XMLMarshal {
 public:
-	STR Marshal(Info);
+	static STR Marshal(Info);
+	static Info Unmarshal(STR, DWORD=article);
 };
