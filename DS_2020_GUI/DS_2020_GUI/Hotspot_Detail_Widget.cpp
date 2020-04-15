@@ -7,6 +7,7 @@
 #include "ui_Hotspot_Detail_Widget.h"
 #include "test.h"
 #include "Solver.h"
+#include "F3Solver.h"
 #define W ULONG64
 Hotspot_Property_Item::Hotspot_Property_Item()
 {
