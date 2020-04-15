@@ -43,8 +43,7 @@ public:
 	~XMLParser();
 
 	// 从文件的某个position解析单个对象
-	// TODO:
-	Info ParseSingle(size_t position);
+	Info ParseSingle(LPCWSTR filename,size_t position);
 
 	// 解析一个dblp.xml文件的所有对象
 	OPRESULT ParseFile(LPCWSTR filename, ISolver *pSolver);

@@ -7,6 +7,8 @@
 int _tmain()
 {
     CalcTime timer;
-	F1Solver f1solver(L"E:\\数据结构课设\\dblp.xml\\dblp.xml", article);
+	//F1Solver f1solver(L"E:\\数据结构课设\\dblp.xml\\dblp.xml", article);
+	XMLParser a;
+	Info b=a.ParseSingle(L"C:\\Users\\Q4n\\Desktop\\ds\\sb.xml", 580);
 	return 0;
 }

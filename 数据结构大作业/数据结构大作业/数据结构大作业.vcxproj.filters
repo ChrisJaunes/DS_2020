@@ -80,8 +80,5 @@
     <ClCompile Include="F3Solver.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CliquesCounting.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

@@ -168,7 +168,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Author.cpp" />
-    <ClCompile Include="CliquesCounting.cpp" />
     <ClCompile Include="CommUtils.cpp" />
     <ClCompile Include="F1Solver.cpp" />
     <ClCompile Include="F3Solver.cpp" />

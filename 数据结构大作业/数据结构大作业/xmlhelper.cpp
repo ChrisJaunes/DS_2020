@@ -40,12 +40,79 @@ XMLParser::~XMLParser()
 {
 	delete parseInfo;
 }
-Info XMLParser::ParseSingle(size_t position)
+Info XMLParser::ParseSingle(LPCWSTR filename,size_t position)
 {
+	CComPtr<IStream> m_pFileStream;
+	CComPtr<IXmlReader> m_pReader;
+	LARGE_INTEGER pos;
+	pos.QuadPart = position;
 
-	//LARGE_INTEGER a;
-	//a.QuadPart = 0x100;
-	//pFileStream->Seek(a,STREAM_SEEK_SET, NULL);
+	SHCreateStreamOnFile(
+		filename,
+		STGM_READ,
+		&m_pFileStream);
+	m_pFileStream->Seek(pos,STREAM_SEEK_SET, NULL);
+
+	CreateXmlReader(__uuidof(IXmlReader), (void**)&m_pReader, NULL);
+	m_pReader->SetInput(m_pFileStream);
+	m_pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
+
+	HRESULT hr;
+	LPCWSTR szValue = NULL, curSection = NULL, localName = NULL;
+	XmlNodeType nodeType;
+	Info temp;
+
+	while (S_OK == (hr = m_pReader->Read(&nodeType))) {
+		if (nodeType == XmlNodeType_Element) {
+			m_pReader->GetLocalName(&localName, NULL);
+
+			// 解析类型
+			vector<STR>::iterator ret;
+			ret = std::find(parseInfo->begin(), parseInfo->end(), STR(localName));
+			if (ret == parseInfo->end()) {
+				continue;
+			}
+
+			// 看成是进入一个section
+			curSection = localName;
+			temp.SetClsid(STR(curSection));
+
+			if (S_OK == m_pReader->MoveToFirstAttribute()) {
+				m_pReader->GetLocalName(&localName, NULL);
+				m_pReader->GetValue(&szValue, NULL);
+				temp.AddProperty(STR(localName), STR(szValue));
+				while (S_OK == (hr = m_pReader->MoveToNextAttribute())) {
+					m_pReader->GetLocalName(&localName, NULL);
+					m_pReader->GetValue(&szValue, NULL);
+					temp.AddProperty(STR(localName), STR(szValue));
+				}
+				m_pReader->MoveToElement();
+			}
+
+			while (lstrcmpW(localName, curSection) || nodeType != XmlNodeType_EndElement) {
+				m_pReader->Read(&nodeType);
+				m_pReader->GetLocalName(&localName, NULL);
+				if (nodeType == XmlNodeType_Element) {
+					if (!lstrcmpW(localName, curSection))
+						break;
+					while (nodeType != XmlNodeType_Text) {
+						m_pReader->Read(&nodeType);
+					}
+					m_pReader->GetValue(&szValue, NULL);
+					temp.AddProperty(STR(localName), STR(szValue));
+					while (nodeType != XmlNodeType_EndElement) {
+						m_pReader->Read(&nodeType);
+					}
+				}
+			}
+
+			// 假如没有title的, 将会被忽略
+			if (temp.GetProperty(L"title").size()) {
+				return temp;
+			}
+		}
+	}
+
 
 	return Info();
 }
