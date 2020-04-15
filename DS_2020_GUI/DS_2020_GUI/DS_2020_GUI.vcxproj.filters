@@ -90,9 +90,6 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\CommUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -126,16 +123,13 @@
     <ClCompile Include="Help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BPlusTree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\F1Solver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\F3Solver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BPIO.cpp">
+    <ClCompile Include="DS_test\test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,9 +141,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\CommUtils.h">
@@ -167,16 +158,13 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BPlusTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\F1Solver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\F3Solver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BPIO.h">
+    <ClInclude Include="DS_test\test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

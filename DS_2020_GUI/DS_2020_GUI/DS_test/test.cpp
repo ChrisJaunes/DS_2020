@@ -1,6 +1,8 @@
 #include "test.h"
+#ifdef TEST_DEBUG
 #include "qdebug.h"
 namespace FST {
+
 	Author  *AUTHORS[AUTHORSN];
 	Info    *INFO[INFON];
 	bstr_t getStr(char ch) {
@@ -62,4 +64,8 @@ namespace FST {
 			}
 		}
 	}
+	void tmain() {
+
+	}
 }
+#endif

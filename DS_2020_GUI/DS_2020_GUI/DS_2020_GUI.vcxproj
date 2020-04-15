@@ -41,11 +41,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
-    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
-    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
@@ -113,8 +113,7 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp" />
     <ClCompile Include="Author_Top_Widget.cpp" />
-    <ClCompile Include="BPIO.cpp" />
-    <ClCompile Include="BPlusTree.cpp" />
+    <ClCompile Include="DS_test\test.cpp" />
     <ClCompile Include="Help.cpp" />
     <ClCompile Include="Info_Detail_Widget.cpp" />
     <ClCompile Include="Author_Detail_Widget.cpp" />
@@ -122,7 +121,6 @@
     <ClCompile Include="Info_Title_Widget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
-    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Info_Detail_Widget.h" />
@@ -137,10 +135,8 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Info.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Solver.h" />
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\test.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
-    <ClInclude Include="BPIO.h" />
-    <ClInclude Include="BPlusTree.h" />
+    <ClInclude Include="DS_test\test.h" />
     <QtMoc Include="Help.h" />
     <QtMoc Include="Info_Title_Widget.h" />
     <QtMoc Include="Author_Top_Widget.h" />
