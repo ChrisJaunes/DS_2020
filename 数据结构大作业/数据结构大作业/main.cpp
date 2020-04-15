@@ -10,5 +10,7 @@ int _tmain()
 	//F1Solver f1solver(L"E:\\数据结构课设\\dblp.xml\\dblp.xml", article);
 	XMLParser a;
 	Info b=a.ParseSingle(L"C:\\Users\\Q4n\\Desktop\\ds\\sb.xml", 580);
+	XMLMarshal c;
+	_tprintf(L"%s\n",c.Marshal(b).GetBSTR());
 	return 0;
 }

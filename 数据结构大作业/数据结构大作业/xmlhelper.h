@@ -51,3 +51,9 @@ protected:
 	OPRESULT OpenFile(LPCWSTR);
 	OPRESULT ParseAll(ISolver *);
 };
+
+// 序列化info对象为STR类型, 写入文件操作可能需要自己实现一个wrapper
+class XMLMarshal {
+public:
+	STR Marshal(Info);
+};

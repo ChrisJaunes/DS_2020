@@ -47,17 +47,20 @@ Info XMLParser::ParseSingle(LPCWSTR filename,size_t position)
 	LARGE_INTEGER pos;
 	pos.QuadPart = position;
 
-	SHCreateStreamOnFile(
+	HRESULT hr=SHCreateStreamOnFile(
 		filename,
 		STGM_READ,
 		&m_pFileStream);
+	if (FAILED(hr)) {
+		throw L"Invalid filename";
+		return Info();
+	}
 	m_pFileStream->Seek(pos,STREAM_SEEK_SET, NULL);
 
 	CreateXmlReader(__uuidof(IXmlReader), (void**)&m_pReader, NULL);
 	m_pReader->SetInput(m_pFileStream);
 	m_pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
 
-	HRESULT hr;
 	LPCWSTR szValue = NULL, curSection = NULL, localName = NULL;
 	XmlNodeType nodeType;
 	Info temp;
@@ -128,12 +131,13 @@ OPRESULT XMLParser::ParseFile(LPCWSTR filename, ISolver* pSolver)
 */
 OPRESULT XMLParser::OpenFile(LPCWSTR filename)
 {
+	OPRESULT hr;
 	pFileStream = NULL;
-	SHCreateStreamOnFile(
+	hr = SHCreateStreamOnFile(
 		filename,
 		STGM_READ,
 		&pFileStream);
-
+	if (FAILED(hr))return hr;
 	CreateXmlReader(__uuidof(IXmlReader), (void**)&pReader, NULL);
 	pReader->SetInput(pFileStream);
 	pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
@@ -205,4 +209,42 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 		}
 	}
 	return 0;
+}
+
+STR XMLMarshal::Marshal(Info inobj)
+{
+	CComPtr<IStream> pStream;
+	CComPtr<IXmlWriter> pWriter;
+	::CreateXmlWriter(__uuidof(IXmlWriter),
+		reinterpret_cast<void**>(&pWriter),
+		0);
+	::CreateStreamOnHGlobal(0, TRUE, &pStream);
+	pWriter->SetOutput(pStream);
+	//pWriter->SetProperty(XmlWriterProperty_Indent, TRUE);
+
+	STR clsid = inobj.GetClsid();
+	pWriter->WriteStartElement(0, clsid, 0);
+	std::map<STR, std::vector<STR>> props = inobj.GetProperties();
+	for (auto i : props) {
+		for (auto j : i.second) {
+			pWriter->WriteStartElement(0, i.first, 0);
+			pWriter->WriteString(j);
+			pWriter->WriteEndElement();
+		}
+	}
+	pWriter->WriteEndElement();
+	pWriter->Flush();
+	STATSTG result;
+	pStream->Stat(&result,STATFLAG_DEFAULT);
+	ULONG readret;
+	WCHAR* pv = new WCHAR[result.cbSize.QuadPart + 1]{0};
+	LARGE_INTEGER move;
+	move.QuadPart = 0;
+	pStream->Seek(move, STREAM_SEEK_SET, NULL);
+	pStream->Read(pv, result.cbSize.QuadPart, &readret);
+	wchar_t* pWchar = charToWChar((const char*)pv);
+	STR res = STR(pWchar);
+	delete pv;
+	delete pWchar;
+	return STR(res);
 }
