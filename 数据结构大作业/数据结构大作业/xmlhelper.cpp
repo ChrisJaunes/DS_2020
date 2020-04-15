@@ -138,6 +138,10 @@ OPRESULT XMLParser::OpenFile(LPCWSTR filename)
 		STGM_READ,
 		&pFileStream);
 	if (FAILED(hr))return hr;
+	LARGE_INTEGER move;
+	move.QuadPart = 0;
+	pFileStream->Seek(move, STREAM_SEEK_SET, NULL);
+
 	CreateXmlReader(__uuidof(IXmlReader), (void**)&pReader, NULL);
 	pReader->SetInput(pFileStream);
 	pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
@@ -152,16 +156,16 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 	// 初始化结构
 	psolver->InitMemory();
 
-	while (lstrcmpW(L"dblp", localName) || nodeType != XmlNodeType_Element) {
-		pReader->Read(&nodeType);
-		pReader->GetLocalName(&localName, NULL);
-	}
+	//while (lstrcmpW(L"dblp", localName) || nodeType != XmlNodeType_Element) {
+	//	pReader->Read(&nodeType);
+	//	pReader->GetLocalName(&localName, NULL);
+	//}
 
 	while (S_OK == (hr = pReader->Read(&nodeType))) {
 		if (nodeType == XmlNodeType_Element) {
 			pReader->GetLocalName(&localName, NULL);
 
-			// 解析类型
+			// 解析类型, 用这个来限定解析对象
 			vector<STR>::iterator ret;
 			ret = std::find(parseInfo->begin(), parseInfo->end(), STR(localName));
 			if (ret == parseInfo->end()) {
@@ -203,7 +207,6 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 
 			// 假如没有title的, 将会被忽略
 			if (temp.GetProperty(L"title").size()) {
-				// TODO: 使用temp
 				psolver->InsertObject(temp);
 			}
 		}

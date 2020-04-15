@@ -40,10 +40,10 @@ public:
 	XMLParser(DWORD flag);
 	~XMLParser();
 
-	// 从文件的某个position解析单个对象
+	// 从文件的某个position解析单个对象, 这个不需要根节点, 但是需要提前拿到position
 	Info ParseSingle(LPCWSTR filename,size_t position);
 
-	// 解析一个dblp.xml文件的所有对象
+	// 解析一个dblp.xml文件的所有对象, 这个文档需要有一个根节点
 	OPRESULT ParseFile(LPCWSTR filename, ISolver *pSolver);
 protected:
 	OPRESULT OpenFile(LPCWSTR);
@@ -51,6 +51,15 @@ protected:
 };
 
 // 序列化info对象为STR类型, 写入文件操作可能需要自己实现一个wrapper
+// 这个不受xml文档定义限制, 不一定必须要一个根节点
+/*
+	XMLParser a;
+	Info b=a.ParseSingle(L"C:\\Users\\Q4n\\Desktop\\ds\\sb.xml", 580);
+	STR t1 = XMLMarshal::Marshal(b);
+	wchar_t* tmp= t1.GetBSTR();
+	_tprintf(L"%s\n",tmp);
+	Info d = XMLMarshal::Unmarshal(t1);
+*/
 class XMLMarshal {
 public:
 	static STR Marshal(Info);
