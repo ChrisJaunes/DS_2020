@@ -1,6 +1,9 @@
 #include "test.h"
 #ifdef TEST_DEBUG
 #include "qdebug.h"
+#include "BPIO.h"
+#include "BPlusTree.h"
+
 namespace FST {
 
 	Author  *AUTHORS[AUTHORSN];
@@ -64,8 +67,25 @@ namespace FST {
 			}
 		}
 	}
-	void tmain() {
+	void test_BPIO() {
+		key_t buf;
+		FILE* in, * out;
+		int sz;
 
+		out = _wfopen(L"DS_test/IO1.txt", L"wb");
+		wchar_t a[100] = L"作为中文测试,This_is_English,{!@#$%^&*()<>?|[123456789]}";
+		sz = sizeof(a);
+		BPIO::db_write(out, 0, a, sizeof(a), 1);
+
+		in = _wfopen(L"DS_test/IO1.txt", L"rb");
+		wchar_t b[100];
+		sz = sizeof(b);
+		BPIO::db_read(out, 0, &buf, sizeof(buf), 1);
+		
+		assert(wcscmp(a, b) == 0);
+	}
+	void tmain() {
+		test_BPIO();
 	}
 }
 #endif

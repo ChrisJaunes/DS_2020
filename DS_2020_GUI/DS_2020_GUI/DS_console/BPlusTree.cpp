@@ -66,14 +66,14 @@ BPlusTreeNode* BPlusTree::node_fetch(off_t offset) {
     }
 
     BPlusTreeNode* node = cache_refer();
-    int len = BPIO::db_read(index_fd, offset, node, BPT_BLOCK_SIZE);
+    int len = BPIO::db_read(index_fd, offset, node, sizeof(node), 1);
     assert(len == BPT_BLOCK_SIZE);
     return node;
 }
 
 void BPlusTree::node_flush_file(BPlusTreeNode* node) {
     if (node != NULL) {
-        int len = BPIO::db_write(index_fd, node->self, node, BPT_BLOCK_SIZE);
+        int len = BPIO::db_write(index_fd, node->self, node, sizeof(node), 1);
         assert(len == BPT_BLOCK_SIZE);
         cache_defer(node);
     }
@@ -433,7 +433,7 @@ off_t BPlusTree::insert_leaf_value(off_t next_off, value_t* value) {
     }
     return INVALID_OFFSET;
     */
-    return BPIO::db_write(data_fd, data_fdsize, value, wcslen(value));
+    return BPIO::db_write(data_fd, data_fdsize, value, sizeof(value), wcslen(value));
 }
 
 int BPlusTree::insert(key_t key, value_t* value) {

@@ -28,6 +28,24 @@
       <Extensions>ts</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="Header Files\DS_console">
+      <UniqueIdentifier>{201dcfa5-e5b5-4d02-9264-1f3e1edbf7b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DS_test">
+      <UniqueIdentifier>{02c8a5af-bfce-43ee-893f-08db545f3451}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DS_console">
+      <UniqueIdentifier>{a257d31c-3c04-49b7-b7f5-519bb737a84b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DS_test">
+      <UniqueIdentifier>{ff8b8d49-ff31-4430-aa47-d11c347b1453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DS_gui">
+      <UniqueIdentifier>{07cee0ce-c818-488c-aedf-0d3525d0fba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DS_gui">
+      <UniqueIdentifier>{5123c199-9448-42cf-b6ed-da0fb50f0485}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="DS_2020_GUI.qrc">
@@ -130,7 +148,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DS_test\test.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\DS_test</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_console\BPIO.cpp">
+      <Filter>Source Files\DS_console</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_console\BPlusTree.cpp">
+      <Filter>Source Files\DS_console</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +189,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DS_test\test.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\DS_test</Filter>
+    </ClInclude>
+    <ClInclude Include="DS_console\BPIO.h">
+      <Filter>Header Files\DS_console</Filter>
+    </ClInclude>
+    <ClInclude Include="DS_console\BPlusTree.h">
+      <Filter>Header Files\DS_console</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

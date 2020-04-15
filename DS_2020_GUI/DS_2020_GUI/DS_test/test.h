@@ -19,6 +19,7 @@ namespace FST {
 	extern Info   *INFO[INFON];
 	bstr_t getStr(char ch);
 	void create_FST();
+	void tmain();
 }
 #endif
 

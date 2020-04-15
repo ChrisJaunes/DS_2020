@@ -1,11 +1,11 @@
 #include "BPIO.h"
 
-int BPIO::db_read(FILE*, off_t, void*, size_t)
-{
-	return 0;
+int BPIO::db_read(FILE* file, off_t off, void* buf, size_t size, size_t count) {
+	fseek(file, off, SEEK_SET);
+	return fread(buf, size, count, file);
 }
 
-int BPIO::db_write(FILE*, off_t, const void*, size_t)
-{
-	return 0;
+int BPIO::db_write(FILE* file, off_t off, const void* buf, size_t size, size_t count) {
+	fseek(file, off, SEEK_SET);
+	return fwrite(buf, size, count, file);
 }

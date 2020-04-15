@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[])
 {
-	FST::create_FST();
+	FST::tmain();
 	//FST::test();
 	/*QApplication a(argc, argv);
 	MainWindow w;
