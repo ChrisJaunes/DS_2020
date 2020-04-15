@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AuthorMarshal.h" />
     <ClInclude Include="BPTrees.h" />
     <ClInclude Include="CommUtils.h" />
     <ClInclude Include="error.h" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Author.cpp" />
+    <ClCompile Include="AuthorMarshal.cpp" />
     <ClCompile Include="CommUtils.cpp" />
     <ClCompile Include="F1Solver.cpp" />
     <ClCompile Include="F3Solver.cpp" />

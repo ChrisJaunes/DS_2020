@@ -49,6 +49,11 @@ std::pair<OPRESULT, STR > Author::GetName() const {
 	return std::make_pair(true, name);
 }
 
+void Author::SetName(STR _name)
+{
+	name = _name;
+}
+
 OPRESULT Author::AddArticle(STR& _name, std::vector<STR>& _author)
 {
 	if (articles->count(_name)) {

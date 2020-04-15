@@ -31,6 +31,7 @@ public:
 	~Author();
 
 	std::pair<OPRESULT, STR > GetName() const ;
+	void SetName(STR);
 
 	OPRESULT AddArticle(STR&, std::vector<STR>&);
 	std::pair<OPRESULT, std::vector<STR> > GetTitleOfArticles();
