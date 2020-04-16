@@ -92,18 +92,6 @@
     <QtRcc Include="DS_2020_GUI.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="Author_Top_Widget.ui" />
-    <QtUic Include="Help.ui" />
-    <QtUic Include="Info_Detail_Widget.ui" />
-    <QtUic Include="Author_Detail_Widget.ui" />
-    <QtUic Include="Hotspot_Detail_Widget.ui" />
-    <QtUic Include="Info_Title_Widget.ui" />
-    <QtUic Include="MainWindow.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="MainWindow.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\CommUtils.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\F1Solver.cpp" />
@@ -112,20 +100,17 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Info.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp" />
-    <ClCompile Include="Author_Top_Widget.cpp" />
     <ClCompile Include="DS_console\BPIO.cpp" />
     <ClCompile Include="DS_console\BPlusTree.cpp" />
+    <ClCompile Include="DS_gui\Author_Detail_Widget.cpp" />
+    <ClCompile Include="DS_gui\Author_Top_Widget.cpp" />
+    <ClCompile Include="DS_gui\Help.cpp" />
+    <ClCompile Include="DS_gui\Hotspot_Detail_Widget.cpp" />
+    <ClCompile Include="DS_gui\Info_Detail_Widget.cpp" />
+    <ClCompile Include="DS_gui\Info_Title_Widget.cpp" />
+    <ClCompile Include="DS_gui\MainWindow.cpp" />
     <ClCompile Include="DS_test\test.cpp" />
-    <ClCompile Include="Help.cpp" />
-    <ClCompile Include="Info_Detail_Widget.cpp" />
-    <ClCompile Include="Author_Detail_Widget.cpp" />
-    <ClCompile Include="Hotspot_Detail_Widget.cpp" />
-    <ClCompile Include="Info_Title_Widget.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="Info_Detail_Widget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Author.h" />
@@ -135,20 +120,30 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\F3Solver.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Info.h" />
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Solver.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
     <ClInclude Include="DS_console\BPIO.h" />
     <ClInclude Include="DS_console\BPlusTree.h" />
+    <QtMoc Include="DS_gui\MainWindow.h" />
+    <QtMoc Include="DS_gui\Info_Detail_Widget.h" />
+    <QtMoc Include="DS_gui\Author_Detail_Widget.h" />
+    <QtMoc Include="DS_gui\Author_Top_Widget.h" />
+    <QtMoc Include="DS_gui\Help.h" />
+    <QtMoc Include="DS_gui\Hotspot_Detail_Widget.h" />
+    <QtMoc Include="DS_gui\Info_Title_Widget.h" />
     <ClInclude Include="DS_test\test.h" />
-    <QtMoc Include="Help.h" />
-    <QtMoc Include="Info_Title_Widget.h" />
-    <QtMoc Include="Author_Top_Widget.h" />
-    <QtMoc Include="Hotspot_Detail_Widget.h" />
-    <QtMoc Include="Author_Detail_Widget.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ds_2020_gui_zh.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="DS_gui\Author_Detail_Widget.ui" />
+    <QtUic Include="DS_gui\Author_Top_Widget.ui" />
+    <QtUic Include="DS_gui\Help.ui" />
+    <QtUic Include="DS_gui\Hotspot_Detail_Widget.ui" />
+    <QtUic Include="DS_gui\Info_Detail_Widget.ui" />
+    <QtUic Include="DS_gui\Info_Title_Widget.ui" />
+    <QtUic Include="DS_gui\MainWindow.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

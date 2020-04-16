@@ -1,6 +1,6 @@
 #pragma once
 struct key_t {
-    wchar_t a[128];
+    wchar_t a[255];
     bool operator != (const key_t& x) const {
         return wcscmp(&a[0], &(x.a[0])) != 0;
     }
@@ -32,6 +32,8 @@ const int BPT_MAX_ORDER = 10;
  * offs[]: off数组
  * isleaf(): 判断是否是叶子节点
  * binary_search_by_key()： 用于处理key上的二分
+ * fromFileBlock(): 用于从文件块中读取数据并且借助读取的数据生成一个BPlusTreeNode节点
+ * toFileBlock(): 用于向文件块中写入数据并且借助自身的节点信息写入数据
  */
 
 struct BPlusTreeNode {
@@ -45,6 +47,9 @@ struct BPlusTreeNode {
     off_t offs[BPT_MAX_ENTRIES];
     bool is_leaf() const;
     int binary_search_by_key(key_t);
+
+    int fromFileBlock(FILE* file, off_t file_off, size_t _BLOCK_SIZE);
+    int toFileBlock(FILE* file, off_t file_off, size_t _BLOCK_SIZE);
 };
 
 /*

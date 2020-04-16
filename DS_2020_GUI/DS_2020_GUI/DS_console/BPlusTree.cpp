@@ -20,6 +20,38 @@ int BPlusTreeNode::binary_search_by_key(key_t target) {
     return pos;
 }
 
+int BPlusTreeNode::fromFileBlock(FILE* file, off_t file_off, size_t _BLOCK_SIZE) {
+    void* buf = malloc(_BLOCK_SIZE);
+    int res = BPIO::db_read(file, file_off, buf, _BLOCK_SIZE, 1);
+    size_t off = 0;
+    memmove(&type, (char*)buf + off, sizeof(type)); off += sizeof(type);
+    memmove(&self, (char*)buf + off, sizeof(self)); off += sizeof(self);
+    memmove(&parent, (char*)buf + off, sizeof(parent)); off += sizeof(parent);
+    memmove(&prev, (char*)buf + off, sizeof(prev)); off += sizeof(prev);
+    memmove(&next, (char*)buf + off, sizeof(next)); off += sizeof(next);
+    memmove(&ch_cnt, (char*)buf + off, sizeof(ch_cnt)); off += sizeof(ch_cnt);
+    memmove(&keys, (char*)buf + off, sizeof(keys[0]) * BPT_MAX_ENTRIES); off += sizeof(keys[0]) * BPT_MAX_ENTRIES;
+    memmove(&offs, (char*)buf + off, sizeof(offs[0]) * BPT_MAX_ENTRIES); off += sizeof(offs[0]) * BPT_MAX_ENTRIES;
+    free(buf);
+    return res;
+}
+
+int BPlusTreeNode::toFileBlock(FILE* file, off_t file_off, size_t _BLOCK_SIZE) {
+    void* buf = malloc(_BLOCK_SIZE);
+    size_t off = 0;
+    memmove((char*)buf + off, &type, sizeof(type)); off += sizeof(type);
+    memmove((char*)buf + off, &self, sizeof(self)); off += sizeof(self);
+    memmove((char*)buf + off, &parent, sizeof(parent)); off += sizeof(parent);
+    memmove((char*)buf + off, &prev, sizeof(prev)); off += sizeof(prev);
+    memmove((char*)buf + off, &next, sizeof(next)); off += sizeof(next);
+    memmove((char*)buf + off, &ch_cnt, sizeof(ch_cnt)); off += sizeof(ch_cnt);
+    memmove((char*)buf + off, &keys, sizeof(keys[0]) * BPT_MAX_ENTRIES); off += sizeof(keys[0]) * BPT_MAX_ENTRIES;
+    memmove((char*)buf + off, &offs, sizeof(offs[0]) * BPT_MAX_ENTRIES); off += sizeof(offs[0]) * BPT_MAX_ENTRIES;
+    int res = BPIO::db_write(file, file_off,  buf, _BLOCK_SIZE, 1);
+    free(buf);
+    return res;
+}
+
 inline BPlusTreeNode* BPlusTree::cache_refer() {
     for (int i = 0; i < BPT_CACHE_NUM; i++) {
         if (!used[i]) {

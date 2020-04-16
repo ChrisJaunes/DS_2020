@@ -68,24 +68,81 @@ namespace FST {
 		}
 	}
 	void test_BPIO() {
-		key_t buf;
 		FILE* in, * out;
-		int sz;
 
-		out = _wfopen(L"DS_test/IO1.txt", L"wb");
-		wchar_t a[100] = L"作为中文测试,This_is_English,{!@#$%^&*()<>?|[123456789]}";
-		sz = sizeof(a);
-		BPIO::db_write(out, 0, a, sizeof(a), 1);
-
-		in = _wfopen(L"DS_test/IO1.txt", L"rb");
-		wchar_t b[100];
-		sz = sizeof(b);
-		BPIO::db_read(out, 0, &buf, sizeof(buf), 1);
+		in = _wfopen(L"DS_test/IO.dstest", L"rb");
+		out = _wfopen(L"DS_test/IO.dstest", L"ab");
 		
-		assert(wcscmp(a, b) == 0);
+		int sz;wchar_t a_out[100] = L"作为中文测试,Hello World test,{!@#$%^&*()<>?|[123456789]}";
+		sz = sizeof(a_out);
+		BPIO::db_write(out, 0, a_out, sizeof(a_out), 1);
+
+		wchar_t a_in[100];
+		sz = sizeof(a_in);
+		BPIO::db_read(in, 0, a_in, sizeof(a_in), 1);
+		
+		assert(wcscmp(a_in, a_out) == 0);
+
+		key_t b_in = { L"hhh, 这是数据结构大作业的key_t类型测试, 987654321！@#￥%……&*（）" };
+		BPIO::db_write(out, 200, &b_in, sizeof(b_in), 1);
+		
+		key_t b_out;
+		BPIO::db_read(in, 200, &b_out, sizeof(b_out), 1);
+
+		assert(b_in == b_out);
+		fclose(in);
+		fclose(out);
+	}
+	bool test_BPlusTreeNode_check(BPlusTreeNode* a, BPlusTreeNode* b) {
+		assert(a->type == b->type);
+		assert(a->self == b->self);
+		assert(a->parent == b->parent);
+		assert(a->prev == b->prev);
+		assert(a->next == b->next);
+		assert(a->ch_cnt == b->ch_cnt);
+		for (int i = 0; i < BPT_MAX_ENTRIES; i++) {
+			assert(a->keys[i] == b->keys[i]);
+			assert(a->offs[i] == b->offs[i]);
+		}
+		return true;
+	}
+	void test_BPlusTreeNode() {
+		void* buf = malloc(6000);
+		free(buf);
+		FILE* in, * out;
+		in = _wfopen(L"DS_test/IO.dstest", L"rb");
+		out = _wfopen(L"DS_test/IO.dstest", L"ab");
+		fseek(out, 0, SEEK_END);
+		int off = ftell(out);
+
+		BPlusTreeNode a_out;
+		a_out.type = 1;
+		a_out.self = off_t(off);
+		a_out.parent = off_t(0);
+		a_out.prev = off_t(0);
+		a_out.next = off_t(0);
+		a_out.ch_cnt = 5;
+		a_out.keys[0] = key_t{ L"ASCII test" };
+		a_out.keys[1] = key_t{ L"中文测试" };
+		a_out.keys[2] = key_t{ L"1234567890" };
+		a_out.keys[3] = key_t{ L"!@#$%^&*()_+-=~`|[]{}:;\"'<>,.?'" };
+ 		a_out.offs[0] = 1;
+		a_out.offs[1] = 10;
+		a_out.offs[2] = 100;
+		a_out.offs[3] = 1000;
+		a_out.offs[4] = 10000;
+		a_out.offs[5] = 10000000000;
+		a_out.offs[6] = 8589934592;
+
+		a_out.toFileBlock(out, off, sizeof(a_out));
+		BPlusTreeNode a_in;
+		a_in.fromFileBlock(in, off, sizeof(a_in));
+		assert(test_BPlusTreeNode_check(&a_in, &a_out));
 	}
 	void tmain() {
+		create_FST();
 		test_BPIO();
+		test_BPlusTreeNode();
 	}
 }
 #endif

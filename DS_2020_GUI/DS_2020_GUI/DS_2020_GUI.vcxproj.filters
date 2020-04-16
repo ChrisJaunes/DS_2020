@@ -53,56 +53,30 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="MainWindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="Info_Detail_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="Author_Detail_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="Hotspot_Detail_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="Author_Top_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="Info_Title_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="Help.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="MainWindow.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="DS_gui\MainWindow.h">
+      <Filter>Header Files\DS_gui</Filter>
     </QtMoc>
-    <QtMoc Include="Info_Detail_Widget.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="DS_gui\Info_Detail_Widget.h">
+      <Filter>Header Files\DS_gui</Filter>
     </QtMoc>
-    <QtMoc Include="Author_Detail_Widget.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="DS_gui\Author_Detail_Widget.h">
+      <Filter>Header Files\DS_gui</Filter>
     </QtMoc>
-    <QtMoc Include="Hotspot_Detail_Widget.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="DS_gui\Author_Top_Widget.h">
+      <Filter>Header Files\DS_gui</Filter>
     </QtMoc>
-    <QtMoc Include="Author_Top_Widget.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="DS_gui\Help.h">
+      <Filter>Header Files\DS_gui</Filter>
     </QtMoc>
-    <QtMoc Include="Info_Title_Widget.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="DS_gui\Hotspot_Detail_Widget.h">
+      <Filter>Header Files\DS_gui</Filter>
     </QtMoc>
-    <QtMoc Include="Help.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="DS_gui\Info_Title_Widget.h">
+      <Filter>Header Files\DS_gui</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp">
@@ -123,24 +97,6 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Info_Detail_Widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Author_Detail_Widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Hotspot_Detail_Widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Author_Top_Widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Info_Title_Widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Help.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\F1Solver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -156,15 +112,33 @@
     <ClCompile Include="DS_console\BPlusTree.cpp">
       <Filter>Source Files\DS_console</Filter>
     </ClCompile>
+    <ClCompile Include="DS_gui\MainWindow.cpp">
+      <Filter>Source Files\DS_gui</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_gui\Info_Detail_Widget.cpp">
+      <Filter>Source Files\DS_gui</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_gui\Author_Detail_Widget.cpp">
+      <Filter>Source Files\DS_gui</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_gui\Author_Top_Widget.cpp">
+      <Filter>Source Files\DS_gui</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_gui\Help.cpp">
+      <Filter>Source Files\DS_gui</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_gui\Hotspot_Detail_Widget.cpp">
+      <Filter>Source Files\DS_gui</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_gui\Info_Title_Widget.cpp">
+      <Filter>Source Files\DS_gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Author.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\error.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\CommUtils.h">
@@ -202,5 +176,28 @@
     <None Include="ds_2020_gui_zh.ts">
       <Filter>Translation Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="DS_gui\Author_Detail_Widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DS_gui\Author_Top_Widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DS_gui\Help.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DS_gui\Hotspot_Detail_Widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DS_gui\Info_Detail_Widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DS_gui\Info_Title_Widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DS_gui\MainWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>
