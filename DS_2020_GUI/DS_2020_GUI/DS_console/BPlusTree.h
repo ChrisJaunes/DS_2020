@@ -98,7 +98,7 @@ struct BPlusTree {
     BPlusTreeNode* new_internal_node();
     BPlusTreeNode* node_fetch(chd_t chdset);
 
-    int search_by_key(key_t key, wchar_t* value);
+    int search_by_key(key_t key, value_t*& value);
     
     //²åÈë²Ù×÷
     chd_t node_append(BPlusTreeNode* node);

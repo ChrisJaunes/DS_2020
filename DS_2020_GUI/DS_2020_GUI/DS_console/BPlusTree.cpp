@@ -148,7 +148,7 @@ void BPlusTree::node_flush_parent(chd_t node, BPlusTreeNode* parent) {
     node_flush_file(child);
 }
 
-int BPlusTree::search_by_key(key_t key, wchar_t* value) {
+int BPlusTree::search_by_key(key_t key, value_t*& value) {
     int ret = 0;
     BPlusTreeNode* node = node_fetch(root);
     while (node != NULL) {
