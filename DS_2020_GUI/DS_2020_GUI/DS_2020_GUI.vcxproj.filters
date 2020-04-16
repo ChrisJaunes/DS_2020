@@ -106,9 +106,6 @@
     <ClCompile Include="DS_test\test.cpp">
       <Filter>Source Files\DS_test</Filter>
     </ClCompile>
-    <ClCompile Include="DS_console\BPIO.cpp">
-      <Filter>Source Files\DS_console</Filter>
-    </ClCompile>
     <ClCompile Include="DS_console\BPlusTree.cpp">
       <Filter>Source Files\DS_console</Filter>
     </ClCompile>
@@ -132,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="DS_gui\Info_Title_Widget.cpp">
       <Filter>Source Files\DS_gui</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_console\BPlusTree_Utils.cpp">
+      <Filter>Source Files\DS_console</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,14 +165,14 @@
     <ClInclude Include="DS_test\test.h">
       <Filter>Header Files\DS_test</Filter>
     </ClInclude>
-    <ClInclude Include="DS_console\BPIO.h">
-      <Filter>Header Files\DS_console</Filter>
-    </ClInclude>
     <ClInclude Include="DS_console\BPlusTree.h">
       <Filter>Header Files\DS_console</Filter>
     </ClInclude>
     <ClInclude Include="config.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DS_console\BPlusTreeUtils.h">
+      <Filter>Header Files\DS_console</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

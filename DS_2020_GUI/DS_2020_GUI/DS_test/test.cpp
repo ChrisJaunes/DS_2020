@@ -1,8 +1,8 @@
 #include "test.h"
 #ifdef TEST_DEBUG
 #include "qdebug.h"
-#include "BPIO.h"
 #include "BPlusTree.h"
+#include "BPlusTreeUtils.h"
 
 namespace FST {
 
@@ -68,30 +68,31 @@ namespace FST {
 		}
 	}
 	void test_BPIO() {
-		FILE* in, * out;
+		FILE* file;
 
-		in = _wfopen(L"DS_test/IO.dstest", L"rb");
-		out = _wfopen(L"DS_test/IO.dstest", L"ab");
+		file = _wfopen(L"DS_test/IO.dstest", L"rb+");
 		
 		int sz;wchar_t a_out[100] = L"作为中文测试,Hello World test,{!@#$%^&*()<>?|[123456789]}";
 		sz = sizeof(a_out);
-		BPIO::db_write(out, 0, a_out, sizeof(a_out), 1);
+		BPlusTreeUtils::db_write(file, 0, a_out, sizeof(a_out), 1);
 
 		wchar_t a_in[100];
 		sz = sizeof(a_in);
-		BPIO::db_read(in, 0, a_in, sizeof(a_in), 1);
+		BPlusTreeUtils::db_read(file, 0, a_in, sizeof(a_in), 1);
 		
 		assert(wcscmp(a_in, a_out) == 0);
 
 		key_t b_in = { L"hhh, 这是数据结构大作业的key_t类型测试, 987654321！@#￥%……&*（）" };
-		BPIO::db_write(out, 200, &b_in, sizeof(b_in), 1);
+		BPlusTreeUtils::db_write(file, 200, &b_in, sizeof(b_in), 1);
 		
 		key_t b_out;
-		BPIO::db_read(in, 200, &b_out, sizeof(b_out), 1);
+		BPlusTreeUtils::db_read(file, 200, &b_out, sizeof(b_out), 1);
 
 		assert(b_in == b_out);
-		fclose(in);
-		fclose(out);
+
+		char c[100];
+		memset(c, 'A', sizeof(c));
+		BPlusTreeUtils::db_write(file, 50, c, sizeof(c), 1);
 	}
 	bool test_BPlusTreeNode_check(BPlusTreeNode* a, BPlusTreeNode* b) {
 		assert(a->type == b->type);
@@ -109,11 +110,10 @@ namespace FST {
 	void test_BPlusTreeNode() {
 		void* buf = malloc(6000);
 		free(buf);
-		FILE* in, * out;
-		in = _wfopen(L"DS_test/IO.dstest", L"rb");
-		out = _wfopen(L"DS_test/IO.dstest", L"ab");
-		fseek(out, 0, SEEK_END);
-		int off = ftell(out);
+		FILE* file;
+		file = _wfopen(L"DS_test/IO.dstest", L"rb+");
+		fseek(file, 0, SEEK_END);
+		int off = ftell(file);
 
 		BPlusTreeNode a_out;
 		a_out.type = 1;
@@ -133,17 +133,36 @@ namespace FST {
 		a_out.chds[4] = 10000;
 		a_out.chds[5] = 10000000000;
 		a_out.chds[6] = 8589934592;
-
-		a_out.toFileBlock(out, off, sizeof(a_out));
+		int sz = sizeof(a_out);
+		a_out.toFileBlock(file, off, sizeof(a_out));
 		BPlusTreeNode a_in;
-		a_in.fromFileBlock(in, off, sizeof(a_in));
+		a_in.fromFileBlock(file, off, sizeof(a_in));
 		assert(test_BPlusTreeNode_check(&a_in, &a_out));
-		fclose(in);
-		fclose(out);
+		fclose(file);
+
+		
 	}
 	void test_BPlusTree() {
-		//BPlusTree tmp(L"test", 0);
+		BPlusTree tmp(L"test", 0);
+		tmp.insert(key_t{ L"hello, 这是一个测试" }, L"123456");
+		tmp.insert(key_t{ L"1. 中文测试" }, L"插入的值是中文");
+		tmp.insert(key_t{ L"2. ASCII" }, L"ASCII is Ok.");
+		tmp.insert(key_t{ L"3. symbol" }, L"~!@#$%^&*()_+`-={}[]|\\:;<>?,.");
+		tmp.insert(key_t{ L"4. number" }, L"1234567890");
+		tmp.insert(key_t{ L"5. OK" }, L"OK");
 
+		wchar_t *value = NULL;
+		tmp.search(key_t{ L"hello, 这是一个测试" }, value);
+		value = NULL;
+		tmp.search(key_t{ L"1. 中文测试" }, value);
+		value = NULL;
+		tmp.search(key_t{ L"2. ASCII" }, value);
+		value = NULL;
+		tmp.search(key_t{ L"3. symbol" }, value);
+		value = NULL;
+		tmp.search(key_t{ L"4. number" }, value);
+		value = NULL;
+		tmp.search(key_t{ L"5. OK" }, value);
 	}
 	void tmain() {
 		create_FST();

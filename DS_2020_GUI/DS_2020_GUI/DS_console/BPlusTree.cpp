@@ -1,16 +1,9 @@
 #include "pch.h"
 #include "config.h"
-#include "BPIO.h"
 #include "BPlusTree.h"
+#include "BPlusTreeUtils.h"
 
-const chd_t INVALID_OFFSET = 0xffffffff;
-
-enum {
-    BPLUSTREE_INTERNAL,
-    BPLUSTREE_LEAF = 1,
-};
-
-bool BPlusTreeNode::is_leaf() const{
+bool BPlusTreeNode::is_leaf() const {
     return type == BPLUSTREE_LEAF;
 }
 
@@ -21,11 +14,11 @@ int BPlusTreeNode::binary_search_by_key(key_t target) {
     return pos;
 }
 
-int BPlusTreeNode::fromFileBlock(FILE* file, chd_t file_off, size_t _BLOCK_SIZE) {
-    void* buf = malloc(_BLOCK_SIZE);
-    int res = BPIO::db_read(file, file_off, buf, _BLOCK_SIZE, 1);
+int BPlusTreeNode::fromFileBlock(FILE* file, chd_t file_off, size_t _block_size) {
+    void* buf = malloc(_block_size);
+    int res = BPlusTreeUtils::db_read(file, file_off, buf, _block_size, 1);
     size_t off = 0;
-    memmove(&type, (char*)buf + off, sizeof(type)); off += sizeof(type);
+    memmove(&type, (void*)((char*)buf + off), sizeof(type)); off += sizeof(type);
     memmove(&self, (char*)buf + off, sizeof(self)); off += sizeof(self);
     memmove(&parent, (char*)buf + off, sizeof(parent)); off += sizeof(parent);
     memmove(&prev, (char*)buf + off, sizeof(prev)); off += sizeof(prev);
@@ -37,10 +30,10 @@ int BPlusTreeNode::fromFileBlock(FILE* file, chd_t file_off, size_t _BLOCK_SIZE)
     return res;
 }
 
-int BPlusTreeNode::toFileBlock(FILE* file, chd_t file_off, size_t _BLOCK_SIZE) {
-    void* buf = malloc(_BLOCK_SIZE);
+int BPlusTreeNode::toFileBlock(FILE* file, chd_t file_off, size_t _block_size) {
+    void* buf = malloc(_block_size);
     size_t off = 0;
-    memmove((char*)buf + off, &type, sizeof(type)); off += sizeof(type);
+    memmove((void*)((char*)buf + off), &type, sizeof(type)); off += sizeof(type);
     memmove((char*)buf + off, &self, sizeof(self)); off += sizeof(self);
     memmove((char*)buf + off, &parent, sizeof(parent)); off += sizeof(parent);
     memmove((char*)buf + off, &prev, sizeof(prev)); off += sizeof(prev);
@@ -48,38 +41,58 @@ int BPlusTreeNode::toFileBlock(FILE* file, chd_t file_off, size_t _BLOCK_SIZE) {
     memmove((char*)buf + off, &ch_cnt, sizeof(ch_cnt)); off += sizeof(ch_cnt);
     memmove((char*)buf + off, &keys, sizeof(keys[0]) * BPT_MAX_ENTRIES); off += sizeof(keys[0]) * BPT_MAX_ENTRIES;
     memmove((char*)buf + off, &chds, sizeof(chds[0]) * BPT_MAX_ENTRIES); off += sizeof(chds[0]) * BPT_MAX_ENTRIES;
-     int res = BPIO::db_write(file, file_off,  buf, _BLOCK_SIZE, 1);
+    int res = BPlusTreeUtils::db_write(file, file_off,  buf, _block_size, 1);
     free(buf);
     return res;
 }
 
-//本处应该使用文件块链表方式，buf利用不用free掉
-wchar_t* BPlusTree::get_value_by_offset(chd_t next_off) {
-    void* buf = malloc(_BLOCK_SIZE);
-    int off = next_off == INVALID_OFFSET ? data_fdsz : next_off;
+//本处应该使用文件块链表方式, 测试过程中假定sizeof(chd_t) * 2 + sizeof(value) <= _BLOCK_SIZE;
+chd_t BPlusTree::get_value_by_offset(chd_t file_off, wchar_t*& value) {
+    assert(value == NULL);
+    assert(file_off != INVALID_OFFSET);
+    void* buf = malloc(_block_size);
 
-    int res = BPIO::db_read(data_fd, off, buf, _BLOCK_SIZE, 1);
-
-    wchar_t* value = new wchar_t[wcslen((wchar_t*)buf)];
-    free(buf);
-    return value;
-}
-//本处应该使用文件块链表方式，测试过程中假定sizeof(chd_t) * 2 + sizeof(value) <= _BLOCK_SIZE;
-chd_t BPlusTree::set_value_by_offest(chd_t next_off, const value_t* value) {
-    void* buf = malloc(_BLOCK_SIZE);
-    int off = next_off == INVALID_OFFSET ? data_fdsz : next_off;
-
-    int res = BPIO::db_write(data_fd, off, buf, _BLOCK_SIZE, 1);
+    int res = BPlusTreeUtils::db_read(data_fd, file_off, buf, _block_size, 1);
+    size_t off = sizeof(file_off) * 2;
+    size_t sz = wcslen((wchar_t*)((char*)buf + off)) + 1;
+    value = new wchar_t[sz];
+    memmove(&(value[0]), (char*)buf + off, 2 * sz);
+    
     free(buf);
     return res;
-    /*int value_size = wcslen(value), write_size = 0;
-    while (write_size < value_size) {
-        if (next_off != INVALID_chdsET) {
-            node = node_fetch();
-        }
+}
+//本处应该使用文件块链表方式, 测试过程中假定sizeof(chd_t) * 2 + sizeof(value) <= _BLOCK_SIZE;
+chd_t BPlusTree::set_value_by_offest(chd_t file_off, const wchar_t*& value) {
+    void* buf = malloc(_block_size);
+    size_t off = 0;
+    while (file_off != INVALID_OFFSET) {
+        BPlusTreeUtils::db_read(data_fd, file_off, buf, _block_size, 1);
+        off = sizeof(file_off);
+        memmove(&file_off, (char*)buf + off, sizeof(file_off));
+        memmove((char*)buf + off, &empty_head, sizeof(file_off));
+        memmove(&empty_head, buf, sizeof(file_off));
     }
-    return INVALID_chdsET;
-    */
+    chd_t res = 0;
+    off = sizeof(file_off) * 2;
+    size_t sz = wcslen(value) + 1;
+    if (empty_head == INVALID_OFFSET) {
+        res = file_off = data_fdsz;
+        memmove(buf, &file_off, sizeof(file_off));
+        memmove((char*)buf + sizeof(INVALID_OFFSET), &INVALID_OFFSET, sizeof(INVALID_OFFSET));
+        memmove((char*)buf + off, &(value[0]), 2 * sz);
+        BPlusTreeUtils::db_write(data_fd, file_off, buf, _block_size, 1);
+        data_fdsz += _block_size;
+    }
+    else {
+        res = file_off = empty_head;
+        BPlusTreeUtils::db_read(data_fd, file_off, buf, _block_size, 1);
+        memmove(&empty_head,(char*)buf + sizeof(empty_head),  sizeof(empty_head));
+        memmove((char*)buf + sizeof(INVALID_OFFSET), &INVALID_OFFSET, sizeof(INVALID_OFFSET));
+        memmove((char*)buf + off, &(value[0]), 2 * sz);
+        BPlusTreeUtils::db_write(data_fd, file_off, buf, _block_size, 1);
+    }
+    free(buf);
+    return res;
 }
 
 inline BPlusTreeNode* BPlusTree::cache_refer() {
@@ -128,15 +141,15 @@ BPlusTreeNode* BPlusTree::node_fetch(chd_t chdset) {
     }
 
     BPlusTreeNode* node = cache_refer();
-    int len = BPIO::db_read(index_fd, chdset, node, sizeof(node), 1);
-    assert(len == BPT_BLOCK_SIZE);
+    int len = BPlusTreeUtils::db_read(index_fd, chdset, node, BPT_BLOCK_SIZE, 1);
+    //assert(len == BPT_BLOCK_SIZE);
     return node;
 }
 
 void BPlusTree::node_flush_file(BPlusTreeNode* node) {
     if (node != NULL) {
-        int len = BPIO::db_write(index_fd, node->self, node, sizeof(node), 1);
-        assert(len == BPT_BLOCK_SIZE);
+        int len = BPlusTreeUtils::db_write(index_fd, node->self, node, BPT_BLOCK_SIZE, 1);
+        //assert(len == BPT_BLOCK_SIZE);
         cache_defer(node);
     }
 }
@@ -148,7 +161,7 @@ void BPlusTree::node_flush_parent(chd_t node, BPlusTreeNode* parent) {
     node_flush_file(child);
 }
 
-int BPlusTree::search_by_key(key_t key, value_t*& value) {
+int BPlusTree::search(key_t key, wchar_t*& value) {
     int ret = 0;
     BPlusTreeNode* node = node_fetch(root);
     while (node != NULL) {
@@ -157,7 +170,7 @@ int BPlusTree::search_by_key(key_t key, value_t*& value) {
             if (index >= 0) {
                 ret = 1;
                 if (value) delete value;
-                value = get_value_by_offset(node->chds[index]);
+                get_value_by_offset(node->chds[index], value);
             }
             break;
         }
@@ -180,7 +193,7 @@ int BPlusTree::search_by_key(key_t key, value_t*& value) {
 
 chd_t BPlusTree::node_append(BPlusTreeNode* node) {
     node->self = index_fdsz;
-    index_fdsz += _BLOCK_SIZE;
+    index_fdsz += _block_size;
     return node->self;
 }
 
@@ -457,7 +470,7 @@ void BPlusTree::insert_leaf_simple(BPlusTreeNode* leaf, int ins_pos, key_t key, 
     leaf->ch_cnt++;
 }
 
-int BPlusTree::insert_leaf(BPlusTreeNode* leaf, key_t key, const value_t* value) {
+int BPlusTree::insert_leaf(BPlusTreeNode* leaf, key_t key, const wchar_t*& value) {
     int ins_pos = leaf->binary_search_by_key(key);
     
     if (ins_pos >= 0) {
@@ -490,7 +503,7 @@ int BPlusTree::insert_leaf(BPlusTreeNode* leaf, key_t key, const value_t* value)
     return 0;
 }
 
-int BPlusTree::insert(key_t key, const value_t* value) {
+int BPlusTree::insert(key_t key, const wchar_t* value) {
     BPlusTreeNode* node = node_fetch(root);
     while (node != NULL) {
         if (node->is_leaf()) {
@@ -522,55 +535,66 @@ int BPlusTree::insert(key_t key, const value_t* value) {
     return 0;
 }
 
-BPlusTree::BPlusTree(wchar_t* filename, int exist) {
-    int sz = wcslen(filename);
+BPlusTree::BPlusTree(const wchar_t* filename, int exist) {
+    size_t sz;
+    
+    sz = wcslen(DS_DATABASE_DIR) + wcslen(L"db/") + wcslen(filename) + wcslen(L"_index.db") + 1;
+    index_fdpath = new wchar_t[sz];
+    memset(index_fdpath, 0, sz);
+    wcscat(index_fdpath, DS_DATABASE_DIR);
+    wcscat(index_fdpath, L"db/");
+    wcscat(index_fdpath, filename);
+    wcscat(index_fdpath, L"_index.db");
 
-    index_fdpath = new wchar_t[wcslen(DS_DATABASE_DIR) + wcslen(L"db/") +  sz + wcslen(L"_index.db") + 1];
-    wcscat_s(index_fdpath, sizeof(index_fdpath), DS_DATABASE_DIR);
-    wcscat_s(index_fdpath, sizeof(index_fdpath), L"db/");
-    wcscat_s(index_fdpath, sizeof(index_fdpath), filename);
-    wcscat_s(index_fdpath, sizeof(index_fdpath), L"_index.db");
-    assert((index_fd = _wfopen(index_fdpath, L"wb+")) != NULL);
+    sz = wcslen(DS_DATABASE_DIR) + wcslen(L"db/") + wcslen(filename) + wcslen(L"_data.db") + 1;
+    data_fdpath = new wchar_t[sz];
+    memset(data_fdpath, 0, sz);
+    wcscat(data_fdpath, DS_DATABASE_DIR);
+    wcscat(data_fdpath, L"db/");
+    wcscat(data_fdpath, filename);
+    wcscat(data_fdpath, L"_data.db");
 
-    data_fdpath = new wchar_t[wcslen(DS_DATABASE_DIR) + wcslen(L"db/") + sz + wcslen(L"_data.db") + 1];
-    wcscat_s(data_fdpath, sizeof(data_fdpath), DS_DATABASE_DIR);
-    wcscat_s(data_fdpath, sizeof(data_fdpath), L"db/");
-    wcscat_s(data_fdpath, sizeof(data_fdpath), filename);
-    wcscat_s(data_fdpath, sizeof(data_fdpath), L"_data.db");
-    assert((data_fd = _wfopen(data_fdpath, L"wb+")) != NULL);
-
-    void* buf = malloc(48);
+    void* buf = malloc(BPT_ROOT_SIZE);
+    memset(buf, 0, BPT_ROOT_SIZE);
     if (exist) {
-        BPIO::db_read(index_fd, 0, buf, 48, 1);
+        assert((index_fd = _wfopen(index_fdpath, L"rb+")) != NULL);
+        assert((data_fd = _wfopen(data_fdpath, L"rb+")) != NULL);
+        BPlusTreeUtils::db_read(index_fd, 0, buf, BPT_ROOT_SIZE, 1);
 
         size_t off = 0;
-        memmove(&_BLOCK_SIZE, (char*)buf + off, sizeof(_BLOCK_SIZE)); off += sizeof(_BLOCK_SIZE);
+        memmove(&_block_size, (char*)buf + off, sizeof(_block_size)); off += sizeof(_block_size);
         memmove(&index_fdsz, (char*)buf + off, sizeof(index_fdsz)); off += sizeof(index_fdsz);
         memmove(&data_fdsz, (char*)buf + off, sizeof(data_fdsz)); off += sizeof(data_fdsz);
         memmove(&level, (char*)buf + off, sizeof(level)); off += sizeof(level);
         memmove(&root, (char*)buf + off, sizeof(root)); off += sizeof(root);
-        memmove(&leadf_head, (char*)buf + off, sizeof(leadf_head)); off += sizeof(leadf_head);
-        assert(_BLOCK_SIZE <= sizeof(BPlusTreeNode));
+        memmove(&leaf_head, (char*)buf + off, sizeof(leaf_head)); off += sizeof(leaf_head);
+        memmove(&empty_head, (char*)buf + off, sizeof(empty_head)); off += sizeof(empty_head);
+        assert(_block_size <= sizeof(BPlusTreeNode));
     }
     else {
-        _BLOCK_SIZE = BPT_BLOCK_SIZE;
-        assert(_BLOCK_SIZE <= sizeof(BPlusTreeNode));
-        index_fdsz = 48;
+        assert((index_fd = _wfopen(index_fdpath, L"wb+")) != NULL);
+        assert((data_fd = _wfopen(data_fdpath, L"wb+")) != NULL);
+
+        _block_size = BPT_BLOCK_SIZE;
+        assert(_block_size <= sizeof(BPlusTreeNode));
+        index_fdsz = BPT_ROOT_SIZE;
         data_fdsz = 0;
         level = -1;
         root = INVALID_OFFSET;
-        leadf_head = INVALID_OFFSET;
+        leaf_head = INVALID_OFFSET;
+        empty_head = INVALID_OFFSET;
         
         size_t off = 0;
-        memmove((char*)buf + off, &_BLOCK_SIZE, sizeof(_BLOCK_SIZE)); off += sizeof(_BLOCK_SIZE);
+        memmove((char*)buf + off, &_block_size, sizeof(_block_size)); off += sizeof(_block_size);
         memmove((char*)buf + off, &index_fdsz, sizeof(index_fdsz)); off += sizeof(index_fdsz);
         memmove((char*)buf + off, &data_fdsz, sizeof(data_fdsz)); off += sizeof(data_fdsz);
         memmove((char*)buf + off, &level, sizeof(level)); off += sizeof(level);
         memmove((char*)buf + off, &root, sizeof(root)); off += sizeof(root);
-        memmove((char*)buf + off, &leadf_head, sizeof(leadf_head)); off += sizeof(leadf_head);
-        BPIO::db_write(index_fd, 0, buf, 48, 1);
+        memmove((char*)buf + off, &leaf_head, sizeof(leaf_head)); off += sizeof(leaf_head);
+        memmove((char*)buf + off, &empty_head, sizeof(empty_head)); off += sizeof(empty_head);
+        BPlusTreeUtils::db_write(index_fd, 0, buf, BPT_ROOT_SIZE, 1);
     }
-    caches = malloc(_BLOCK_SIZE * BPT_CACHE_NUM);
+    caches = malloc(_block_size * BPT_CACHE_NUM);
     memset(used, 0, sizeof(used));
     free(buf);
 }
@@ -578,7 +602,7 @@ BPlusTree::BPlusTree(wchar_t* filename, int exist) {
 BPlusTree::~BPlusTree() {
     fclose(index_fd);
     fclose(data_fd);
-    delete index_fdpath;
-    delete data_fdpath;
-    delete caches;
+    delete[] index_fdpath;
+    delete[] data_fdpath;
+    delete[] caches;
 }

@@ -100,7 +100,7 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Info.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp" />
-    <ClCompile Include="DS_console\BPIO.cpp" />
+    <ClCompile Include="DS_console\BPlusTree_Utils.cpp" />
     <ClCompile Include="DS_console\BPlusTree.cpp" />
     <ClCompile Include="DS_gui\Author_Detail_Widget.cpp" />
     <ClCompile Include="DS_gui\Author_Top_Widget.cpp" />
@@ -122,7 +122,7 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Info.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Solver.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
-    <ClInclude Include="DS_console\BPIO.h" />
+    <ClInclude Include="DS_console\BPlusTreeUtils.h" />
     <ClInclude Include="DS_console\BPlusTree.h" />
     <ClInclude Include="config.h" />
     <QtMoc Include="DS_gui\MainWindow.h" />
