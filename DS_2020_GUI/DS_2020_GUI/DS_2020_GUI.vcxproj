@@ -41,11 +41,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
-    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;.;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
-    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;.;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
@@ -124,6 +124,7 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
     <ClInclude Include="DS_console\BPIO.h" />
     <ClInclude Include="DS_console\BPlusTree.h" />
+    <ClInclude Include="config.h" />
     <QtMoc Include="DS_gui\MainWindow.h" />
     <QtMoc Include="DS_gui\Info_Detail_Widget.h" />
     <QtMoc Include="DS_gui\Author_Detail_Widget.h" />

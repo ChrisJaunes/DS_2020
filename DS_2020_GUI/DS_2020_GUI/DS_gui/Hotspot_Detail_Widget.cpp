@@ -141,7 +141,7 @@ void Hotspot_Detail_Widget::initData()
     int i = 0;
     std::map < STR, std::map<STR, W> > hotspot[HOTSPOTTYPEN];
     for (int j = 0; j < HOTSPOTTYPEN; j++) {
-        hotspot[j] = F3Solver::ImportFromFile(L"database/f3/F3_" + HOTSPOTTYPE[j] + L".txt");
+        hotspot[j] = F3Solver::ImportFromFile(L"DS_database/f3/F3_" + HOTSPOTTYPE[j] + L".txt");
         types.push_back(QString(HOTSPOTTYPE[j]));
         for (auto it : hotspot[j]) i += it.second.size();
 }

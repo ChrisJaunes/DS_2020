@@ -171,6 +171,9 @@
     <ClInclude Include="DS_console\BPlusTree.h">
       <Filter>Header Files\DS_console</Filter>
     </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ds_2020_gui_zh.ts">

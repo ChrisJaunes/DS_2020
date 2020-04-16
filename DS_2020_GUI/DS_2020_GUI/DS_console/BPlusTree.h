@@ -11,14 +11,14 @@ struct key_t {
         return wcscmp(&a[0], &(x.a[0])) == 0;
     }
 };
-
-#define value_t wchar_t
+typedef size_t chd_t;
+typedef wchar_t value_t;
 //B+树的缓存区大小，手写内存管理
-
-const int BPT_CACHE_NUM = 100;
-const int BPT_MAX_CHILDRENS = 10;
+const int BPT_CACHE_NUM = 10;
 const int BPT_MAX_ENTRIES = 10;
 const int BPT_MAX_ORDER = 10;
+const int BPT_BLOCK_SIZE = 4096;
+
 
 /* by ChrisJaunes
  * 以下是B+树节点信息的注释
@@ -29,7 +29,7 @@ const int BPT_MAX_ORDER = 10;
  * next: 同级下一个节点的文件指针,链表
  * ch_cnt: 孩子的个数,根据B+树定义:内部节点有ch_cnt-1个key、cn_cnt个孩子指针; 叶子节点有ch_cnt个key、cn_cnt个数据域指针
  * keys[]：key数组
- * offs[]: off数组
+ * chds[]: 孩子数组的文件指针
  * isleaf(): 判断是否是叶子节点
  * binary_search_by_key()： 用于处理key上的二分
  * fromFileBlock(): 用于从文件块中读取数据并且借助读取的数据生成一个BPlusTreeNode节点
@@ -38,25 +38,32 @@ const int BPT_MAX_ORDER = 10;
 
 struct BPlusTreeNode {
     int type;
-    off_t self;
-    off_t parent;
-    off_t prev;
-    off_t next;
+    chd_t self;
+    chd_t parent;
+    chd_t prev;
+    chd_t next;
     int ch_cnt;
     key_t keys[BPT_MAX_ENTRIES];
-    off_t offs[BPT_MAX_ENTRIES];
+    chd_t chds[BPT_MAX_ENTRIES];
     bool is_leaf() const;
     int binary_search_by_key(key_t);
 
-    int fromFileBlock(FILE* file, off_t file_off, size_t _BLOCK_SIZE);
-    int toFileBlock(FILE* file, off_t file_off, size_t _BLOCK_SIZE);
+    int fromFileBlock(FILE* file, chd_t file_off, size_t _BLOCK_SIZE);
+    int toFileBlock(FILE* file, chd_t file_off, size_t _BLOCK_SIZE);
 };
 
 /*
  * by ChrisJaunes
  * 以下是B+树信息的注释
+ * index_fd: 节点存储文件的文件指针
+ * index_fdpath: 节点存储文件的文件路径
+ * index_fdsz: 节点存储文件的文件大小
+ * data_fd: 数据存储文件的文件指针
+ * data_fdpath: 数据存储文件的文件路径
+ * data_fdsz: 数据存储文件的文件大小
  * root: 树根的文件指针
  * level: 树高
+ * leaf_head: 叶子节点链的文件指针
  * 手动内存管理
  * BPT_BLOCK_SIZE：BPlusTreeNode块大小
  * caches: 内存管理
@@ -64,32 +71,39 @@ struct BPlusTreeNode {
  * cache_refer: 获取一块内存空间
  * cache_refer: 释放一块内存空间
  */
+
 struct BPlusTree {
-    off_t root;
-    int level;
-
     FILE* index_fd;
-    off_t index_fdsize;
+    wchar_t* index_fdpath;
+    chd_t index_fdsz;
     FILE* data_fd;
-    off_t data_fdsize;
+    wchar_t* data_fdpath;
+    chd_t data_fdsz;
+    
+    int level;
+    chd_t root;
+    chd_t leadf_head;
 
-    const int BPT_BLOCK_SIZE = sizeof(BPlusTreeNode);
-    char* caches;
+    int _BLOCK_SIZE;
+    void* caches;
     int used[BPT_CACHE_NUM];
+    //
+    wchar_t* get_value_by_offset(chd_t);
+    chd_t set_value_by_offest(chd_t, const value_t*);
+
     BPlusTreeNode* cache_refer();
     void cache_defer(BPlusTreeNode* node);
     BPlusTreeNode* new_node();
     BPlusTreeNode* new_leaf_node();
     BPlusTreeNode* new_internal_node();
-    BPlusTreeNode* node_fetch(off_t offset);
+    BPlusTreeNode* node_fetch(chd_t chdset);
 
-    
-    off_t search_by_key(key_t key);
+    int search_by_key(key_t key, wchar_t* value);
     
     //插入操作
-    off_t node_append(BPlusTreeNode* node);
+    chd_t node_append(BPlusTreeNode* node);
     void node_flush_file(BPlusTreeNode* node);
-    void node_flush_parent(off_t node, BPlusTreeNode* parent);
+    void node_flush_parent(chd_t node, BPlusTreeNode* parent);
 
     void node_add_left(BPlusTreeNode* node, BPlusTreeNode* left);
     void node_add_right(BPlusTreeNode* node, BPlusTreeNode* right);
@@ -101,12 +115,13 @@ struct BPlusTree {
     void insert_internal_simple(BPlusTreeNode* node, int ins_pos, BPlusTreeNode* lch, BPlusTreeNode* rch, key_t key);
     int insert_internal(BPlusTreeNode* node, BPlusTreeNode* l_ch, BPlusTreeNode* r_ch, key_t key);
 
-    key_t split_leaf_L(BPlusTreeNode* leaf, BPlusTreeNode* left, int insert, key_t key, off_t data);
-    key_t split_leaf_R(BPlusTreeNode* leaf, BPlusTreeNode* right, int insert, key_t key, off_t dataoff);
-    void insert_leaf_simple(BPlusTreeNode* leaf, int ins_pos, key_t key, off_t value_off);
-    int insert_leaf(BPlusTreeNode* leaf, key_t key, value_t* data);
+    key_t split_leaf_L(BPlusTreeNode* leaf, BPlusTreeNode* left, int insert, key_t key, chd_t data);
+    key_t split_leaf_R(BPlusTreeNode* leaf, BPlusTreeNode* right, int insert, key_t key, chd_t dataoff);
+    void insert_leaf_simple(BPlusTreeNode* leaf, int ins_pos, key_t key, chd_t value_off);
+    int insert_leaf(BPlusTreeNode* leaf, key_t key, const value_t* data);
 
-    off_t insert_leaf_value(off_t, value_t*);
-    int insert(key_t key, value_t* data);
-    
+    int insert(key_t key, const value_t* data);
+
+    BPlusTree(wchar_t* filename, int exist);
+    ~BPlusTree();
 };

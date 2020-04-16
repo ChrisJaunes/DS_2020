@@ -102,7 +102,7 @@ namespace FST {
 		assert(a->ch_cnt == b->ch_cnt);
 		for (int i = 0; i < BPT_MAX_ENTRIES; i++) {
 			assert(a->keys[i] == b->keys[i]);
-			assert(a->offs[i] == b->offs[i]);
+			assert(a->chds[i] == b->chds[i]);
 		}
 		return true;
 	}
@@ -126,23 +126,30 @@ namespace FST {
 		a_out.keys[1] = key_t{ L"÷–Œƒ≤‚ ‘" };
 		a_out.keys[2] = key_t{ L"1234567890" };
 		a_out.keys[3] = key_t{ L"!@#$%^&*()_+-=~`|[]{}:;\"'<>,.?'" };
- 		a_out.offs[0] = 1;
-		a_out.offs[1] = 10;
-		a_out.offs[2] = 100;
-		a_out.offs[3] = 1000;
-		a_out.offs[4] = 10000;
-		a_out.offs[5] = 10000000000;
-		a_out.offs[6] = 8589934592;
+ 		a_out.chds[0] = 1;
+		a_out.chds[1] = 10;
+		a_out.chds[2] = 100;
+		a_out.chds[3] = 1000;
+		a_out.chds[4] = 10000;
+		a_out.chds[5] = 10000000000;
+		a_out.chds[6] = 8589934592;
 
 		a_out.toFileBlock(out, off, sizeof(a_out));
 		BPlusTreeNode a_in;
 		a_in.fromFileBlock(in, off, sizeof(a_in));
 		assert(test_BPlusTreeNode_check(&a_in, &a_out));
+		fclose(in);
+		fclose(out);
+	}
+	void test_BPlusTree() {
+		//BPlusTree tmp(L"test", 0);
+
 	}
 	void tmain() {
 		create_FST();
 		test_BPIO();
 		test_BPlusTreeNode();
+		test_BPlusTree();
 	}
 }
 #endif
