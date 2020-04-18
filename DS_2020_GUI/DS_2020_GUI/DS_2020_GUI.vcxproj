@@ -41,11 +41,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
-    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;.;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;.;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <SourcePath>C:\Users\hjj18\Desktop\DS_2020;$(SourcePath)</SourcePath>
-    <IncludePath>C:\Users\hjj18\Desktop\DS_2020\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;.;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\数据结构大作业\数据结构大作业;DS_test;DS_console;DS_gui;.;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
@@ -98,6 +98,7 @@
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\F3Solver.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Info.cpp" />
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\pch.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp" />
     <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp" />
     <ClCompile Include="DS_console\BPlusTree_Utils.cpp" />
@@ -110,6 +111,7 @@
     <ClCompile Include="DS_gui\Info_Title_Widget.cpp" />
     <ClCompile Include="DS_gui\MainWindow.cpp" />
     <ClCompile Include="DS_test\test.cpp" />
+    <ClCompile Include="DS_test\test_BPT.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -120,11 +122,13 @@
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\F3Solver.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Info.h" />
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Solver.h" />
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h" />
     <ClInclude Include="DS_console\BPlusTreeUtils.h" />
     <ClInclude Include="DS_console\BPlusTree.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="DS_test\test_BPT.h" />
     <QtMoc Include="DS_gui\MainWindow.h" />
     <QtMoc Include="DS_gui\Info_Detail_Widget.h" />
     <QtMoc Include="DS_gui\Author_Detail_Widget.h" />

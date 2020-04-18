@@ -11,6 +11,7 @@
 #ifdef TEST_DEBUG
 #include "Author.h"
 #include "Info.h"
+#include "BPlusTree.h"
 #include <qstring.h>
 namespace FST {
 	const int AUTHORSN = 10;

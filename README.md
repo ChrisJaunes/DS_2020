@@ -84,9 +84,18 @@ GUI目录下新添加了DS_console、DS_gui、DS_test三个目录, `项目 右�
 之后需要在 VS 的`头文件/head file`和`源文件/source file`中`添加现有项`, 把那些需要的文件添加进去, 这样基本就可以了 
 
 
-
-
-
+起始 64 byte
+| 偏移(byte) | 大小(byte) |内容 |
+|---|---|---|
+|0	|	|固定内容，LYCBP，魔数（magic number）
+|5	|1	|sizeof(size_t)，每个节点预分配块大小，对应_block_size
+|6	|1	|sizoef(size_t), 文件末尾位置
+|7	|1	|sizoef(size_t), 根节点的文件偏移值
+|8	|4	|sizoef(unsigned int)，B树的树高
+|12	|4	|sizeof(unsigned int)，B树的节点数
+|16	|4	|sizeof(size_t), B树的叶子链表起始指针
+|20	|4	|sizeof(size_t), 文件空的块位置
+|
 
 
 

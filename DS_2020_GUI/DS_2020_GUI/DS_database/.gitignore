@@ -2,3 +2,5 @@
 db
 
 # File types
+dblp.xml
+*.xml

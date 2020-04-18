@@ -133,6 +133,12 @@
     <ClCompile Include="DS_console\BPlusTree_Utils.cpp">
       <Filter>Source Files\DS_console</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DS_test\test_BPT.cpp">
+      <Filter>Source Files\DS_test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Author.h">
@@ -173,6 +179,12 @@
     </ClInclude>
     <ClInclude Include="DS_console\BPlusTreeUtils.h">
       <Filter>Header Files\DS_console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DS_test\test_BPT.h">
+      <Filter>Header Files\DS_test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
