@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
 	FST::tmain();
 	QApplication a(argc, argv);
-	MainWindow w;
+	/*MainWindow w;
 	w.show();
-	return a.exec();
+	return a.exec();*/
 }

@@ -4,6 +4,8 @@
 #include "BPlusTree.h"
 #include "BPlusTreeUtils.h"
 #include "test_BPT.h"
+#include <QFileDialog>
+#include <QString>
 
 key_t getKey()
 {
@@ -86,7 +88,7 @@ void test_BPlusTreeNode() {
 	fclose(file);
 }*/
 void test_BPT0() {
-	BPlusTree tmp(DS_DATABASE_TEST, 0);
+	/*BPlusTree tmp(DS_DATABASE_TEST, 0);
 	tmp.insert(key_t{ L"hello, 这是一个测试" }, L"123456");
 	tmp.insert(key_t{ L"1. 中文测试" }, L"插入的值是中文");
 	tmp.insert(key_t{ L"2. ASCII" }, L"ASCII is Ok.");
@@ -105,9 +107,9 @@ void test_BPT0() {
 	value = NULL;
 	tmp.search(key_t{ L"4. number" }, value);
 	value = NULL;
-	tmp.search(key_t{ L"5. OK" }, value);
+	tmp.search(key_t{ L"5. OK" }, value);*/
 }
-
+/*
 int test_BPT1() {
 	srand(time(0));
 	key_t ERKEY = key_t{ L"w\\AL,5,#5+x" };
@@ -116,21 +118,15 @@ int test_BPT1() {
 	std::map<key_t, key_t> mp;
 	for (int i = 1; i <= 2; i++) {
 		int type = rand() & 1;
-		if (type == 1) {
-			key_t key = getKey();
-			key_t value = getKey();
-			if (ERKEY == key) {
-				int x = 0;
-			}
-			mp[key] = value;
-			BPT.insert(key, &value.a[0]);
-			for (int i = 0; i < 10; i++) if (BPT.used[i] != 0) {
-				int x = 0;
-			}
-
+		key_t key = getKey();
+		key_t value = getKey();
+		mp[key] = value;
+		BPT.insert(key, &value.a[0]);
+		for (int i = 0; i < 10; i++) if (BPT.used[i] != 0) {
+			int x = 0;
 		}
 	}
-	int n = rand() % 100000;
+	int n = 100000;
 	for (int i = 1; i <= n; i++) {
 		int type = rand() & 1;
 		if (type == 1) {
@@ -159,4 +155,101 @@ int test_BPT1() {
 	fprintf(file, "%d", clock() - begin_time);
 	fclose(file);
 	return 0;
+}*/
+static void test_BP_data(QString file_in, int n) {
+	srand(time(0));
+	FILE* _in = _wfopen(file_in.toStdWString().c_str(), L"w");
+	std::vector<int> vec(5, 3);
+	int key, value;
+	while (n--) {
+		int type = rand() % 2;
+		fprintf(_in, "%d ", type);
+		if (type == 0) {
+			int a = rand(),  b = rand();
+			fprintf(_in, "%d %d\n", a, b);
+			vec.push_back(a);
+		}
+		else if (type == 1) {
+			int a = vec[rand() % vec.size()];
+			fprintf(_in, " %d\n", a);
+		}
+	}
+	fclose(_in);
+}
+static void test_BP_std(QString file_in, QString file_ans) {
+	FILE* _in = _wfopen(file_in.toStdWString().c_str(), L"r");
+	FILE* _ans = _wfopen(file_ans.toStdWString().c_str(), L"w");
+	std::map<int, int> mp;
+	for (int type; ~fscanf(_in, "%d", &type);) {
+		 int a, b;
+		if (type == 0) {
+			fscanf(_in, "%d %d", &a, &b);
+			mp[a] = b;
+		}
+		else {
+			fscanf(_in, "%d", &a);
+			fprintf(_ans, "%d\n", mp[a]);
+		}
+	}
+	fclose(_in);
+	fclose(_ans);
+}
+static void test_BP_me(QString file_in, QString file_out, QString file_als) {
+	BPlusTree BPT(DS_DATABASE_TEST, 0);
+	FILE* _in = _wfopen(file_in.toStdWString().c_str(), L"r");
+	FILE* _out = _wfopen(file_out.toStdWString().c_str(), L"w");
+	key_t key, value;
+	int cnt = 0;
+	while (!feof(_in)) {
+		int type;
+		fscanf(_in, "%d", &type);
+		int a, b;
+		if (type == 0) {
+			fscanf(_in, "%d %d", &a, &b);
+			memset(key.a, 0, sizeof(key.a));
+			memmove(&key.a[0], &a, sizeof(a));
+			memset(&value.a[0], 0, sizeof(value.a));
+			memmove(&value.a[0], &b, sizeof(b));
+			BPT.insert(key, &value.a[0]);
+		}
+		else {
+			int a;
+			fscanf(_in, "%d", &a);
+			memset(key.a, 0, sizeof(key.a));
+			memmove(&key.a[0], &a, sizeof(a));
+			void* res = NULL; size_t res_sz = 0;
+			if (BPT.search(key, res, res_sz) == BPLUSTRE_FAILED) {
+				fprintf(_out, "0\n");
+			}
+			else {
+				fprintf(_out, "%d\n", *(int*)res);
+			}
+			free(res);
+		}
+		/*if ((++cnt) % 1000000 == 0) {
+			fprintf(_out, "%d\n", cnt);
+			fflush(_out);
+		}*/
+	}
+	fclose(_in);
+	fclose(_out);
+	
+}
+void test_BP2() {
+	srand(time(0));
+	for (int i = 1; i <= 10; i++) {
+		QString file_in = QString("DS_database/db/test%1.in").arg(QString::number(1));
+		QString file_out = QString("DS_database/db/test%1.out").arg(QString::number(1));
+		QString file_ans = QString("DS_database/db/test%1.ans").arg(QString::number(1));
+		QString file_als = QString("DS_database/test.als");
+		test_BP_data(file_in, 100000);
+		test_BP_std(file_in, file_ans);
+		int begin_time = clock();
+		test_BP_me(file_in, file_out, file_als);	
+		FILE* _als = _wfopen(file_als.toStdWString().c_str(), L"a");
+		fprintf(_als, "%dth, time: %d, res ok\n", i, clock() - begin_time); 
+		system("fc DS_database/db/test1.out DS_database/db/test1.ans");
+		system("pause");
+		fclose(_als);
+	}
 }

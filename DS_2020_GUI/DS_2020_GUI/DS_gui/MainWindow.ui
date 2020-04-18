@@ -207,7 +207,7 @@ font: 75 12pt &quot;Consolas&quot;;</string>
   </widget>
  </widget>
  <resources>
-  <include location="DS_2020_GUI.qrc"/>
+  <include location="../DS_2020_GUI.qrc"/>
  </resources>
  <connections/>
  <slots>

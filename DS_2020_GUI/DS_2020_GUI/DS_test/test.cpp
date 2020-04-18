@@ -68,10 +68,12 @@ namespace FST {
 		}
 	}
 	void tmain() {
-		create_FST();
+		//create_FST();
 		//test_BPIO();
 		//test_BPlusTreeNode();
-		test_BPT1();
+		//test_BPT0();
+		//test_BPT0();
+		test_BP2();
 	}
 }
 #endif
