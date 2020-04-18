@@ -31,7 +31,7 @@ enum {
 const char MAGIC_NUMBER[17] = "-DS_2020,LE,V1-";
 //B+树的缓存区大小，手写内存管理
 const int BPT_CACHE_NUM = 10;
-const int BPT_MAX_ORDER = 250;
+const int BPT_MAX_ORDER = 200;
 const int BPT_ROOT_SIZE = 64;
 
 

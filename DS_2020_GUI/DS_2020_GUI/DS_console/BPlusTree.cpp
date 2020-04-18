@@ -371,8 +371,8 @@ BPlusTree::BPlusTree(const wchar_t* filepath, int exist) {
     }
     else {
         assert((fd = _wfopen(fdpath, L"wb+")) != NULL);
-        node_block_size = 19384;
-        data_block_size = 32;
+        node_block_size = 16384;
+        data_block_size = 16384;
         assert(sizeof(BPlusTreeNode) <= node_block_size);
         root = INVALID_OFFSET;
         level = 0;

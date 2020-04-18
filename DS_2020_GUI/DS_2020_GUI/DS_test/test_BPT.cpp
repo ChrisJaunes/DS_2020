@@ -242,7 +242,7 @@ void test_BP2() {
 		QString file_out = QString("DS_database/db/test%1.out").arg(QString::number(1));
 		QString file_ans = QString("DS_database/db/test%1.ans").arg(QString::number(1));
 		QString file_als = QString("DS_database/test.als");
-		test_BP_data(file_in, 100000);
+		test_BP_data(file_in, 1000000);
 		test_BP_std(file_in, file_ans);
 		int begin_time = clock();
 		test_BP_me(file_in, file_out, file_als);	
