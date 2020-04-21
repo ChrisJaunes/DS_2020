@@ -10,6 +10,7 @@ Release/
 .svn/
 .hg/
 .vs/
+程序设计报告书/
 
 # File types
 *.dll

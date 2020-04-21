@@ -53,137 +53,36 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="DS_gui\MainWindow.h">
-      <Filter>Header Files\DS_gui</Filter>
-    </QtMoc>
-    <QtMoc Include="DS_gui\Info_Detail_Widget.h">
-      <Filter>Header Files\DS_gui</Filter>
-    </QtMoc>
-    <QtMoc Include="DS_gui\Author_Detail_Widget.h">
-      <Filter>Header Files\DS_gui</Filter>
-    </QtMoc>
-    <QtMoc Include="DS_gui\Author_Top_Widget.h">
-      <Filter>Header Files\DS_gui</Filter>
-    </QtMoc>
-    <QtMoc Include="DS_gui\Help.h">
-      <Filter>Header Files\DS_gui</Filter>
-    </QtMoc>
-    <QtMoc Include="DS_gui\Hotspot_Detail_Widget.h">
-      <Filter>Header Files\DS_gui</Filter>
-    </QtMoc>
-    <QtMoc Include="DS_gui\Info_Title_Widget.h">
-      <Filter>Header Files\DS_gui</Filter>
-    </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Author.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\CommUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Info.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\Solver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\F1Solver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\F3Solver.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="DS_console\BPlusTreeUtils.cpp">
+      <Filter>Source Files\DS_console</Filter>
     </ClCompile>
     <ClCompile Include="DS_test\test.cpp">
       <Filter>Source Files\DS_test</Filter>
     </ClCompile>
-    <ClCompile Include="DS_console\BPlusTree.cpp">
-      <Filter>Source Files\DS_console</Filter>
-    </ClCompile>
-    <ClCompile Include="DS_gui\MainWindow.cpp">
-      <Filter>Source Files\DS_gui</Filter>
-    </ClCompile>
-    <ClCompile Include="DS_gui\Info_Detail_Widget.cpp">
-      <Filter>Source Files\DS_gui</Filter>
-    </ClCompile>
-    <ClCompile Include="DS_gui\Author_Detail_Widget.cpp">
-      <Filter>Source Files\DS_gui</Filter>
-    </ClCompile>
-    <ClCompile Include="DS_gui\Author_Top_Widget.cpp">
-      <Filter>Source Files\DS_gui</Filter>
-    </ClCompile>
-    <ClCompile Include="DS_gui\Help.cpp">
-      <Filter>Source Files\DS_gui</Filter>
-    </ClCompile>
-    <ClCompile Include="DS_gui\Hotspot_Detail_Widget.cpp">
-      <Filter>Source Files\DS_gui</Filter>
-    </ClCompile>
-    <ClCompile Include="DS_gui\Info_Title_Widget.cpp">
-      <Filter>Source Files\DS_gui</Filter>
-    </ClCompile>
-    <ClCompile Include="DS_console\BPlusTree_Utils.cpp">
-      <Filter>Source Files\DS_console</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\数据结构大作业\数据结构大作业\pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DS_test\test_BPT.cpp">
       <Filter>Source Files\DS_test</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Author.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\error.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\CommUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\FrequencyRanking.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Info.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\Solver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\xmlhelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\F1Solver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\F3Solver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DS_test\test.h">
-      <Filter>Header Files\DS_test</Filter>
-    </ClInclude>
     <ClInclude Include="DS_console\BPlusTree.h">
       <Filter>Header Files\DS_console</Filter>
-    </ClInclude>
-    <ClInclude Include="config.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DS_console\BPlusTreeUtils.h">
       <Filter>Header Files\DS_console</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\数据结构大作业\数据结构大作业\pch.h">
+    <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DS_test\test_BPT.h">
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DS_test\test.h">
       <Filter>Header Files\DS_test</Filter>
     </ClInclude>
   </ItemGroup>
@@ -191,28 +90,5 @@
     <None Include="ds_2020_gui_zh.ts">
       <Filter>Translation Files</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="DS_gui\Author_Detail_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="DS_gui\Author_Top_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="DS_gui\Help.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="DS_gui\Hotspot_Detail_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="DS_gui\Info_Detail_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="DS_gui\Info_Title_Widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="DS_gui\MainWindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
   </ItemGroup>
 </Project>

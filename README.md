@@ -87,7 +87,7 @@ GUI目录下新添加了DS_console、DS_gui、DS_test三个目录, `项目 右�
 起始 64 byte
 | 偏移(byte) | 大小(byte) |内容 |
 |---|---|---|
-|0	|	|固定内容，LYCBP，魔数（magic number）
+|0	|16	|魔数, -DS_2020,LE,V1-
 |5	|1	|sizeof(size_t)，每个节点预分配块大小，对应_block_size
 |6	|1	|sizoef(size_t), 文件末尾位置
 |7	|1	|sizoef(size_t), 根节点的文件偏移值

@@ -1,0 +1,256 @@
+===============================
+new n = 1000
+
+1th, std, time: 30
+1th, me, time: 122
+
+2th, std, time: 27
+2th, me, time: 123
+
+3th, std, time: 27
+3th, me, time: 123
+
+4th, std, time: 26
+4th, me, time: 121
+
+5th, std, time: 27
+5th, me, time: 116
+
+6th, std, time: 27
+6th, me, time: 127
+
+7th, std, time: 29
+7th, me, time: 119
+
+8th, std, time: 28
+8th, me, time: 126
+
+9th, std, time: 31
+9th, me, time: 116
+
+10th, std, time: 27
+10th, me, time: 127
+===============================
+new n = 10000
+
+1th, std, time: 124
+1th, me, time: 776
+
+2th, std, time: 139
+2th, me, time: 750
+
+3th, std, time: 128
+3th, me, time: 753
+
+4th, std, time: 123
+4th, me, time: 743
+
+5th, std, time: 133
+5th, me, time: 740
+
+6th, std, time: 133
+6th, me, time: 765
+
+7th, std, time: 126
+7th, me, time: 748
+
+8th, std, time: 133
+8th, me, time: 740
+
+9th, std, time: 136
+9th, me, time: 745
+
+10th, std, time: 126
+10th, me, time: 753
+===============================
+new n = 10000
+
+1th, std, time: 123
+1th, me, time: 740
+
+2th, std, time: 132
+2th, me, time: 758
+
+3th, std, time: 145
+3th, me, time: 749
+
+4th, std, time: 126
+4th, me, time: 738
+
+5th, std, time: 131
+5th, me, time: 753
+
+6th, std, time: 125
+6th, me, time: 751
+
+7th, std, time: 133
+7th, me, time: 764
+
+8th, std, time: 123
+8th, me, time: 748
+
+9th, std, time: 135
+9th, me, time: 761
+
+10th, std, time: 124
+10th, me, time: 738
+===============================
+new n = 10000
+
+1th, std, time: 128
+1th, me, time: 741
+
+2th, std, time: 148
+2th, me, time: 839
+
+3th, std, time: 131
+3th, me, time: 761
+
+4th, std, time: 134
+4th, me, time: 771
+
+5th, std, time: 130
+5th, me, time: 754
+
+6th, std, time: 127
+6th, me, time: 800
+
+7th, std, time: 142
+7th, me, time: 801
+
+8th, std, time: 125
+8th, me, time: 749
+
+9th, std, time: 127
+9th, me, time: 766
+
+10th, std, time: 135
+10th, me, time: 773
+===============================
+new n = 100000
+
+1th, std, time: 1102
+1th, me, time: 7635
+
+2th, std, time: 1083
+2th, me, time: 7686
+
+3th, std, time: 1105
+3th, me, time: 8056
+
+4th, std, time: 1080
+4th, me, time: 7018
+
+5th, std, time: 987
+5th, me, time: 7177
+
+6th, std, time: 1112
+6th, me, time: 7864
+
+7th, std, time: 1144
+7th, me, time: 7999
+
+8th, std, time: 1130
+8th, me, time: 7024
+
+9th, std, time: 660
+9th, me, time: 6088
+
+10th, std, time: 1078
+10th, me, time: 7371
+===============================
+new n = 100000
+
+1th, std, time: 1090
+1th, me, time: 8155
+
+2th, std, time: 1175
+2th, me, time: 8139
+
+3th, std, time: 1175
+3th, me, time: 6961
+
+4th, std, time: 1075
+4th, me, time: 7740
+
+5th, std, time: 1091
+5th, me, time: 8414
+
+6th, std, time: 1176
+6th, me, time: 7869
+
+7th, std, time: 1235
+7th, me, time: 7805
+
+8th, std, time: 1116
+8th, me, time: 7621
+
+9th, std, time: 1070
+9th, me, time: 7535
+
+10th, std, time: 1071
+10th, me, time: 7210
+===============================
+new n = 100000
+
+1th, std, time: 1118
+1th, me, time: 7496
+
+2th, std, time: 1108
+2th, me, time: 6781
+
+3th, std, time: 1127
+3th, me, time: 7573
+
+4th, std, time: 1095
+4th, me, time: 7726
+
+5th, std, time: 1092
+5th, me, time: 7637
+
+6th, std, time: 1019
+6th, me, time: 7216
+
+7th, std, time: 1077
+7th, me, time: 6512
+
+8th, std, time: 1108
+8th, me, time: 7674
+
+9th, std, time: 989
+9th, me, time: 5763
+
+10th, std, time: 456
+10th, me, time: 2893
+===============================
+new n = 1000000
+
+1th, std, time: 8345
+1th, me, time: 73585
+
+2th, std, time: 10313
+2th, me, time: 78706
+
+3th, std, time: 10206
+3th, me, time: 75651
+
+4th, std, time: 9863
+4th, me, time: 73203
+
+5th, std, time: 9567
+5th, me, time: 68662
+
+6th, std, time: 8750
+6th, me, time: 67460
+
+7th, std, time: 9432
+7th, me, time: 78867
+
+8th, std, time: 10000
+8th, me, time: 75596
+
+9th, std, time: 9674
+9th, me, time: 74138
+
+10th, std, time: 9907
+10th, me, time: 69259
