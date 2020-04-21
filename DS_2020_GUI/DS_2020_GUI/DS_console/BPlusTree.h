@@ -10,7 +10,7 @@
  * prev: 同级上一个节点的文件指针,链表
  * next: 同级下一个节点的文件指针,链表
  * keys[]：key数组
- * chds[]: 孩子数组的文件指针
+ * offs[]: 孩子数组的文件指针
  * isleaf(): 判断是否是叶子节点
  * binary_search_by_key()： 用于处理key上的二分
  * fromFileBlock(): 用于从文件块中读取数据并且借助读取的数据生成一个BPlusTreeNode节点
@@ -32,32 +32,9 @@
  * used[]: 内存管理
  * cache_refer: 获取一块内存空间
  * cache_refer: 释放一块内存空间
- * 以下是B+树文件信息
- *  起始块 64 byte
- * | 偏移 | 大小 |内容
- * |---   |---  |---
- * |0	  | 8	 | 魔数, -DS,V1-； 检验信息
-
- *
- * 节点块 包括内部节点和叶子节点
- * | 偏移 | 大小 |内容
- * |---   |---  |---
- * |0	  | 8	| sizeof(size_t) 自身文件偏移,用于检验,对应self
- * |8	  | 8	| sizeof(size_t) 父节点文件偏移,用于检验,对应parent
- * |16	  | 4	| sizeof(int) 类型, 内部节点或者叶子节点, 对应type
- * |20	  | 4	| sizeof(int) 该节点孩子数, 对应ch_cnt
- * |24	  | 8	| sizeof(size_t) 同级链上一个节点的文件偏移, 对应prev
- * |32	  | 8	| sizoef(size_t) 同级链下一个节点的文件偏移, 对应next
- * |40	  | ？	| sizoef(key_t) * BPT_MAX_ORDER, 对应keys数组
- * |？    | ？  | sizoef(chd_t) * BPT_MAX_ORDER, 对应chds数组
- *
- * 数据块
- * | 偏移 | 大小 |内容
- * |---   |---  |---
- * |0	  | 8	| sizeof(size_t) 自身文件偏移,用于检验
- * |8	  | 8	| sizeof(size_t) 下一个数据块节点, 本质上是一个链表
- * |16	  | ？	| 数据内容, 二进制文件
  */
+#define keys(node) ( (KEY_T *)( (char *)(node) + p_KEYS) )
+#define offs(node) ( (OFF_T *)( (char *)(node) + p_OFFS) )
 
 template<typename KEY_T = key_t>
 class BPlusTree {
@@ -69,6 +46,12 @@ public:
     int insert(KEY_T key, const void* value, const size_t value_sz);
     int search(KEY_T key, void*& value, size_t& value_sz);
 //private:
+    //BPT常用常量
+    const size_t sz_NODE;
+    const size_t sz_KEY;
+    const size_t sz_OFF;
+    size_t p_KEYS;
+    size_t p_OFFS;
     //节点类
     struct BPlusTreeNode {
         OFF_T self;
@@ -77,14 +60,13 @@ public:
         unsigned int ch_cnt;
         OFF_T prev;
         OFF_T next;
-        KEY_T keys[BPT_MAX_ORDER];
-        OFF_T chds[BPT_MAX_ORDER];
         BPlusTreeNode(const BPlusTreeNode&);
         void operator=(const BPlusTreeNode& a);
-        int binary_search_by_key(const KEY_T& key);
     };
+    int binary_search_by_key(BPlusTreeNode* node, const KEY_T& key);
     //B+树基本信息
     void* BPT_caches;
+    size_t node_max_order;
     unsigned int node_block_size;
     unsigned int data_block_size;
     OFF_T root;
@@ -110,7 +92,7 @@ public:
     void nodeFromFileBlock(BPlusTreeNode* node, OFF_T file_off);
     void nodeToFileBlock(BPlusTreeNode* node, OFF_T file_off);
     BPlusTreeNode* node_new(OFF_T _self, OFF_T _parent,int _type);
-    BPlusTreeNode* node_fetch(OFF_T chdset);
+    BPlusTreeNode* node_fetch(OFF_T offset);
     void node_flush_parent(OFF_T node, BPlusTreeNode* parent);
     //数据块缓存池
     void* data_caches;
@@ -125,7 +107,7 @@ public:
     OFF_T data_empty_block();
     void dataFromFileBlock(OFF_T file_off);
     void dataToFileBlock(OFF_T file_of);
-    void* data_fetch(OFF_T chdset);
+    void* data_fetch(OFF_T offset);
     void valueFromFileBlock(OFF_T file_off, void*& value, size_t& value_sz);
     OFF_T valueToFileBlock(OFF_T file_off, const void* value, const size_t value_sz);
 
@@ -142,6 +124,9 @@ public:
 
 template<typename KEY_T>
 inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, int exist, int _node_block_size, int _data_block_size)
+    : sz_NODE(sizeof(BPlusTreeNode))
+    , sz_KEY(sizeof(KEY_T))
+    , sz_OFF(sizeof(OFF_T))
 {
     size_t sz = wcslen(filepath) + 1;
     wchar_t* fdpath = new wchar_t[sz];
@@ -153,12 +138,18 @@ inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, int exist, int _node
     if (exist) {
         assert((fd = _wfopen(fdpath, L"rb+")) != nullptr);
         treeFromFileBlock();
+        assert(node_block_size == _node_block_size);
+        assert(sizeof(BPlusTreeNode) <= node_block_size);
+        node_max_order = (node_block_size - sz_NODE) / (sz_KEY + sz_OFF);
+        assert(node_max_order >= 2);
     }
     else {
         assert((fd = _wfopen(fdpath, L"wb+")) != nullptr);
         node_block_size = _node_block_size;
         data_block_size = _data_block_size;
         assert(sizeof(BPlusTreeNode) <= node_block_size);
+        node_max_order = (node_block_size - sz_NODE) / (sz_KEY + sz_OFF);
+        assert(node_max_order >= 2);
         root = INVALID_OFFSET;
         level = 0;
         number = 0;
@@ -167,6 +158,8 @@ inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, int exist, int _node
         data_block_head = INVALID_OFFSET;
         treeToFileBlock();
     }
+    p_KEYS = sz_NODE;
+    p_OFFS = sz_NODE + node_max_order * sz_KEY;
 
     sz = (size_t) node_block_size * BPT_CACHE_NUM;
     node_caches = malloc(sz);
@@ -180,7 +173,7 @@ inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, int exist, int _node
     for (int i = 0; i < BPT_CACHE_NUM; i++) {
         data_unused[++data_used_cnt] = (char*)data_caches + (size_t)data_block_size * i;
     }
-    temp_block_size = max(node_block_size, data_block_size) * 2;
+    temp_block_size = max(node_block_size, data_block_size) * 3;
     temp_caches = malloc((size_t)temp_block_size * BPT_CACHE_TEMP_NUM);
     memset(temp_used, 0, sizeof(temp_used));
     
@@ -219,8 +212,8 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
     if (node == nullptr) {
         node = node_new(node_empty_block(), INVALID_OFFSET, BPLUSTREE_LEAF);
         node->ch_cnt = 1;
-        node->keys[0] = key;
-        node->chds[0] = valueToFileBlock(INVALID_OFFSET, value, value_sz);
+        keys(node)[0] = key;
+        offs(node)[0] = valueToFileBlock(INVALID_OFFSET, value, value_sz);
 
         root = node->self;
         level = 1;
@@ -231,22 +224,22 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
     }
     int pos;
     while (node->type == BPLUSTREE_INTERNAL) {
-        pos = node->binary_search_by_key(key);
-        OFF_T next_off = node->chds[pos];
+        pos = binary_search_by_key(node, key);
+        OFF_T next_off = offs(node)[pos];
         node_defer(node);
         node = node_fetch(next_off);
     }
 
-    pos = node->binary_search_by_key(key);
-    if (pos < node->ch_cnt && node->keys[pos] == key) {
-        valueToFileBlock(node->chds[pos], value, value_sz);
+    pos = binary_search_by_key(node, key);
+    if (pos < node->ch_cnt && keys(node)[pos] == key) {
+        valueToFileBlock(offs(node)[pos], value, value_sz);
         node_defer(node);
         return BPLUSTRE_SUCCESS_REPLACE;
     }
     OFF_T value_off = valueToFileBlock(INVALID_OFFSET, value, value_sz);
     BPlusTreeNode* lch, * rch;
     while (true) {
-        if (node->ch_cnt < BPT_MAX_ORDER) {
+        if (node->ch_cnt < node_max_order) {
             node_insert(node, pos, key, value_off);
             node_defer(node);
             return BPLUSTRE_SUCCESS;;
@@ -255,9 +248,9 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
         if (lch->parent == INVALID_OFFSET && rch->parent == INVALID_OFFSET) {
             node = node_new(node_empty_block(), INVALID_OFFSET, BPLUSTREE_INTERNAL);
             node->ch_cnt = 2;
-            node->keys[0] = key;
-            node->chds[0] = lch->self;
-            node->chds[1] = rch->self;
+            keys(node)[0] = key;
+            offs(node)[0] = lch->self;
+            offs(node)[1] = rch->self;
             lch->parent = node->self;
             rch->parent = node->self;
             ++number;
@@ -270,7 +263,7 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
         }
         value_off = lch->self;
         node = node_fetch(lch->parent);
-        pos = node->binary_search_by_key(key);
+        pos = binary_search_by_key(node, key);
         node_defer(lch);
         node_defer(rch);
     }
@@ -287,14 +280,14 @@ inline int BPlusTree<KEY_T>::search(KEY_T key, void*& value, size_t& value_sz)
     }
     int pos;
     while (node->type == BPLUSTREE_INTERNAL) {
-        pos = node->binary_search_by_key(key);
-        OFF_T next_off = node->chds[pos];
+        pos = binary_search_by_key(node, key);
+        OFF_T next_off = offs(node)[pos];
         node_defer(node);
         node = node_fetch(next_off);
     }
-    pos = node->binary_search_by_key(key);
-    if (pos < node->ch_cnt && node->keys[pos] == key) {
-        valueFromFileBlock(node->chds[pos], value, value_sz);
+    pos = binary_search_by_key(node, key);
+    if (pos < node->ch_cnt && keys(node)[pos] == key) {
+        valueFromFileBlock(offs(node)[pos], value, value_sz);
         node_defer(node);
         return BPLUSTRE_SUCCESS;
     }
@@ -315,10 +308,11 @@ inline void BPlusTree<KEY_T>::BPlusTreeNode::operator=(const BPlusTreeNode& a)
 }
 
 template<typename KEY_T>
-inline int BPlusTree<KEY_T>::BPlusTreeNode::binary_search_by_key(const KEY_T& key)
+inline int BPlusTree<KEY_T>::binary_search_by_key(BPlusTreeNode* node, const KEY_T& key)
 {
-    int len = type == BPLUSTREE_LEAF ? ch_cnt : ch_cnt - 1;
-    int pos = std::lower_bound(keys, keys + len, key) - keys;
+    int len = node->type == BPLUSTREE_LEAF ? node->ch_cnt : node->ch_cnt - 1;
+    KEY_T *beg = &(keys(node)[0]), *end = &(keys(node)[len]);
+    int pos = std::lower_bound(beg, end, key) - beg;
     return pos;
 }
 
@@ -411,14 +405,14 @@ inline void BPlusTree<KEY_T>::nodeFromFileBlock(BPlusTreeNode* node, OFF_T file_
     void* buf = swap_refer();
     BPlusTreeUtils::db_read(fd, file_off, buf, node_block_size, 1);
     size_t off = 0;
-    memmove(&node->self, (char*)buf + off, sizeof(node->self)); off += sizeof(node->self);
-    memmove(&node->parent, (char*)buf + off, sizeof(node->parent)); off += sizeof(node->parent);
+    memmove(&node->self, (char*)buf + off, sz_OFF); off += sz_OFF;
+    memmove(&node->parent, (char*)buf + off, sz_OFF); off += sz_OFF;
     memmove(&node->type, (char*)buf + off, sizeof(node->type)); off += sizeof(node->type);
     memmove(&node->ch_cnt, (char*)buf + off, sizeof(node->ch_cnt)); off += sizeof(node->ch_cnt);
-    memmove(&node->prev, (char*)buf + off, sizeof(node->prev)); off += sizeof(node->prev);
-    memmove(&node->next, (char*)buf + off, sizeof(node->next)); off += sizeof(node->next);
-    memmove(&node->keys, (char*)buf + off, sizeof(node->keys)); off += sizeof(node->keys);
-    memmove(&node->chds, (char*)buf + off, sizeof(node->chds)); off += sizeof(node->chds);
+    memmove(&node->prev, (char*)buf + off, sz_OFF); off += sz_OFF;
+    memmove(&node->next, (char*)buf + off, sz_OFF); off += sz_OFF;
+    memmove(&(keys(node)[0]), (char*)buf + off, sz_KEY * node_max_order); off += sz_KEY * node_max_order;
+    memmove(&(offs(node)[0]), (char*)buf + off, sz_OFF * node_max_order); 
     swap_defer(buf);
 }
 
@@ -428,14 +422,14 @@ inline void BPlusTree<KEY_T>::nodeToFileBlock(BPlusTreeNode* node, OFF_T file_of
     assert(node->self == file_off);
     void* buf = swap_refer();
     size_t off = 0;
-    memmove((char*)buf + off, &node->self, sizeof(node->self)); off += sizeof(node->self);
-    memmove((char*)buf + off, &node->parent, sizeof(node->parent)); off += sizeof(node->parent);
+    memmove((char*)buf + off, &node->self, sz_OFF); off += sz_OFF;
+    memmove((char*)buf + off, &node->parent, sz_OFF); off += sz_OFF;
     memmove((char*)buf + off, &node->type, sizeof(node->type)); off += sizeof(node->type);
     memmove((char*)buf + off, &node->ch_cnt, sizeof(node->ch_cnt)); off += sizeof(node->ch_cnt);
-    memmove((char*)buf + off, &node->prev, sizeof(node->prev)); off += sizeof(node->prev);
-    memmove((char*)buf + off, &node->next, sizeof(node->next)); off += sizeof(node->next);
-    memmove((char*)buf + off, &node->keys, sizeof(node->keys)); off += sizeof(node->keys);
-    memmove((char*)buf + off, &node->chds, sizeof(node->chds)); off += sizeof(node->chds);
+    memmove((char*)buf + off, &node->prev, sz_OFF); off += sz_OFF;
+    memmove((char*)buf + off, &node->next, sz_OFF); off += sz_OFF;
+    memmove((char*)buf + off, &(keys(node)[0]), sz_KEY * node_max_order); off += sz_KEY * node_max_order;
+    memmove((char*)buf + off, &(offs(node)[0]), sz_OFF * node_max_order);
     BPlusTreeUtils::db_write(fd, file_off, buf, node_block_size, 1);
     swap_defer(buf);
 }
@@ -457,13 +451,13 @@ inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_new(OFF_
 }
 
 template<typename KEY_T>
-inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_fetch(OFF_T chdset)
+inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_fetch(OFF_T offset)
 {
-    if (chdset == INVALID_OFFSET) {
+    if (offset == INVALID_OFFSET) {
         return nullptr;
     }
-    if (node_map.count(chdset)) {
-        BPlusTreeNode* node = (BPlusTreeNode * )node_map[chdset];
+    if (node_map.count(offset)) {
+        BPlusTreeNode* node = (BPlusTreeNode * )node_map[offset];
         size_t _id = node_used[node];
         assert(node_unused.count(_id));
         //if (unused.count(_id)) 
@@ -472,7 +466,7 @@ inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_fetch(OF
         return node;
     }
     BPlusTreeNode* node = (BPlusTreeNode *)node_refer();
-    nodeFromFileBlock(node, chdset);
+    nodeFromFileBlock(node, offset);
     node_map[node->self] = node;
     return node;
 }
@@ -546,7 +540,7 @@ inline void BPlusTree<KEY_T>::dataToFileBlock(OFF_T file_of)
 }
 
 template<typename KEY_T>
-inline void* BPlusTree<KEY_T>::data_fetch(OFF_T chdset)
+inline void* BPlusTree<KEY_T>::data_fetch(OFF_T offset)
 {
     //待实现
     return NULL;
@@ -561,14 +555,14 @@ inline void BPlusTree<KEY_T>::valueFromFileBlock(OFF_T file_off, void*& value, s
     void* value_tmp;
     value = NULL;
     value_sz = 0;
-    size_t sz = data_block_size - sizeof(OFF_T) * 2;
+    size_t sz = data_block_size - sz_OFF * 2;
     while (file_off != INVALID_OFFSET) {
         BPlusTreeUtils::db_read(fd, file_off, buf, data_block_size, 1);
-        memmove(&file_off, (char*)buf + sizeof(OFF_T), sizeof(OFF_T));
+        memmove(&file_off, (char*)buf + sz_OFF, sz_OFF);
 
         value_tmp = value;
         value = malloc(value_sz + sz);
-        memmove(value, (char*)buf + sizeof(OFF_T) * 2, sz);
+        memmove(value, (char*)buf + sz_OFF * 2, sz);
         memmove((char*)value + value_sz, value_tmp, value_sz);
         value_sz += sz;
         free(value_tmp);
@@ -582,22 +576,21 @@ inline OFF_T BPlusTree<KEY_T>::valueToFileBlock(OFF_T file_off, const void* valu
     void* buf = swap_refer();
     while (file_off != INVALID_OFFSET) {
         BPlusTreeUtils::db_read(fd, file_off, buf, data_block_size, 1);
-        memmove(&file_off, (char*)buf + sizeof(OFF_T), sizeof(OFF_T));
-        memmove((char*)buf + sizeof(OFF_T), &data_block_head, sizeof(OFF_T));
-        memmove(&data_block_head, buf, sizeof(OFF_T));
+        memmove(&file_off, (char*)buf + sz_OFF, sz_OFF);
+        memmove((char*)buf + sz_OFF, &data_block_head, sz_OFF);
+        memmove(&data_block_head, buf, sz_OFF);
     }
 
     size_t value_sz_tmp = 0;
-    size_t sz = sizeof(OFF_T);
-    assert(value_sz % (data_block_size - sz * 2) == 0);
+    assert(value_sz % (data_block_size - sz_OFF * 2) == 0);
 
     while (value_sz_tmp < value_sz) {
-        memmove((char*)buf + sz, &file_off, sz);
+        memmove((char*)buf + sz_OFF, &file_off, sz_OFF);
         file_off = data_empty_block();
-        memmove(buf, &file_off, sz);
-        memmove((char*)buf + sz * 2, (char*)value + value_sz_tmp, data_block_size - sz * 2);
+        memmove(buf, &file_off, sz_OFF);
+        memmove((char*)buf + sz_OFF + sz_OFF, (char*)value + value_sz_tmp, data_block_size - sz_OFF * 2);
         BPlusTreeUtils::db_write(fd, file_off, buf, data_block_size, 1);
-        value_sz_tmp += data_block_size - sz * 2;
+        value_sz_tmp += data_block_size - sz_OFF * 2;
     }
     swap_defer(buf);
     return file_off;
@@ -627,12 +620,12 @@ inline void BPlusTree<KEY_T>::swap_defer(void* node)
 template<typename KEY_T>
 inline KEY_T BPlusTree<KEY_T>::node_split(typename BPlusTreeNode* node, const int pos, const KEY_T key, const OFF_T value_off, BPlusTreeNode*& lch, BPlusTreeNode*& rch)
 {
-    assert(node->ch_cnt == BPT_MAX_ORDER);
+    assert(node->ch_cnt == node_max_order);
     BPlusTreeNode* sibling = node_new(node_empty_block(), node->parent, node->type);
 
-    int split = (BPT_MAX_ORDER + 1) / 2;
+    int split = (node_max_order + 1) / 2;
     sibling->ch_cnt = split;
-    node->ch_cnt = BPT_MAX_ORDER - split + 1;
+    node->ch_cnt = node_max_order - split + 1;
 
     if ((sibling->prev = node->prev) != INVALID_OFFSET) {
         BPlusTreeNode* prev = node_fetch(sibling->prev);
@@ -645,28 +638,28 @@ inline KEY_T BPlusTree<KEY_T>::node_split(typename BPlusTreeNode* node, const in
     node->prev = sibling->self;
     sibling->next = node->self;
     void* buf = swap_refer();
-    size_t sz = sizeof(KEY_T), off = 0;
-    memmove((char*)buf + off, &(node->keys[0])  , pos * sz); off += pos * sz;
-    memmove((char*)buf + off, &key              , sz      ); off += sz;
-    memmove((char*)buf + off, &(node->keys[pos]), (BPT_MAX_ORDER - pos) * sz);
+    size_t off = 0;
+    memmove((char*)buf + off, &(keys(node)[0])  , pos * sz_KEY); off += pos * sz_KEY;
+    memmove((char*)buf + off, &key              , sz_KEY      ); off += sz_KEY;
+    memmove((char*)buf + off, &(keys(node)[pos]), (node_max_order - pos) * sz_KEY);
     off = 0;
-    memmove(&(sibling->keys[0]), (char*) buf + off, sibling->ch_cnt * sz); off += sibling->ch_cnt * sz;
-    memmove(&(node->keys[0]),    (char*) buf + off, node->ch_cnt * sz);
+    memmove(&(keys(sibling)[0]), (char*) buf + off, sibling->ch_cnt * sz_KEY); off += sibling->ch_cnt * sz_KEY;
+    memmove(&(keys(node)[0]),    (char*) buf + off, node->ch_cnt * sz_KEY);
 
-    sz = sizeof(OFF_T); off = 0;
-    memmove((char*)buf + off, &(node->chds[0]), pos * sz); off += pos * sz;
-    memmove((char*)buf + off, &value_off      , sz      ); off += sz;
-    memmove((char*)buf + off, &(node->chds[pos]), (BPT_MAX_ORDER - pos) * sz);
     off = 0;
-    memmove(&(sibling->chds[0]), (char*) buf + off, sibling->ch_cnt * sz); off += sibling->ch_cnt * sz;
-    memmove(&(node->chds[0]),    (char*) buf + off, node->ch_cnt * sz);
+    memmove((char*)buf + off, &(offs(node)[0]), pos * sz_OFF); off += pos * sz_OFF;
+    memmove((char*)buf + off, &value_off      , sz_OFF      ); off += sz_OFF;
+    memmove((char*)buf + off, &(offs(node)[pos]), (node_max_order - pos) * sz_OFF);
+    off = 0;
+    memmove(&(offs(sibling)[0]), (char*) buf + off, sibling->ch_cnt * sz_OFF); off += sibling->ch_cnt * sz_OFF;
+    memmove(&(offs(node)[0]),    (char*) buf + off, node->ch_cnt * sz_OFF);
     swap_defer(buf);
     if (sibling->type == BPLUSTREE_INTERNAL) {
         for (int i = 0; i < sibling->ch_cnt; i++)
-            node_flush_parent(sibling->chds[i], sibling);
+            node_flush_parent(offs(sibling)[i], sibling);
     }
 
-    KEY_T res = sibling->keys[split - 1];
+    KEY_T res = keys(sibling)[split - 1];
     lch = sibling;
     rch = node;
     
@@ -676,10 +669,10 @@ inline KEY_T BPlusTree<KEY_T>::node_split(typename BPlusTreeNode* node, const in
 template<typename KEY_T>
 inline void BPlusTree<KEY_T>::node_insert(BPlusTreeNode* node, const int pos, const KEY_T key, const OFF_T value_off)
 {
-    memmove(&(node->keys[pos + 1]), &(node->keys[pos]), (node->ch_cnt - pos) * sizeof(KEY_T));
-    memmove(&(node->chds[pos + 1]), &(node->chds[pos]), (node->ch_cnt - pos) * sizeof(OFF_T));
-    node->keys[pos] = key;
-    node->chds[pos] = value_off;
+    memmove(&(keys(node)[pos + 1]), &(keys(node)[pos]), (node->ch_cnt - pos) * sz_KEY);
+    memmove(&(offs(node)[pos + 1]), &(offs(node)[pos]), (node->ch_cnt - pos) * sz_OFF);
+    keys(node)[pos] = key;
+    offs(node)[pos] = value_off;
     node->ch_cnt++;
     if (node->type == BPLUSTREE_INTERNAL) node_flush_parent(value_off, node);
 }

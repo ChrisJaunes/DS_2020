@@ -165,13 +165,15 @@ void test_BPT1(int n) {
 		test_BP_me(file_in, file_out);
 		fprintf(_als, "%dth, me, time: %d\n", i, clock() - begin_time);
 	}
+	fprintf(_als, "Result: \n");
 	fclose(_als);
+	system("DS_database\\db\\check.bat >> DS_database/test.als");
 }
 void test_BPT2() {
 
 }
 void test_BPT() {
-	//test_BPT0();
+	test_BPT0();
 	test_BPT1(1000);
 	test_BPT1(10000);
 	test_BPT1(10000);
@@ -179,7 +181,7 @@ void test_BPT() {
 	test_BPT1(100000);
 	test_BPT1(100000);
 	test_BPT1(100000);
-	test_BPT1(1000000);
+	//test_BPT1(1000000);
 	test_BPT2();
 }
 
