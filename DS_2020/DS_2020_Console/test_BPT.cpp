@@ -106,7 +106,6 @@ namespace FST {
 	static void test_BP_data(std::wstring file_in, int n) {
 		FILE* _in = _wfopen(file_in.c_str(), L"w");
 		std::vector<int> vec(5, 0);
-		int key, value;
 		while (n--) {
 			int type = rand() % 2;
 			fprintf(_in, "%d ", type);
@@ -173,7 +172,7 @@ namespace FST {
 
 	}
 	void test_BPT2(int n) {
-		srand(time(0));
+		srand((unsigned int) time(0));
 		std::wstring file_als = std::wstring(DS_BPT_TEST_ALS);
 		FILE* _als = _wfopen(file_als.c_str(), L"a");
 		fprintf(_als, "===============================\nnew n = %d\n", n);

@@ -19,7 +19,7 @@ F3Solver::~F3Solver()
 void F3Solver::ExportToFile(const TCHAR* filename)
 {
     // 1936-2020 868.157s 6G
-    std::vector<STR> a = pF3->GetYears();
+    std::vector<MYSTR> a = pF3->GetYears();
     wofstream ofs;
     ofs.open(filename, ios::out);
 
@@ -34,19 +34,19 @@ void F3Solver::ExportToFile(const TCHAR* filename)
     ofs.close();
 }
 
-std::map < STR, std::map<STR, ULONG64> > F3Solver::ImportFromFile(const TCHAR* filename)
+std::map < MYSTR, std::map<MYSTR, ULONG64> > F3Solver::ImportFromFile(const TCHAR* filename)
 {
     wifstream ifs;
-    std::map < STR, std::map<STR, ULONG64> > result;
+    std::map < MYSTR, std::map<MYSTR, ULONG64> > result;
     ifs.open(filename, ios::in);
     wchar_t buffer[0x200]{ 0 };
     while (ifs >> buffer) {
-        STR year(buffer);
-        std::map<STR, ULONG64> result_peryear;
-        while (STR(buffer) != STR()) {
+        MYSTR year(buffer);
+        std::map<MYSTR, ULONG64> result_peryear;
+        while (MYSTR(buffer) != MYSTR()) {
             ifs >> buffer;
-            STR word(buffer);
-            if (STR(buffer) == STR(L"---")) {
+            MYSTR word(buffer);
+            if (MYSTR(buffer) == MYSTR(L"---")) {
                 break;
             }
             ULONG64 times;

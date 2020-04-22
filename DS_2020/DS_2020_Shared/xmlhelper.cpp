@@ -4,36 +4,36 @@
 #include "CommUtils.h"
 XMLParser::XMLParser()
 {
-	parseInfo = new std::vector<STR>;
-	parseInfo->push_back(STR(L"article"));
+	parseInfo = new std::vector<MYSTR>;
+	parseInfo->push_back(MYSTR(L"article"));
 
 }
 XMLParser::XMLParser(DWORD flag)
 {
-	parseInfo = new std::vector<STR>;
+	parseInfo = new std::vector<MYSTR>;
 	if (flag & article) {
-		parseInfo->push_back(STR(L"article"));
+		parseInfo->push_back(MYSTR(L"article"));
 	}
 	if (flag & book) {
-		parseInfo->push_back(STR(L"book"));
+		parseInfo->push_back(MYSTR(L"book"));
 	}
 	if (flag & incollection) {
-		parseInfo->push_back(STR(L"incollection"));
+		parseInfo->push_back(MYSTR(L"incollection"));
 	}
 	if (flag & inproceedings) {
-		parseInfo->push_back(STR(L"inproceedings"));
+		parseInfo->push_back(MYSTR(L"inproceedings"));
 	}
 	if (flag & mastersthesis) {
-		parseInfo->push_back(STR(L"mastersthesis"));
+		parseInfo->push_back(MYSTR(L"mastersthesis"));
 	}
 	if (flag & phdthesis) {
-		parseInfo->push_back(STR(L"phdthesis"));
+		parseInfo->push_back(MYSTR(L"phdthesis"));
 	}
 	if (flag & proceedings) {
-		parseInfo->push_back(STR(L"proceedings"));
+		parseInfo->push_back(MYSTR(L"proceedings"));
 	}
 	if (flag & www) {
-		parseInfo->push_back(STR(L"www"));
+		parseInfo->push_back(MYSTR(L"www"));
 	}
 }
 XMLParser::~XMLParser()
@@ -70,24 +70,24 @@ Info XMLParser::ParseSingle(LPCWSTR filename,size_t position)
 			m_pReader->GetLocalName(&localName, NULL);
 
 			// 解析类型
-			vector<STR>::iterator ret;
-			ret = std::find(parseInfo->begin(), parseInfo->end(), STR(localName));
+			vector<MYSTR>::iterator ret;
+			ret = std::find(parseInfo->begin(), parseInfo->end(), MYSTR(localName));
 			if (ret == parseInfo->end()) {
 				continue;
 			}
 
 			// 看成是进入一个section
 			curSection = localName;
-			temp.SetClsid(STR(curSection));
+			temp.SetClsid(MYSTR(curSection));
 
 			if (S_OK == m_pReader->MoveToFirstAttribute()) {
 				m_pReader->GetLocalName(&localName, NULL);
 				m_pReader->GetValue(&szValue, NULL);
-				temp.AddProperty(STR(localName), STR(szValue));
+				temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 				while (S_OK == (hr = m_pReader->MoveToNextAttribute())) {
 					m_pReader->GetLocalName(&localName, NULL);
 					m_pReader->GetValue(&szValue, NULL);
-					temp.AddProperty(STR(localName), STR(szValue));
+					temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 				}
 				m_pReader->MoveToElement();
 			}
@@ -102,7 +102,7 @@ Info XMLParser::ParseSingle(LPCWSTR filename,size_t position)
 						m_pReader->Read(&nodeType);
 					}
 					m_pReader->GetValue(&szValue, NULL);
-					temp.AddProperty(STR(localName), STR(szValue));
+					temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 					while (nodeType != XmlNodeType_EndElement) {
 						m_pReader->Read(&nodeType);
 					}
@@ -166,8 +166,8 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 			pReader->GetLocalName(&localName, NULL);
 
 			// 解析类型, 用这个来限定解析对象
-			vector<STR>::iterator ret;
-			ret = std::find(parseInfo->begin(), parseInfo->end(), STR(localName));
+			vector<MYSTR>::iterator ret;
+			ret = std::find(parseInfo->begin(), parseInfo->end(), MYSTR(localName));
 			if (ret == parseInfo->end()) {
 				continue;
 			}
@@ -175,16 +175,16 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 			// 看成是进入一个section
 			curSection = localName;
 			Info temp;
-			temp.SetClsid(STR(curSection));
+			temp.SetClsid(MYSTR(curSection));
 
 			pReader->MoveToFirstAttribute();
 			pReader->GetLocalName(&localName, NULL);
 			pReader->GetValue(&szValue, NULL);
-			temp.AddProperty(STR(localName), STR(szValue));
+			temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 			while (S_OK == (hr = pReader->MoveToNextAttribute())) {
 				pReader->GetLocalName(&localName, NULL);
 				pReader->GetValue(&szValue, NULL);
-				temp.AddProperty(STR(localName), STR(szValue));
+				temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 			}
 			pReader->MoveToElement();
 
@@ -198,7 +198,7 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 						pReader->Read(&nodeType);
 					}
 					pReader->GetValue(&szValue, NULL);
-					temp.AddProperty(STR(localName), STR(szValue));
+					temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 					while (nodeType != XmlNodeType_EndElement) {
 						pReader->Read(&nodeType);
 					}
@@ -227,9 +227,9 @@ wchar_t* XMLMarshal::Marshal(Info inobj)
 	pWriter->SetOutput(pOutput);
 	//pWriter->SetProperty(XmlWriterProperty_Indent, TRUE);
 
-	STR clsid = inobj.GetClsid();
+	MYSTR clsid = inobj.GetClsid();
 	pWriter->WriteStartElement(0, clsid, 0);
-	std::map<STR, std::vector<STR>> props = inobj.GetProperties();
+	std::map<MYSTR, std::vector<MYSTR>> props = inobj.GetProperties();
 	for (auto i : props) {
 		for (auto j : i.second) {
 			pWriter->WriteStartElement(0, i.first, 0);
@@ -250,32 +250,32 @@ wchar_t* XMLMarshal::Marshal(Info inobj)
 	return pv;
 }
 
-Info XMLMarshal::Unmarshal(STR xmlcode, DWORD flag)
+Info XMLMarshal::Unmarshal(MYSTR xmlcode, DWORD flag)
 {
-	std::vector<STR> *parseInfo = new std::vector<STR>;
+	std::vector<MYSTR> *parseInfo = new std::vector<MYSTR>;
 	if (flag & article) {
-		parseInfo->push_back(STR(L"article"));
+		parseInfo->push_back(MYSTR(L"article"));
 	}
 	if (flag & book) {
-		parseInfo->push_back(STR(L"book"));
+		parseInfo->push_back(MYSTR(L"book"));
 	}
 	if (flag & incollection) {
-		parseInfo->push_back(STR(L"incollection"));
+		parseInfo->push_back(MYSTR(L"incollection"));
 	}
 	if (flag & inproceedings) {
-		parseInfo->push_back(STR(L"inproceedings"));
+		parseInfo->push_back(MYSTR(L"inproceedings"));
 	}
 	if (flag & mastersthesis) {
-		parseInfo->push_back(STR(L"mastersthesis"));
+		parseInfo->push_back(MYSTR(L"mastersthesis"));
 	}
 	if (flag & phdthesis) {
-		parseInfo->push_back(STR(L"phdthesis"));
+		parseInfo->push_back(MYSTR(L"phdthesis"));
 	}
 	if (flag & proceedings) {
-		parseInfo->push_back(STR(L"proceedings"));
+		parseInfo->push_back(MYSTR(L"proceedings"));
 	}
 	if (flag & www) {
-		parseInfo->push_back(STR(L"www"));
+		parseInfo->push_back(MYSTR(L"www"));
 	}
 
 	CComPtr<IStream> pStream;
@@ -304,24 +304,24 @@ Info XMLMarshal::Unmarshal(STR xmlcode, DWORD flag)
 			m_pReader->GetLocalName(&localName, NULL);
 
 			// 解析类型
-			vector<STR>::iterator ret;
-			ret = std::find(parseInfo->begin(), parseInfo->end(), STR(localName));
+			vector<MYSTR>::iterator ret;
+			ret = std::find(parseInfo->begin(), parseInfo->end(), MYSTR(localName));
 			if (ret == parseInfo->end()) {
 				continue;
 			}
 
 			// 看成是进入一个section
 			curSection = localName;
-			temp.SetClsid(STR(curSection));
+			temp.SetClsid(MYSTR(curSection));
 
 			if (S_OK == m_pReader->MoveToFirstAttribute()) {
 				m_pReader->GetLocalName(&localName, NULL);
 				m_pReader->GetValue(&szValue, NULL);
-				temp.AddProperty(STR(localName), STR(szValue));
+				temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 				while (S_OK == (hr = m_pReader->MoveToNextAttribute())) {
 					m_pReader->GetLocalName(&localName, NULL);
 					m_pReader->GetValue(&szValue, NULL);
-					temp.AddProperty(STR(localName), STR(szValue));
+					temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 				}
 				m_pReader->MoveToElement();
 			}
@@ -336,7 +336,7 @@ Info XMLMarshal::Unmarshal(STR xmlcode, DWORD flag)
 						m_pReader->Read(&nodeType);
 					}
 					m_pReader->GetValue(&szValue, NULL);
-					temp.AddProperty(STR(localName), STR(szValue));
+					temp.AddProperty(MYSTR(localName), MYSTR(szValue));
 					while (nodeType != XmlNodeType_EndElement) {
 						m_pReader->Read(&nodeType);
 					}

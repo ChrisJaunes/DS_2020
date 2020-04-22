@@ -1,4 +1,5 @@
 #pragma once
+#define MYSTR bstr_t
 
 #define DS_BPT_TEST_DB  L"../DS_2020_Test/test_file/test.bpdb" 
 #define DS_BPT_TEST_ALS L"../DS_2020_Test/test.als"
@@ -13,5 +14,5 @@
 #define TEST_DEBUG_TOP
 #define TEST_DEBUG_INFO_TITLE
 
-#define MYSTR bstr_t
+//GUI ¿ØÖÆºê
 //#define TEST_DEBUG_HOTSPOT

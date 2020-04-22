@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "config.h"
 #include "error.h"
 #include "Info.h"
 typedef std::pair<bstr_t, ULONG64> PAIR;

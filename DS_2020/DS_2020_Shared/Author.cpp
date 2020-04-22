@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "config.h"
-
 #include "Author.h"
 #include "AuthorMarshal.h"
 

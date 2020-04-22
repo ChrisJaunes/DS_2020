@@ -1,27 +1,30 @@
 #pragma once
 #include "pch.h"
-#define STR bstr_t
-
+#include "config.h"
 // update: title为必要属性
 class Info {
 protected:
 	// 标识当前大类属性
-	STR clsid;
-	std::map<STR, std::vector<STR>>* properties;
+	MYSTR clsid;
+	std::map<MYSTR, std::vector<MYSTR>>* properties;
 public:
 	Info();
 	Info(const Info&);
+	Info& operator=(const Info&);
 	~Info();
 
 	// 初始化函数
-	void AddProperty(STR, STR);
-	void SetClsid(STR);
+	void AddProperty(MYSTR, MYSTR);
+	void SetClsid(MYSTR);
 
 	// 获取属性
-	STR GetClsid();
-	std::vector<STR> GetProperty(STR);
-	std::map<STR, std::vector<STR>> GetProperties();
+	MYSTR GetClsid();
+	std::vector<MYSTR> GetProperty(MYSTR);
+	std::map<MYSTR, std::vector<MYSTR>> GetProperties();
 
 	wchar_t* serialize();
-	static Info deserialize(STR);
+	static Info deserialize(MYSTR);
+#ifdef TEST_DEBUG_INFO
+	static unsigned int Info_cnt;
+#endif
 };

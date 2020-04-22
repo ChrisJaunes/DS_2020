@@ -52,7 +52,7 @@ wchar_t* AuthorMarshal::Marshal(Author inobj)
 	//	pWriter->WriteString(STR(i.first));
 	//	pWriter->WriteEndElement();
 	//}
-	std::map<STR, std::vector<STR> > articles = inobj.GetArticles().second;
+	std::map<MYSTR, std::vector<MYSTR> > articles = inobj.GetArticles().second;
 	for (auto i : articles) {
 		pWriter->WriteStartElement(0, L"title", 0);
 		pWriter->WriteAttributeString(0, L"name", 0, i.first);
@@ -76,9 +76,9 @@ wchar_t* AuthorMarshal::Marshal(Author inobj)
 	return pv;
 }
 
-Author AuthorMarshal::Unmarshal(STR xmlcode)
+Author AuthorMarshal::Unmarshal(MYSTR xmlcode)
 {
-	std::vector<STR>* parseInfo = new std::vector<STR>;
+	std::vector<MYSTR>* parseInfo = new std::vector<MYSTR>;
 	parseInfo->push_back(L"AUTHOR");
 	CComPtr<IStream> pStream;
 	CComPtr<IXmlReader> m_pReader;
@@ -106,8 +106,8 @@ Author AuthorMarshal::Unmarshal(STR xmlcode)
 			m_pReader->GetLocalName(&localName, NULL);
 
 			// Ω‚Œˆ¿‡–Õ
-			vector<STR>::iterator ret;
-			ret = std::find(parseInfo->begin(), parseInfo->end(), STR(localName));
+			vector<MYSTR>::iterator ret;
+			ret = std::find(parseInfo->begin(), parseInfo->end(), MYSTR(localName));
 			if (ret == parseInfo->end()) {
 				continue;
 			}
@@ -116,7 +116,7 @@ Author AuthorMarshal::Unmarshal(STR xmlcode)
 			curSection = localName;
 			if (S_OK != m_pReader->MoveToFirstAttribute()) { throw "unk error"; };
 			m_pReader->GetValue(&szValue, NULL);
-			temp.SetName(STR(szValue));
+			temp.SetName(MYSTR(szValue));
 			m_pReader->MoveToElement();
 			
 			while (lstrcmpW(localName, curSection) || nodeType != XmlNodeType_EndElement) {
@@ -127,8 +127,8 @@ Author AuthorMarshal::Unmarshal(STR xmlcode)
 						break;
 
 					if (nodeType == XmlNodeType_Element && !lstrcmpW(localName, L"title")) {
-						std::vector<STR> tmpPeople;
-						STR tmpTitle;
+						std::vector<MYSTR> tmpPeople;
+						MYSTR tmpTitle;
 						if (S_OK != m_pReader->MoveToFirstAttribute()) { throw "unk error1"; };
 						m_pReader->GetValue(&szValue, NULL);
 						tmpTitle = szValue;

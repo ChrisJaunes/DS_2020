@@ -17,5 +17,7 @@ int _tmain()
     CalcTime timer;
     //FST::test_BPT();
     FST::test_AUTHOR0();
+    FST::test_INFO0();
+    FST::test_INFO1();
     return 0;
 }

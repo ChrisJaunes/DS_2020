@@ -1,11 +1,11 @@
 #pragma once
+#include "config.h"
 #include "Solver.h"
 #include "BPTrees.h"
 #include "Info.h"
 #include "xmlhelper.h"
-
 class F1Solver : public ISolver {
-	BPTree<Info, STR>* pF1;
+	BPTree<Info, MYSTR>* pF1;
 	XMLParser* pParser;
 public:
 	// 构造函数, 这个不要变动 按照F3Solver的构造函数来实现(copy一下)

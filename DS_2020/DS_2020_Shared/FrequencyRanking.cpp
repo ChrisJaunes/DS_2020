@@ -7,27 +7,27 @@ OPRESULT FrequencyRanking::Insert(Info inobj) {
 	bstr_t left;
 	bstr_t year;
 
-	if (inobj.GetProperty(STR(L"year")).empty()) {
-		if (inobj.GetProperty(STR(L"mdate")).empty()) {
+	if (inobj.GetProperty(MYSTR(L"year")).empty()) {
+		if (inobj.GetProperty(MYSTR(L"mdate")).empty()) {
 			// fail
 			return 1;
 		}
 		else {
-			year = inobj.GetProperty(STR(L"mdate")).at(0);
+			year = inobj.GetProperty(MYSTR(L"mdate")).at(0);
 			CString trans((wchar_t*)year);
 			year = trans.Left(4);
 		}
 	}
 	else {
-		year = inobj.GetProperty(STR(L"year")).at(0);
+		year = inobj.GetProperty(MYSTR(L"year")).at(0);
 	}
 
-	if (inobj.GetProperty(STR(L"title")).empty()) {
+	if (inobj.GetProperty(MYSTR(L"title")).empty()) {
 		//fail
 		return 1;
 	}
 	else {
-		title = inobj.GetProperty(STR(L"title")).at(0);
+		title = inobj.GetProperty(MYSTR(L"title")).at(0);
 	}
 
 	CString t(title.GetBSTR());
@@ -211,8 +211,8 @@ OPRESULT FrequencyRanking2::Insert(Info inobj) {
 	bstr_t left;
 	bstr_t year;
 
-	year=inobj.GetProperty(STR(L"year")).at(0);
-	title = inobj.GetProperty(STR(L"title")).at(0);
+	year=inobj.GetProperty(MYSTR(L"year")).at(0);
+	title = inobj.GetProperty(MYSTR(L"title")).at(0);
 
 	CString t(title.GetBSTR());
 	int idx = t.Find(L" ");

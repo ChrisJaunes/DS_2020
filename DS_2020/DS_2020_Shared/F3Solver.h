@@ -1,4 +1,5 @@
 #pragma once
+#include "config.h"
 #include "Solver.h"
 #include "FrequencyRanking.h"
 #include "xmlhelper.h"
@@ -33,5 +34,5 @@ public:
 
 	// 这个是自己拓展的
 	void ExportToFile(const TCHAR*);
-	static std::map < STR, std::map<STR, ULONG64> > ImportFromFile(const TCHAR*);
+	static std::map < MYSTR, std::map<MYSTR, ULONG64> > ImportFromFile(const TCHAR*);
 };

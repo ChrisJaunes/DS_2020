@@ -2,7 +2,7 @@
 int  BPlusTreeUtils::bptcnt = 0;
 size_t BPlusTreeUtils::db_EOF(FILE* file) {
 	fseek(file, 0, SEEK_END);
-	return _ftelli64(file);
+	return (size_t)_ftelli64(file);
 }
 size_t BPlusTreeUtils::db_read(FILE* file, off_t off, void* buf, size_t size, size_t count) {
 	++bptcnt;

@@ -1,6 +1,6 @@
 #pragma once
 #include "Author.h"
-#define STR bstr_t
+#define MYSTR bstr_t
 /*
 	Author* AUTHORS[10];
 	AUTHORS[0] = new Author;
@@ -40,5 +40,5 @@ class AuthorMarshal {
 public:
 	// 用到了CommUtils.h -> charToWchar函数, 好像不支持中文
 	static wchar_t* Marshal(Author);
-	static Author Unmarshal(STR);
+	static Author Unmarshal(MYSTR);
 };

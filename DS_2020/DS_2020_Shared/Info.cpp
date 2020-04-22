@@ -1,70 +1,100 @@
 #include "pch.h"
+#include "config.h"
 #include "Info.h"
+#include "xmlhelper.h"
+
+#ifdef TEST_DEBUG_INFO
+unsigned int Info::Info_cnt = 0;
+#endif
 
 Info::Info()
 {
+#ifdef TEST_DEBUG_INFO
+	++Info_cnt;
+#endif
 	clsid = "";
-	properties = new std::map<STR, std::vector<STR>>;
+	properties = new std::map<MYSTR, std::vector<MYSTR>>;
 }
 
 Info::Info(const Info& Src)
 {
+#ifdef TEST_DEBUG_INFO
+	++Info_cnt;
+#endif
 	clsid = Src.clsid;
-	properties = new std::map<STR, std::vector<STR>>;
+	properties = new std::map<MYSTR, std::vector<MYSTR>>;
 	for (auto i : *Src.properties) {
 		properties->insert(i);
 	}
 }
 
+Info& Info::operator=(const Info& Src)
+{
+#ifdef TEST_DEBUG_INFO
+	++Info_cnt;
+#endif
+	if (properties != nullptr) delete[] properties;
+	clsid = Src.clsid;
+	if (Src.deserialize != nullptr) {
+		properties = new std::map<MYSTR, std::vector<MYSTR> >(*Src.properties);
+	}
+	else {
+		assert(0);
+	}
+	return *this;
+}
+
 Info::~Info()
 {
+#ifdef TEST_DEBUG_INFO
+	--Info_cnt;
+#endif
 	delete properties;
 }
 
-void Info::AddProperty(STR ProPertyName, STR ProPertyValue)
+void Info::AddProperty(MYSTR ProPertyName, MYSTR ProPertyValue)
 {
 	if (this->properties->count(ProPertyName)) {
 		this->properties->at(ProPertyName).push_back(ProPertyValue);
 	}
 	else {
-		std::vector<STR>* tmp = new std::vector<STR>;
+		std::vector<MYSTR>* tmp = new std::vector<MYSTR>;
 		tmp->push_back(ProPertyValue);
 		this->properties->insert(std::make_pair(ProPertyName,*tmp));
 	}
 }
 
-void Info::SetClsid(STR clsid)
+void Info::SetClsid(MYSTR clsid)
 {
 	this->clsid = clsid;
 }
 
-STR Info::GetClsid()
+MYSTR Info::GetClsid()
 {
-	return STR(clsid);
+	return MYSTR(clsid);
 }
 
-std::vector<STR> Info::GetProperty(STR ProPertyName)
+std::vector<MYSTR> Info::GetProperty(MYSTR ProPertyName)
 {
 	if (this->properties->count(ProPertyName)) {
-		return std::vector<STR>(this->properties->at(ProPertyName));
+		return std::vector<MYSTR>(this->properties->at(ProPertyName));
 	}
 	else {
-		return std::vector<STR>();
+		return std::vector<MYSTR>();
 	}
 }
 
-std::map<STR, std::vector<STR>> Info::GetProperties()
+std::map<MYSTR, std::vector<MYSTR>> Info::GetProperties()
 {
-	return std::map<STR, std::vector<STR>>(*properties);
+	return std::map<MYSTR, std::vector<MYSTR>>(*properties);
 }
 
-#include "xmlhelper.h"
 wchar_t* Info::serialize()
 {
 	return XMLMarshal::Marshal(*this);
 }
 
-Info Info::deserialize(STR xmlcode)
+Info Info::deserialize(MYSTR xmlcode)
 {
 	return XMLMarshal::Unmarshal(xmlcode);
 }

@@ -2,8 +2,6 @@
 #include "FrequencyRanking.h"
 #include "BPTrees.h"
 
-#define STR bstr_t
-
 wchar_t* charToWChar(const char* text);
 
 class CalcTime {

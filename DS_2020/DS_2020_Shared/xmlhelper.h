@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "error.h"
 #include <xmllite.h>
 #include <shlwapi.h>
@@ -32,7 +33,7 @@ class XMLParser {
 protected:
 	CComPtr<IStream> pFileStream;
 	CComPtr<IXmlReader> pReader;
-	std::vector<STR>* parseInfo;
+	std::vector<MYSTR>* parseInfo;
 public:
 	// Ä¬ÈÏÖ»·ÖÎö article
 	XMLParser();
@@ -63,5 +64,5 @@ protected:
 class XMLMarshal {
 public:
 	static wchar_t* Marshal(Info);
-	static Info Unmarshal(STR, DWORD=alltypes);
+	static Info Unmarshal(MYSTR, DWORD=alltypes);
 };

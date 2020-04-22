@@ -13,9 +13,9 @@
  * search: 在B+树里查询key_t， 返回一个vector()
  */
 template<typename KEY_T, typename OBJ>
-class BPMS{
+class BPTMS{
 public:
-    BPMS(const wchar_t* filename, int exist = 0);
+    BPTMS(const wchar_t* filename, int exist = 0);
     void insertMulti(KEY_T key, OBJ obj);
     void insertReplace(KEY_T key, OBJ obj);
     std::vector<OBJ> search(KEY_T);
@@ -25,15 +25,15 @@ public:
 };
 
 template<typename KEY_T, typename OBJ>
-inline BPMS<KEY_T, OBJ>::BPMS(const wchar_t* filepath, int exist)
+inline BPTMS<KEY_T, OBJ>::BPTMS(const wchar_t* filepath, int exist)
     : db(filepath, exist)
 {
-    value_block_sz = db.data_block_size - sizeof(chd_t) * 2;
+    value_block_sz = db.data_block_size - sizeof(OFF_T) * 2;
 
 }
 
 template<typename KEY_T, typename OBJ>
-inline void BPMS<KEY_T, OBJ>::insertMulti(KEY_T key, OBJ obj) {
+inline void BPTMS<KEY_T, OBJ>::insertMulti(KEY_T key, OBJ obj) {
     wchar_t* value = obj.serialize();
 
     size_t value_sz = (wcslen(value) + 1) * sizeof(wchar_t);
@@ -49,7 +49,7 @@ inline void BPMS<KEY_T, OBJ>::insertMulti(KEY_T key, OBJ obj) {
 }
 
 template<typename KEY_T, typename OBJ>
-inline void BPMS<KEY_T, OBJ>::insertReplace(KEY_T key, OBJ obj) {
+inline void BPTMS<KEY_T, OBJ>::insertReplace(KEY_T key, OBJ obj) {
     wchar_t * value = obj.serialize();
     size_t value_sz = (wcslen(value) + 1) * sizeof(wchar_t);
     size_t _value_sz = (value_sz + value_block_sz - 1) / value_block_sz * value_block_sz;
@@ -64,11 +64,12 @@ inline void BPMS<KEY_T, OBJ>::insertReplace(KEY_T key, OBJ obj) {
 }
 
 template<typename KEY_T, typename OBJ>
-inline std::vector<OBJ> BPMS<KEY_T, OBJ>::search(KEY_T key)
+inline std::vector<OBJ> BPTMS<KEY_T, OBJ>::search(KEY_T key)
 {
     void* _value = nullptr;
     size_t _value_sz;
-    if (search(key, _value, _value_sz) == BPLUSTRE_FAILED) return vector<OBJ>();
-    vector<OBJ> res;
+    if (search(key, _value, _value_sz) == BPLUSTRE_FAILED) return std::vector<OBJ>();
+    std::vector<OBJ> res;
     res.push_back(OBJ::deserialize());
+    return res;
 }

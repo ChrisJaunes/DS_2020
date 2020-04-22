@@ -1,9 +1,9 @@
 # Directories
-test_file/
+test_file/*
 !test_file/check.bat
 
 # File types
 dblp.xml
 *.xml
 *.als
-*.als.bak\w*
+*.bak
