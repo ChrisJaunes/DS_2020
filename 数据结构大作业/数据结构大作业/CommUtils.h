@@ -12,8 +12,3 @@ public:
 	CalcTime();
 	~CalcTime();
 };
-
-class SerializeHelper {
-
-};
-

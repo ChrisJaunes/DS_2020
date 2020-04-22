@@ -72,7 +72,7 @@ wchar_t* AuthorMarshal::Marshal(Author inobj)
 	pStream->Seek(move, STREAM_SEEK_SET, NULL);
 	pStream->Read(pv, result.cbSize.QuadPart, &readret);
 	wchar_t* pWchar = charToWChar((const char*)pv);
-	STR res = STR(pWchar);
+	//STR res = STR(pWchar);
 	delete[] pv;
 	//delete[] pWchar;
 	//return STR(res);
