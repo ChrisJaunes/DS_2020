@@ -38,8 +38,10 @@ wchar_t* AuthorMarshal::Marshal(Author inobj)
 		reinterpret_cast<void**>(&pWriter),
 		0);
 	::CreateStreamOnHGlobal(0, TRUE, &pStream);
-	pWriter->SetOutput(pStream);
 
+	CComPtr<IXmlWriterOutput> pOutput;
+	CreateXmlWriterOutputWithEncodingName(pStream, nullptr, L"utf-16", &pOutput);
+	pWriter->SetOutput(pOutput);
 	pWriter->WriteStartElement(0, L"AUTHOR", 0);
 	pWriter->WriteAttributeString(0,L"name", 0, inobj.GetName().second);
 
@@ -71,12 +73,7 @@ wchar_t* AuthorMarshal::Marshal(Author inobj)
 	move.QuadPart = 0;
 	pStream->Seek(move, STREAM_SEEK_SET, NULL);
 	pStream->Read(pv, result.cbSize.QuadPart, &readret);
-	wchar_t* pWchar = charToWChar((const char*)pv);
-	//STR res = STR(pWchar);
-	delete[] pv;
-	//delete[] pWchar;
-	//return STR(res);
-	return pWchar;
+	return pv;
 }
 
 Author AuthorMarshal::Unmarshal(STR xmlcode)
@@ -85,16 +82,19 @@ Author AuthorMarshal::Unmarshal(STR xmlcode)
 	parseInfo->push_back(L"AUTHOR");
 	CComPtr<IStream> pStream;
 	CComPtr<IXmlReader> m_pReader;
+	CComPtr<IXmlReaderInput> pInput;
 	HRESULT hr = ::CreateStreamOnHGlobal(0, TRUE, &pStream);
+	CreateXmlReaderInputWithEncodingName(pStream, nullptr, L"utf-16", false, nullptr, &pInput);
+
 	ULONG written;
-	char* pv = (char*)xmlcode;
-	pStream->Write(pv, strlen(pv), &written);
+	wchar_t* pv = (wchar_t*)xmlcode;
+	pStream->Write(pv, 2*wcslen(pv)+1, &written);
 	LARGE_INTEGER move;
 	move.QuadPart = 0;
 	pStream->Seek(move, STREAM_SEEK_SET, NULL);
 
 	CreateXmlReader(__uuidof(IXmlReader), (void**)&m_pReader, NULL);
-	m_pReader->SetInput(pStream);
+	m_pReader->SetInput(pInput);
 	m_pReader->SetProperty(XmlReaderProperty_DtdProcessing, TRUE);
 
 	LPCWSTR szValue = NULL, curSection = NULL, localName = NULL;

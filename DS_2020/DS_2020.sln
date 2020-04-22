@@ -11,6 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DS_2020_GUI", "DS_2020_GUI\
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		DS_2020_Shared\DS_2020_Shared.vcxitems*{2db24434-9378-45a9-a173-baa64d268a59}*SharedItemsImports = 4
 		DS_2020_Shared\DS_2020_Shared.vcxitems*{b0390685-3a7c-4821-8c81-eab7fb4a2a5d}*SharedItemsImports = 4
 		DS_2020_Shared\DS_2020_Shared.vcxitems*{b84fc743-26c4-4da8-99bb-70359f1ba06b}*SharedItemsImports = 9
 	EndGlobalSection
@@ -40,7 +41,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = VS2017
 		SolutionGuid = {96314E07-A32C-4E1A-BB20-9ED711B40905}
+		Qt5Version = VS2017
 	EndGlobalSection
 EndGlobal
