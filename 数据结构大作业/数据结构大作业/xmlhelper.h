@@ -62,6 +62,6 @@ protected:
 */
 class XMLMarshal {
 public:
-	static STR Marshal(Info);
-	static Info Unmarshal(STR, DWORD=article);
+	static wchar_t* Marshal(Info);
+	static Info Unmarshal(STR, DWORD=alltypes);
 };

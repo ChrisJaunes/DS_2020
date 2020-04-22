@@ -57,3 +57,14 @@ std::map<STR, std::vector<STR>> Info::GetProperties()
 {
 	return std::map<STR, std::vector<STR>>(*properties);
 }
+
+#include "xmlhelper.h"
+wchar_t* Info::serialize()
+{
+	return XMLMarshal::Marshal(*this);
+}
+
+Info Info::deserialize(STR xmlcode)
+{
+	return XMLMarshal::Unmarshal(xmlcode);
+}

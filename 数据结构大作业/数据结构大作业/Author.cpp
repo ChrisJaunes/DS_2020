@@ -114,5 +114,18 @@ std::pair<OPRESULT, std::vector<STR> > Author::GetCollaboratorsNoWeight() {
 	return make_pair(true, res);
 }
 
+#include "AuthorMarshal.h"
+wchar_t* Author::serialize()
+{
+	return AuthorMarshal::Marshal(*this);
+}
+
+Author Author::deserialize(STR xmlcode)
+{
+
+	return AuthorMarshal::Unmarshal(xmlcode);
+}
+
+
 #undef STR
 #undef W

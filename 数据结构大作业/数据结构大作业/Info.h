@@ -22,4 +22,6 @@ public:
 	std::vector<STR> GetProperty(STR);
 	std::map<STR, std::vector<STR>> GetProperties();
 
+	wchar_t* serialize();
+	static Info deserialize(STR);
 };

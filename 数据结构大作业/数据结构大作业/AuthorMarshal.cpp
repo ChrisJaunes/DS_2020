@@ -30,7 +30,7 @@ collaborators:
 */
 #define W int
 
-STR AuthorMarshal::Marshal(Author inobj)
+wchar_t* AuthorMarshal::Marshal(Author inobj)
 {
 	CComPtr<IStream> pStream;
 	CComPtr<IXmlWriter> pWriter;
@@ -74,8 +74,9 @@ STR AuthorMarshal::Marshal(Author inobj)
 	wchar_t* pWchar = charToWChar((const char*)pv);
 	STR res = STR(pWchar);
 	delete[] pv;
-	delete[] pWchar;
-	return STR(res);
+	//delete[] pWchar;
+	//return STR(res);
+	return pWchar;
 }
 
 Author AuthorMarshal::Unmarshal(STR xmlcode)

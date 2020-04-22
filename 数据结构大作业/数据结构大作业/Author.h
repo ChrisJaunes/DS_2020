@@ -41,8 +41,10 @@ public:
 	OPRESULT GetCollaboratorByArticle(const STR&, std::map<STR, int>&);
 	std::pair<OPRESULT, std::vector<std::pair<int, STR> > > GetCollaborators();
 	std::pair<OPRESULT, std::vector<STR> > GetCollaboratorsNoWeight();
-};
 
+	wchar_t* serialize();
+	static Author deserialize(STR);
+};
 
 struct AuthorCmpByNumOfArticle {
 	bool operator()(const Author *a, const Author *b) {
