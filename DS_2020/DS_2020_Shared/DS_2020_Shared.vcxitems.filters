@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="B+Tree">
+      <UniqueIdentifier>{385114c6-a89c-4474-81f0-732d347cf5e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{14380f81-3fa8-4e3c-a9ab-6c3160a7c568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{baa6c050-456c-46cd-a0b0-861e48840782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Solver">
+      <UniqueIdentifier>{118d5b3f-eb60-44ea-ba8b-83d114dd474f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="废弃">
+      <UniqueIdentifier>{48f33694-e5e3-4db1-a799-6b50467dc710}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XMLhelper">
+      <UniqueIdentifier>{b24f68fe-580d-451d-9f27-08d55343992f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.cpp">
+      <Filter>B+Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)F3Solver.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)F1Solver.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Info.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
+      <Filter>Header</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)xmlhelper.cpp">
+      <Filter>XMLhelper</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Author.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CommUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FrequencyRanking.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AuthorMarshal.cpp">
+      <Filter>XMLhelper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Author.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTree.h">
+      <Filter>B+Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.h">
+      <Filter>B+Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPTMS.h">
+      <Filter>B+Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)config.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)error.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)F3Solver.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)F1Solver.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Info.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)xmlhelper.h">
+      <Filter>XMLhelper</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AuthorMarshal.h">
+      <Filter>XMLhelper</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPTrees.h">
+      <Filter>废弃</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CommUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FrequencyRanking.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

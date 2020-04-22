@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{b84fc743-26c4-4da8-99bb-70359f1ba06b}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Author.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AuthorMarshal.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CommUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)F1Solver.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)F3Solver.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)FrequencyRanking.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Info.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)xmlhelper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Author.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AuthorMarshal.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPTMS.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPTrees.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CommUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)config.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)error.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)F1Solver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)F3Solver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FrequencyRanking.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Info.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)xmlhelper.h" />
+  </ItemGroup>
+</Project>

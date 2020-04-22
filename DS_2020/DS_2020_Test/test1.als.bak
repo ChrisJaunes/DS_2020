@@ -1,0 +1,192 @@
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 44
+  me, time: 199
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 37
+  me, time: 195
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 22
+  me, time: 205
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 230
+  me, time: 1414
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 148
+  me, time: 960
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 100000
+
+  std, time: 1051
+  me, time: 13065
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000000
+
+  std, time: 13879
+  me, time: 113692
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 36
+  me, time: 192
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 21
+  me, time: 189
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 21
+  me, time: 191
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 219
+  me, time: 1353
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 217
+  me, time: 1465
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 100000
+
+  std, time: 1811
+  me, time: 6791
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000000
+
+  std, time: 10921
+  me, time: 92689
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 36
+  me, time: 193
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 21
+  me, time: 190
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000
+
+  std, time: 21
+  me, time: 192
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 219
+  me, time: 1507
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 214
+  me, time: 1458
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 100000
+
+  std, time: 1768
+  me, time: 9058
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000000
+
+  std, time: 13484
+  me, time: 84935
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+

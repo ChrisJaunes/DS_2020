@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DS_2020_Shared", "DS_2020_Shared\DS_2020_Shared.vcxitems", "{B84FC743-26C4-4DA8-99BB-70359F1BA06B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DS_2020_Console", "DS_2020_Console\DS_2020_Console.vcxproj", "{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DS_2020_GUI", "DS_2020_GUI\DS_2020_GUI.vcxproj", "{2DB24434-9378-45A9-A173-BAA64D268A59}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		DS_2020_Shared\DS_2020_Shared.vcxitems*{b0390685-3a7c-4821-8c81-eab7fb4a2a5d}*SharedItemsImports = 4
+		DS_2020_Shared\DS_2020_Shared.vcxitems*{b84fc743-26c4-4da8-99bb-70359f1ba06b}*SharedItemsImports = 9
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}.Debug|x64.ActiveCfg = Debug|x64
+		{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}.Debug|x64.Build.0 = Debug|x64
+		{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}.Debug|x86.ActiveCfg = Debug|Win32
+		{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}.Debug|x86.Build.0 = Debug|Win32
+		{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}.Release|x64.ActiveCfg = Release|x64
+		{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}.Release|x64.Build.0 = Release|x64
+		{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}.Release|x86.ActiveCfg = Release|Win32
+		{B0390685-3A7C-4821-8C81-EAB7FB4A2A5D}.Release|x86.Build.0 = Release|Win32
+		{2DB24434-9378-45A9-A173-BAA64D268A59}.Debug|x64.ActiveCfg = Debug|x64
+		{2DB24434-9378-45A9-A173-BAA64D268A59}.Debug|x64.Build.0 = Debug|x64
+		{2DB24434-9378-45A9-A173-BAA64D268A59}.Debug|x86.ActiveCfg = Debug|x64
+		{2DB24434-9378-45A9-A173-BAA64D268A59}.Release|x64.ActiveCfg = Release|x64
+		{2DB24434-9378-45A9-A173-BAA64D268A59}.Release|x64.Build.0 = Release|x64
+		{2DB24434-9378-45A9-A173-BAA64D268A59}.Release|x86.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		Qt5Version = VS2017
+		SolutionGuid = {96314E07-A32C-4E1A-BB20-9ED711B40905}
+	EndGlobalSection
+EndGlobal
