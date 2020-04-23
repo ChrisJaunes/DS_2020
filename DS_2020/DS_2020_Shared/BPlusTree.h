@@ -196,7 +196,9 @@ template<typename KEY_T>
 inline BPlusTree<KEY_T>::~BPlusTree()
 {
     for (auto it : node_map) nodeToFileBlock((BPlusTreeNode*)it.second, ((BPlusTreeNode*)it.second)->self);
-    //for (auto it : data_map) nodeToFileBlock(it.second);
+    for (auto it : data_map) {
+        BPlusTreeUtils::db_write(fd, it.first, it.second, data_block_size, 1);
+    }
     treeToFileBlock();
     free(BPT_caches);
     free(node_caches);
@@ -217,7 +219,7 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
 
         root = node->self;
         level = 1;
-        ++number;
+        number = 1;
         leaf_head = node->self;
         node_defer(node);
         return BPLUSTRE_SUCCESS;
@@ -253,7 +255,6 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
             offs(node)[1] = rch->self;
             lch->parent = node->self;
             rch->parent = node->self;
-            ++number;
             root = node->self;
             ++level;
             node_defer(lch);
@@ -386,13 +387,34 @@ inline void BPlusTree<KEY_T>::node_defer(void* node)
 }
 
 template<typename KEY_T>
+inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_fetch(OFF_T offset)
+{
+    if (offset == INVALID_OFFSET) {
+        return nullptr;
+    }
+    if (node_map.count(offset)) {
+        BPlusTreeNode* node = (BPlusTreeNode * )node_map[offset];
+        size_t _id = node_used[node];
+        assert(node_unused.count(_id));
+        //if (unused.count(_id)) 
+        node_unused.erase(_id);
+        node_used[node] = ++node_used_cnt;
+        return node;
+    }
+    BPlusTreeNode* node = (BPlusTreeNode *)node_refer();
+    nodeFromFileBlock(node, offset);
+    node_map[node->self] = node;
+    return node;
+}
+
+template<typename KEY_T>
 inline OFF_T BPlusTree<KEY_T>::node_empty_block()
 {
     //总所周知, 只有插入和查询的B+树，节点只会插在文件尾部
     void* buf = swap_refer();
     assert(node_block_head == INVALID_OFFSET);
     OFF_T res = BPlusTreeUtils::db_EOF(fd);
-    memset(buf, 'A', node_block_size);
+    memmove(buf, &res, sizeof(res));
     BPlusTreeUtils::db_write(fd, res, buf, node_block_size, 1);
     swap_defer(buf);
     return res;
@@ -447,27 +469,7 @@ inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_new(OFF_
     node->prev = INVALID_OFFSET;
     node->next = INVALID_OFFSET;
     node_map[node->self] = node;
-    return node;
-}
-
-template<typename KEY_T>
-inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_fetch(OFF_T offset)
-{
-    if (offset == INVALID_OFFSET) {
-        return nullptr;
-    }
-    if (node_map.count(offset)) {
-        BPlusTreeNode* node = (BPlusTreeNode * )node_map[offset];
-        size_t _id = node_used[node];
-        assert(node_unused.count(_id));
-        //if (unused.count(_id)) 
-        node_unused.erase(_id);
-        node_used[node] = ++node_used_cnt;
-        return node;
-    }
-    BPlusTreeNode* node = (BPlusTreeNode *)node_refer();
-    nodeFromFileBlock(node, offset);
-    node_map[node->self] = node;
+    ++number;
     return node;
 }
 
@@ -475,8 +477,12 @@ template<typename KEY_T>
 inline void BPlusTree<KEY_T>::node_flush_parent(OFF_T node, BPlusTreeNode* parent)
 {
     BPlusTreeNode* child = node_fetch(node);
-    assert(child != NULL);
-    child->parent = parent->self;
+    if (child != nullptr && parent != nullptr) {
+        child->parent = parent->self;
+    }
+    else {
+        assert(0);
+    }
     node_defer(child);
 }
 
@@ -495,55 +501,77 @@ inline void BPlusTree<KEY_T>::data_unlock()
 template<typename KEY_T>
 inline void* BPlusTree<KEY_T>::data_refer()
 {
-    //待实现
-    assert(!node_used.count(data_caches));
-    node_used[data_caches] = 1;
-    return data_caches;
+    assert(!data_unused.empty());
+    void* data = (void*) data_unused.begin()->second;
+    if (data_used.count(data)) {
+        size_t off;
+        memmove(&off, data, sizeof(off));
+        data_map.erase(off);
+        BPlusTreeUtils::db_write(fd, off, data, data_block_size, 1);
+    }
+    data_unused.erase(data_unused.begin());
+    data_used[data] = ++data_used_cnt;
+    return data;
 }
 
 template<typename KEY_T>
-inline void BPlusTree<KEY_T>::data_defer(void*)
+inline void BPlusTree<KEY_T>::data_defer(void* data)
 {
-    //待实现
-    node_used.erase(data_caches);
+    assert(data != nullptr);
+    assert(data_used.count(data));
+    data_unused[data_used[data]] = data;
+}
+
+template<typename KEY_T>
+inline void* BPlusTree<KEY_T>::data_fetch(OFF_T offset)
+{
+    if (offset == INVALID_OFFSET) {
+        return nullptr;
+    }
+    if (data_map.count(offset)) {
+        void* data = (void*)data_map[offset];
+        size_t _id = data_used[data];
+        assert(data_unused.count(_id));
+        //if (unused.count(_id)) 
+        data_unused.erase(_id);
+        data_used[data] = ++data_used_cnt;
+        return data;
+    }
+    void* data = (void*)data_refer();
+    BPlusTreeUtils::db_read(fd, offset, data, data_block_size, 1);
+    data_map[offset] = data;
+    return data;
 }
 
 template<typename KEY_T>
 inline OFF_T BPlusTree<KEY_T>::data_empty_block()
 {
-    //待实现
     OFF_T res;
-    void* buf = swap_refer();
     if (data_block_head == INVALID_OFFSET) {
+        void* buf = data_refer();
         res = BPlusTreeUtils::db_EOF(fd);
+        memmove(buf, &res, sizeof(res));
         BPlusTreeUtils::db_write(fd, res, buf, data_block_size, 1);
+        data_map[res] = buf;
+        data_defer(buf);
     }
     else {
         res = data_block_head;
-        BPlusTreeUtils::db_read(fd, data_block_head, buf, data_block_size, 1);
+        void* buf = data_fetch(data_block_head);
         memmove(&data_block_head, (char*)buf + sizeof(data_block_head), sizeof(data_block_head));
+        data_defer(buf);
     }
-    swap_defer(buf);
     return res;
 }
 
 template<typename KEY_T>
 inline void BPlusTree<KEY_T>::dataFromFileBlock(OFF_T file_off)
 {
-    //待实现
 }
 
 template<typename KEY_T>
 inline void BPlusTree<KEY_T>::dataToFileBlock(OFF_T file_of)
 {
-    //待实现
-}
-
-template<typename KEY_T>
-inline void* BPlusTree<KEY_T>::data_fetch(OFF_T offset)
-{
-    //待实现
-    return NULL;
 }
 
 template<typename KEY_T>
@@ -551,13 +579,13 @@ inline void BPlusTree<KEY_T>::valueFromFileBlock(OFF_T file_off, void*& value, s
 {
     assert(value == NULL);
 
-    void* buf = swap_refer();
+    void* buf;
     void* value_tmp;
     value = NULL;
     value_sz = 0;
     size_t sz = data_block_size - sz_OFF * 2;
     while (file_off != INVALID_OFFSET) {
-        BPlusTreeUtils::db_read(fd, file_off, buf, data_block_size, 1);
+        buf = data_fetch(file_off);
         memmove(&file_off, (char*)buf + sz_OFF, sz_OFF);
 
         value_tmp = value;
@@ -566,33 +594,35 @@ inline void BPlusTree<KEY_T>::valueFromFileBlock(OFF_T file_off, void*& value, s
         memmove((char*)value + value_sz, value_tmp, value_sz);
         value_sz += sz;
         free(value_tmp);
+        data_defer(buf);
     }
-    swap_defer(buf);
 }
 
 template<typename KEY_T>
 inline OFF_T BPlusTree<KEY_T>::valueToFileBlock(OFF_T file_off, const void* value, const size_t value_sz)
 {
-    void* buf = swap_refer();
+    void* buf;
     while (file_off != INVALID_OFFSET) {
-        BPlusTreeUtils::db_read(fd, file_off, buf, data_block_size, 1);
+        buf = data_fetch(file_off);
         memmove(&file_off, (char*)buf + sz_OFF, sz_OFF);
         memmove((char*)buf + sz_OFF, &data_block_head, sz_OFF);
         memmove(&data_block_head, buf, sz_OFF);
+        data_defer(buf);
     }
 
-    size_t value_sz_tmp = 0;
+    size_t value_sz_tmp = 0, next_off;
     assert(value_sz % (data_block_size - sz_OFF * 2) == 0);
 
     while (value_sz_tmp < value_sz) {
-        memmove((char*)buf + sz_OFF, &file_off, sz_OFF);
+        next_off = file_off;
         file_off = data_empty_block();
+        buf = data_fetch(file_off);
         memmove(buf, &file_off, sz_OFF);
+        memmove((char*)buf + sz_OFF, &next_off, sz_OFF);
         memmove((char*)buf + sz_OFF + sz_OFF, (char*)value + value_sz_tmp, data_block_size - sz_OFF * 2);
-        BPlusTreeUtils::db_write(fd, file_off, buf, data_block_size, 1);
+        data_defer(buf);
         value_sz_tmp += data_block_size - sz_OFF * 2;
     }
-    swap_defer(buf);
     return file_off;
 }
 

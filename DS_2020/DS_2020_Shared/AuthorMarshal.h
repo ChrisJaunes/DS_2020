@@ -1,6 +1,5 @@
 #pragma once
 #include "Author.h"
-#define MYSTR bstr_t
 /*
 	Author* AUTHORS[10];
 	AUTHORS[0] = new Author;

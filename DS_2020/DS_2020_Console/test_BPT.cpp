@@ -180,12 +180,15 @@ namespace FST {
 		std::wstring file_out = std::wstring(DS_BPT_TEST_OUT);
 		std::wstring file_ans = std::wstring(DS_BPT_TEST_ANS);
 		test_BP_data(file_in, n);
+
 		int begin_time = clock();
 		test_BP_std(file_in, file_ans);
 		fprintf(_als, "\n  std, time: %d\n", clock() - begin_time);
+
 		begin_time = clock();
+		BPlusTreeUtils::bptcntR = BPlusTreeUtils::bptcntW = 0;
 		test_BP_me(file_in, file_out);
-		fprintf(_als, "  me, time: %d\n", clock() - begin_time);
+		fprintf(_als, "  me, time: %d; IO(R): %d ; IO(W): %d\n", clock() - begin_time, BPlusTreeUtils::bptcntR, BPlusTreeUtils::bptcntW);
 		fprintf(_als, "Result: \n");
 		fclose(_als);
 		system("..\\DS_2020_Test\\test_file\\check.bat >> ..\\DS_2020_Test\\test.als");

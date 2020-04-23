@@ -1,7 +1,7 @@
 #pragma once
 #include "pch.h"
 namespace BPlusTreeUtils {
-	extern int bptcnt;
+	extern int bptcntR, bptcntW;
     size_t db_EOF(FILE*);
 	size_t db_read(FILE* , off_t , void* , size_t , size_t );
 	size_t db_write(FILE* , off_t , const void* , size_t, size_t );
@@ -37,12 +37,12 @@ enum {
 };
 const char MAGIC_NUMBER[] = "DS_2020";
 //B+树的缓存区大小，手写内存管理
-const int BPT_CACHE_NUM = 1000;
+const int BPT_CACHE_NUM = 30;
 const int BPT_CACHE_TEMP_NUM = 10;
 //const int BPT_CACHE_BUF_USED = 1;
 //const int BPT_CACHE_BUF_UNUSED = 0;
 //const int BPT_MAX_ORDER = 1000;
 const int BPT_ROOT_SIZE = 64;
-const int BPT_NODE_BLOCK_SIZE = 16 * 1024;
-const int BPT_DATA_BLOCK_SIZE = 128;
+const int BPT_NODE_BLOCK_SIZE = 8 * 1024;
+const int BPT_DATA_BLOCK_SIZE = 1024;
 
