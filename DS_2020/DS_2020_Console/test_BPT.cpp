@@ -188,7 +188,7 @@ namespace FST {
 		begin_time = clock();
 		BPlusTreeUtils::bptcntR = BPlusTreeUtils::bptcntW = 0;
 		test_BP_me(file_in, file_out);
-		fprintf(_als, "  me, time: %d; IO(R): %d ; IO(W): %d\n", clock() - begin_time, BPlusTreeUtils::bptcntR, BPlusTreeUtils::bptcntW);
+		fprintf(_als, "  me, time: %d; IO(R): %.6lf ; IO(W): %.6lf\n", clock() - begin_time, BPlusTreeUtils::bptcntR, BPlusTreeUtils::bptcntW);
 		fprintf(_als, "Result: \n");
 		fclose(_als);
 		system("..\\DS_2020_Test\\test_file\\check.bat >> ..\\DS_2020_Test\\test.als");
@@ -199,11 +199,11 @@ namespace FST {
 	void test_BPT() {
 		test_BPT0();
 		test_BPT1();
-		test_BPT2(1000);
-		test_BPT2(1000);
-		test_BPT2(1000);
 		test_BPT2(10000);
 		test_BPT2(10000);
+		test_BPT2(10000);
+		test_BPT2(10000);
+		test_BPT2(100000);
 		test_BPT2(100000);
 		test_BPT2(1000000);
 		test_BPT3();

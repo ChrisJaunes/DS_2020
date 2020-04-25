@@ -33,36 +33,75 @@
  * cache_refer: 获取一块内存空间
  * cache_refer: 释放一块内存空间
  */
+//页块
+struct BPlusTreePage {
+    BLOCK_Status status;
+    BPlusTreePage(const BPlusTreePage&) = delete;
+    BPlusTreePage& operator=(const BPlusTreePage&) = delete;
+    inline void lock(const BLOCK_Status _status) {
+        //待实现锁
+        //while (status & BLOCK_WRITE_LOCK) ;
+        assert(status == BLOCK_Status::MODIFY || status == BLOCK_Status::NON_MODIFY);
+        if (status == BLOCK_Status::MODIFY) status = BLOCK_Status::WRITE_LOCK; else status = _status;
+    };
+    inline void unlock() {
+        assert(status != BLOCK_Status::MODIFY && status != BLOCK_Status::NON_MODIFY);
+        if (status == BLOCK_Status::WRITE_LOCK) status = BLOCK_Status::MODIFY; else status = BLOCK_Status::NON_MODIFY;
+    }
+};
+//节点页块
 #define keys(node) ( (KEY_T *)( (char *)(node) + p_KEYS) )
 #define offs(node) ( (OFF_T *)( (char *)(node) + p_OFFS) )
-
+struct BPlusTreeNode : public BPlusTreePage {
+    OFF_T self;
+    OFF_T parent;
+    BLOCK_Type type;
+    unsigned int ch_cnt;
+    OFF_T prev;
+    OFF_T next;
+    inline static size_t getSize() {
+        return sizeof(self) + sizeof(parent) + sizeof(type) + sizeof(ch_cnt) + sizeof(prev) + sizeof(next);
+    }
+};
+//数据页块
+struct BPlusTreeData : public BPlusTreePage {
+    OFF_T self;
+    OFF_T next;
+    char  data[0];
+    inline static size_t getSize() {
+        return sizeof(self) + sizeof(next);
+    }
+};
+//事件模块
+/*struct BPlusTreeEvent{
+    BPlusTreePage* page[8];
+    unsigned int level;
+    BPlusTreeEvent():level(0) {}
+    BPlusTreeEvent(const BPlusTreeEvent& a) = delete;
+    void operator=(const BPlusTreeEvent& a) = delete;
+    void addPage(BPlusTreePage* _page, BLOCK_Status _status) {
+        _page->lock(_status);
+        page[level++] = _page;
+    }
+    void delPage() {
+        page[--level]->unlock();
+    }
+};*/
+//B+树主体
 template<typename KEY_T = key_t>
-class BPlusTree {
+class BPlusTree{
 public:
     explicit BPlusTree(const wchar_t* filepath, int exist = BPLUSTREE_FILE_NON_EXIST, int _node_block_size = BPT_NODE_BLOCK_SIZE, int _data_block_size = BPT_DATA_BLOCK_SIZE);
-    BPlusTree(const BPlusTree& a);
-    void operator=(const BPlusTree& a);
+    BPlusTree(const BPlusTree& a) = delete;
+    void operator=(const BPlusTree& a) = delete;
     ~BPlusTree();
     int insert(KEY_T key, const void* value, const size_t value_sz);
     int search(KEY_T key, void*& value, size_t& value_sz);
 //private:
     //BPT常用常量
-    const size_t sz_NODE;
-    const size_t sz_KEY;
-    const size_t sz_OFF;
     size_t p_KEYS;
     size_t p_OFFS;
     //节点类
-    struct BPlusTreeNode {
-        OFF_T self;
-        OFF_T parent;
-        unsigned int type;
-        unsigned int ch_cnt;
-        OFF_T prev;
-        OFF_T next;
-        BPlusTreeNode(const BPlusTreeNode&);
-        void operator=(const BPlusTreeNode& a);
-    };
     int binary_search_by_key(BPlusTreeNode* node, const KEY_T& key);
     //B+树基本信息
     void* BPT_caches;
@@ -80,34 +119,28 @@ public:
     FILE* fd;
     //节点块缓存池
     void* node_caches;
-    size_t node_used_cnt;
-    std::unordered_map<OFF_T, void*> node_map;
-    std::unordered_map<void*, size_t> node_used;
-    std::map<size_t, void*> node_unused;
-    void node_lock();
-    void node_unlock();
-    void* node_refer();
-    void node_defer(void* node);
+    unsigned int node_used_index;
+    unsigned int sz_node_block_size;
+    std::unordered_map<size_t, BPlusTreeNode*> node_map;
+    int node_free();
+    BPlusTreeNode* node_refer();
+    void node_defer(BPlusTreeNode* node);
     OFF_T node_empty_block();
     void nodeFromFileBlock(BPlusTreeNode* node, OFF_T file_off);
     void nodeToFileBlock(BPlusTreeNode* node, OFF_T file_off);
-    BPlusTreeNode* node_new(OFF_T _self, OFF_T _parent,int _type);
+    BPlusTreeNode* node_new(OFF_T _self, OFF_T _parent, BLOCK_Type _type);
     BPlusTreeNode* node_fetch(OFF_T offset);
-    void node_flush_parent(OFF_T node, BPlusTreeNode* parent);
+    void node_flush_parent(OFF_T offset, BPlusTreeNode* parent);
     //数据块缓存池
     void* data_caches;
-    size_t data_used_cnt;
-    std::unordered_map<OFF_T, void*> data_map;
-    std::unordered_map<void*, size_t> data_used;
-    std::map<size_t, void*> data_unused;
-    void data_lock();
-    void data_unlock();
-    void* data_refer();
-    void data_defer(void*);
+    unsigned int data_used_index;
+    unsigned int sz_data_block_size;
+    BPlusTreeData* data_refer();
+    void data_defer(BPlusTreeData*);
+    BPlusTreeData* data_fetch(OFF_T offset);
     OFF_T data_empty_block();
-    void dataFromFileBlock(OFF_T file_off);
-    void dataToFileBlock(OFF_T file_of);
-    void* data_fetch(OFF_T offset);
+    void dataFromFileBlock(BPlusTreeData* data, OFF_T file_off);
+    void dataToFileBlock(BPlusTreeData* data, OFF_T file_of);
     void valueFromFileBlock(OFF_T file_off, void*& value, size_t& value_sz);
     OFF_T valueToFileBlock(OFF_T file_off, const void* value, const size_t value_sz);
 
@@ -124,9 +157,6 @@ public:
 
 template<typename KEY_T>
 inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, int exist, int _node_block_size, int _data_block_size)
-    : sz_NODE(sizeof(BPlusTreeNode))
-    , sz_KEY(sizeof(KEY_T))
-    , sz_OFF(sizeof(OFF_T))
 {
     size_t sz = wcslen(filepath) + 1;
     wchar_t* fdpath = new wchar_t[sz];
@@ -138,17 +168,14 @@ inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, int exist, int _node
     if (exist) {
         assert((fd = _wfopen(fdpath, L"rb+")) != nullptr);
         treeFromFileBlock();
-        assert(node_block_size == _node_block_size);
-        assert(sizeof(BPlusTreeNode) <= node_block_size);
-        node_max_order = (node_block_size - sz_NODE) / (sz_KEY + sz_OFF);
+        node_max_order = (node_block_size - BPlusTreeNode::getSize()) / (sizeof(KEY_T) + sizeof(OFF_T));
         assert(node_max_order >= 2);
     }
     else {
         assert((fd = _wfopen(fdpath, L"wb+")) != nullptr);
         node_block_size = _node_block_size;
         data_block_size = _data_block_size;
-        assert(sizeof(BPlusTreeNode) <= node_block_size);
-        node_max_order = (node_block_size - sz_NODE) / (sz_KEY + sz_OFF);
+        node_max_order = (node_block_size - BPlusTreeNode::getSize()) / (sizeof(KEY_T) + sizeof(OFF_T));
         assert(node_max_order >= 2);
         root = INVALID_OFFSET;
         level = 0;
@@ -158,46 +185,40 @@ inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, int exist, int _node
         data_block_head = INVALID_OFFSET;
         treeToFileBlock();
     }
-    p_KEYS = sz_NODE;
-    p_OFFS = sz_NODE + node_max_order * sz_KEY;
+    p_KEYS = sizeof(BPlusTreeNode);
+    p_OFFS = sizeof(BPlusTreeNode) + node_max_order * sizeof(KEY_T);
 
-    sz = (size_t) node_block_size * BPT_CACHE_NUM;
+    sz_node_block_size = ((size_t)node_block_size - BPlusTreeNode::getSize() + sizeof(BPlusTreeNode));
+    sz = sz_node_block_size * BPT_CACHE_NODE_NUM;
     node_caches = malloc(sz);
-    node_used_cnt = 0;
-    for (int i = 0; i < BPT_CACHE_NUM; i++) {
-        node_unused[++node_used_cnt] = (char*)node_caches + (size_t)node_block_size * i;
-    }
-    sz = (size_t)data_block_size * BPT_CACHE_NUM;
+    memset(node_caches, 0, sz);
+    for (int i = 0; i < BPT_CACHE_NODE_NUM; i++) 
+        ((BPlusTreeNode*)((char*)node_caches + sz_node_block_size * i))->status = BLOCK_Status::NON_MODIFY;
+    node_used_index = 0;
+
+    sz_data_block_size = ((size_t)data_block_size - BPlusTreeData::getSize() + sizeof(BPlusTreeData));
+    sz = sz_data_block_size * BPT_CACHE_DATA_NUM;
     data_caches = malloc(sz);
-    data_used_cnt = 0;
-    for (int i = 0; i < BPT_CACHE_NUM; i++) {
-        data_unused[++data_used_cnt] = (char*)data_caches + (size_t)data_block_size * i;
-    }
+    memset(data_caches, 0, sz);
+    for (int i = 0; i < BPT_CACHE_DATA_NUM; i++)
+        ((BPlusTreeData*)((char*)data_caches + sz_data_block_size * i))->status = BLOCK_Status::NON_MODIFY;
+    data_used_index = 0;
+
     temp_block_size = max(node_block_size, data_block_size) * 3;
     temp_caches = malloc((size_t)temp_block_size * BPT_CACHE_TEMP_NUM);
     memset(temp_used, 0, sizeof(temp_used));
-    
+
     delete[] fdpath;
-}
-
-template<typename KEY_T>
-inline BPlusTree<KEY_T>::BPlusTree(const BPlusTree& a)
-{
-    assert(0);
-}
-
-template<typename KEY_T>
-inline void BPlusTree<KEY_T>::operator=(const BPlusTree& a)
-{
-    assert(0);
 }
 
 template<typename KEY_T>
 inline BPlusTree<KEY_T>::~BPlusTree()
 {
-    for (auto it : node_map) nodeToFileBlock((BPlusTreeNode*)it.second, ((BPlusTreeNode*)it.second)->self);
-    for (auto it : data_map) {
-        BPlusTreeUtils::db_write(fd, it.first, it.second, data_block_size, 1);
+    assert(node_free() == 0);
+    for (int i = 0; i < BPT_CACHE_DATA_NUM; i++) {
+        BPlusTreeData* data = (BPlusTreeData * )((char*)data_caches + sz_data_block_size * i);
+        assert(data->status == BLOCK_Status::NON_MODIFY || data->status == BLOCK_Status::MODIFY);
+        if (data->status == BLOCK_Status::MODIFY) dataToFileBlock(data, data->self);
     }
     treeToFileBlock();
     free(BPT_caches);
@@ -210,9 +231,8 @@ inline BPlusTree<KEY_T>::~BPlusTree()
 template<typename KEY_T>
 inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t value_sz)
 {
-    BPlusTreeNode* node = node_fetch(root);
-    if (node == nullptr) {
-        node = node_new(node_empty_block(), INVALID_OFFSET, BPLUSTREE_LEAF);
+    if (root == INVALID_OFFSET) {
+        BPlusTreeNode* node = node_new(node_empty_block(), INVALID_OFFSET, BLOCK_Type::NODE_LEAF);
         node->ch_cnt = 1;
         keys(node)[0] = key;
         offs(node)[0] = valueToFileBlock(INVALID_OFFSET, value, value_sz);
@@ -225,13 +245,13 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
         return BPLUSTRE_SUCCESS;
     }
     int pos;
-    while (node->type == BPLUSTREE_INTERNAL) {
+    BPlusTreeNode* node = node_fetch(root);
+    while (node->type == BLOCK_Type::NODE_INTERNAL) {
         pos = binary_search_by_key(node, key);
         OFF_T next_off = offs(node)[pos];
         node_defer(node);
         node = node_fetch(next_off);
     }
-
     pos = binary_search_by_key(node, key);
     if (pos < node->ch_cnt && keys(node)[pos] == key) {
         valueToFileBlock(offs(node)[pos], value, value_sz);
@@ -248,7 +268,7 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
         }
         key = node_split(node, pos, key, value_off, lch, rch);
         if (lch->parent == INVALID_OFFSET && rch->parent == INVALID_OFFSET) {
-            node = node_new(node_empty_block(), INVALID_OFFSET, BPLUSTREE_INTERNAL);
+            node = node_new(node_empty_block(), INVALID_OFFSET, BLOCK_Type::NODE_INTERNAL);
             node->ch_cnt = 2;
             keys(node)[0] = key;
             offs(node)[0] = lch->self;
@@ -275,12 +295,12 @@ inline int BPlusTree<KEY_T>::insert(KEY_T key, const void* value, const size_t v
 template<typename KEY_T>
 inline int BPlusTree<KEY_T>::search(KEY_T key, void*& value, size_t& value_sz)
 {
-    BPlusTreeNode* node = node_fetch(root);
-    if (node == NULL) {
+    if (root == INVALID_OFFSET) {
         return BPLUSTRE_FAILED;
     }
     int pos;
-    while (node->type == BPLUSTREE_INTERNAL) {
+    BPlusTreeNode* node = node_fetch(root);
+    while (node->type == BLOCK_Type::NODE_INTERNAL) {
         pos = binary_search_by_key(node, key);
         OFF_T next_off = offs(node)[pos];
         node_defer(node);
@@ -297,21 +317,9 @@ inline int BPlusTree<KEY_T>::search(KEY_T key, void*& value, size_t& value_sz)
 }
 
 template<typename KEY_T>
-inline BPlusTree<KEY_T>::BPlusTreeNode::BPlusTreeNode(const BPlusTreeNode&)
-{
-    assert(0);
-}
-
-template<typename KEY_T>
-inline void BPlusTree<KEY_T>::BPlusTreeNode::operator=(const BPlusTreeNode& a)
-{
-    assert(0);
-}
-
-template<typename KEY_T>
 inline int BPlusTree<KEY_T>::binary_search_by_key(BPlusTreeNode* node, const KEY_T& key)
 {
-    int len = node->type == BPLUSTREE_LEAF ? node->ch_cnt : node->ch_cnt - 1;
+    int len = node->type == BLOCK_Type::NODE_LEAF ? node->ch_cnt : node->ch_cnt - 1;
     KEY_T *beg = &(keys(node)[0]), *end = &(keys(node)[len]);
     int pos = std::lower_bound(beg, end, key) - beg;
     return pos;
@@ -353,58 +361,49 @@ inline void BPlusTree<KEY_T>::treeToFileBlock()
 }
 
 template<typename KEY_T>
-inline void BPlusTree<KEY_T>::node_lock()
+inline int BPlusTree<KEY_T>::node_free()
 {
-    //实现多线程的安全问题
+    node_used_index = 0;
+    node_map.clear();
+    int res = 0;
+    for (int i = 0; i < BPT_CACHE_NODE_NUM; i++) {
+        BPlusTreeNode* node = (BPlusTreeNode*)((char*)node_caches + sz_node_block_size * i);
+        if ((node->status == BLOCK_Status::NON_MODIFY || node->status == BLOCK_Status::MODIFY)) {
+            if (node->status == BLOCK_Status::MODIFY) nodeToFileBlock(node, node->self);
+        }
+        else {
+            ++res;
+            node_map[node->self] = node;
+        }
+    }
+    return res;
 }
 
 template<typename KEY_T>
-inline void BPlusTree<KEY_T>::node_unlock()
+inline BPlusTreeNode* BPlusTree<KEY_T>::node_refer()
 {
-    //实现多线程的安全问题
-}
-
-template<typename KEY_T>
-inline void* BPlusTree<KEY_T>::node_refer()
-{
-    assert(!node_unused.empty());
-    BPlusTreeNode* node = (BPlusTreeNode * )node_unused.begin()->second;
-    if (node_used.count(node)) {
+    while(true) {
+        if (node_used_index == BPT_CACHE_NODE_NUM) node_used_index = 0; 
+        ++node_used_index;
+        BPlusTreeNode* node = (BPlusTreeNode *)((char*)node_caches + sz_node_block_size * (node_used_index-1));
+        if (node->status == BLOCK_Status::INIT_LOCK || node->status == BLOCK_Status::WRITE_LOCK || node->status == BLOCK_Status::READ_LOCK) continue;
+        if (node->status == BLOCK_Status::MODIFY) {
+            nodeToFileBlock(node, node->self);
+        }
         node_map.erase(node->self);
-        nodeToFileBlock(node, node->self);
-    }
-    node_unused.erase(node_unused.begin());
-    node_used[node] = ++node_used_cnt;
-    return node;
-}
-
-template<typename KEY_T>
-inline void BPlusTree<KEY_T>::node_defer(void* node)
-{
-    assert(node != nullptr);
-    assert(node_used.count(node));
-    node_unused[node_used[node]] = node;
-}
-
-template<typename KEY_T>
-inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_fetch(OFF_T offset)
-{
-    if (offset == INVALID_OFFSET) {
-        return nullptr;
-    }
-    if (node_map.count(offset)) {
-        BPlusTreeNode* node = (BPlusTreeNode * )node_map[offset];
-        size_t _id = node_used[node];
-        assert(node_unused.count(_id));
-        //if (unused.count(_id)) 
-        node_unused.erase(_id);
-        node_used[node] = ++node_used_cnt;
+        node->lock(BLOCK_Status::INIT_LOCK);
+        assert(node_map.size() < BPT_CACHE_NODE_NUM);
         return node;
     }
-    BPlusTreeNode* node = (BPlusTreeNode *)node_refer();
-    nodeFromFileBlock(node, offset);
-    node_map[node->self] = node;
-    return node;
+    assert(0);
+    return nullptr;
+}
+
+template<typename KEY_T>
+inline void BPlusTree<KEY_T>::node_defer(BPlusTreeNode* node)
+{
+    assert(node != nullptr);
+    node->unlock();
 }
 
 template<typename KEY_T>
@@ -427,14 +426,14 @@ inline void BPlusTree<KEY_T>::nodeFromFileBlock(BPlusTreeNode* node, OFF_T file_
     void* buf = swap_refer();
     BPlusTreeUtils::db_read(fd, file_off, buf, node_block_size, 1);
     size_t off = 0;
-    memmove(&node->self, (char*)buf + off, sz_OFF); off += sz_OFF;
-    memmove(&node->parent, (char*)buf + off, sz_OFF); off += sz_OFF;
+    memmove(&node->self, (char*)buf + off, sizeof(node->self)); off += sizeof(node->self);
+    memmove(&node->parent, (char*)buf + off, sizeof(node->parent)); off += sizeof(node->parent);
     memmove(&node->type, (char*)buf + off, sizeof(node->type)); off += sizeof(node->type);
     memmove(&node->ch_cnt, (char*)buf + off, sizeof(node->ch_cnt)); off += sizeof(node->ch_cnt);
-    memmove(&node->prev, (char*)buf + off, sz_OFF); off += sz_OFF;
-    memmove(&node->next, (char*)buf + off, sz_OFF); off += sz_OFF;
-    memmove(&(keys(node)[0]), (char*)buf + off, sz_KEY * node_max_order); off += sz_KEY * node_max_order;
-    memmove(&(offs(node)[0]), (char*)buf + off, sz_OFF * node_max_order); 
+    memmove(&node->prev, (char*)buf + off, sizeof(node->prev)); off += sizeof(node->prev);
+    memmove(&node->next, (char*)buf + off, sizeof(node->next)); off += sizeof(node->next);
+    memmove(&(keys(node)[0]), (char*)buf + off, sizeof(KEY_T) * node_max_order); off += sizeof(KEY_T) * node_max_order;
+    memmove(&(offs(node)[0]), (char*)buf + off, sizeof(OFF_T) * node_max_order); 
     swap_defer(buf);
 }
 
@@ -444,102 +443,104 @@ inline void BPlusTree<KEY_T>::nodeToFileBlock(BPlusTreeNode* node, OFF_T file_of
     assert(node->self == file_off);
     void* buf = swap_refer();
     size_t off = 0;
-    memmove((char*)buf + off, &node->self, sz_OFF); off += sz_OFF;
-    memmove((char*)buf + off, &node->parent, sz_OFF); off += sz_OFF;
+    memmove((char*)buf + off, &node->self, sizeof(node->self)); off += sizeof(node->self);
+    memmove((char*)buf + off, &node->parent, sizeof(node->parent)); off += sizeof(node->parent);
     memmove((char*)buf + off, &node->type, sizeof(node->type)); off += sizeof(node->type);
     memmove((char*)buf + off, &node->ch_cnt, sizeof(node->ch_cnt)); off += sizeof(node->ch_cnt);
-    memmove((char*)buf + off, &node->prev, sz_OFF); off += sz_OFF;
-    memmove((char*)buf + off, &node->next, sz_OFF); off += sz_OFF;
-    memmove((char*)buf + off, &(keys(node)[0]), sz_KEY * node_max_order); off += sz_KEY * node_max_order;
-    memmove((char*)buf + off, &(offs(node)[0]), sz_OFF * node_max_order);
+    memmove((char*)buf + off, &node->prev, sizeof(node->prev)); off += sizeof(node->prev);
+    memmove((char*)buf + off, &node->next, sizeof(node->next)); off += sizeof(node->next);
+    memmove((char*)buf + off, &(keys(node)[0]), sizeof(KEY_T) * node_max_order); off += sizeof(KEY_T) * node_max_order;
+    memmove((char*)buf + off, &(offs(node)[0]), sizeof(OFF_T) * node_max_order);
     BPlusTreeUtils::db_write(fd, file_off, buf, node_block_size, 1);
     swap_defer(buf);
 }
 
 template<typename KEY_T>
-inline typename BPlusTree<KEY_T>::BPlusTreeNode* BPlusTree<KEY_T>::node_new(OFF_T _self, OFF_T _parent, int _type)
+inline BPlusTreeNode* BPlusTree<KEY_T>::node_new(OFF_T _self, OFF_T _parent, BLOCK_Type _type)
 {
     assert(_self != INVALID_OFFSET);
-    BPlusTreeNode* node = (BPlusTreeNode*)node_refer();
-
+    BPlusTreeNode* node = node_refer();
+    node_map[_self] = node;
+    node->status = BLOCK_Status::WRITE_LOCK;
     node->self = _self;
     node->parent = _parent;
     node->type = _type;
     node->ch_cnt = 0;
     node->prev = INVALID_OFFSET;
     node->next = INVALID_OFFSET;
-    node_map[node->self] = node;
     ++number;
     return node;
 }
 
 template<typename KEY_T>
-inline void BPlusTree<KEY_T>::node_flush_parent(OFF_T node, BPlusTreeNode* parent)
-{
-    BPlusTreeNode* child = node_fetch(node);
-    if (child != nullptr && parent != nullptr) {
-        child->parent = parent->self;
-    }
-    else {
-        assert(0);
-    }
-    node_defer(child);
-}
-
-template<typename KEY_T>
-inline void BPlusTree<KEY_T>::data_lock()
-{
-    //待实现
-}
-
-template<typename KEY_T>
-inline void BPlusTree<KEY_T>::data_unlock()
-{
-    //待实现
-}
-
-template<typename KEY_T>
-inline void* BPlusTree<KEY_T>::data_refer()
-{
-    assert(!data_unused.empty());
-    void* data = (void*) data_unused.begin()->second;
-    if (data_used.count(data)) {
-        size_t off;
-        memmove(&off, data, sizeof(off));
-        data_map.erase(off);
-        BPlusTreeUtils::db_write(fd, off, data, data_block_size, 1);
-    }
-    data_unused.erase(data_unused.begin());
-    data_used[data] = ++data_used_cnt;
-    return data;
-}
-
-template<typename KEY_T>
-inline void BPlusTree<KEY_T>::data_defer(void* data)
-{
-    assert(data != nullptr);
-    assert(data_used.count(data));
-    data_unused[data_used[data]] = data;
-}
-
-template<typename KEY_T>
-inline void* BPlusTree<KEY_T>::data_fetch(OFF_T offset)
+inline BPlusTreeNode* BPlusTree<KEY_T>::node_fetch(OFF_T offset)
 {
     if (offset == INVALID_OFFSET) {
         return nullptr;
     }
-    if (data_map.count(offset)) {
-        void* data = (void*)data_map[offset];
-        size_t _id = data_used[data];
-        assert(data_unused.count(_id));
-        //if (unused.count(_id)) 
-        data_unused.erase(_id);
-        data_used[data] = ++data_used_cnt;
+    if (node_map.count(offset)) {
+        BPlusTreeNode* node = node_map[offset];
+        assert(node->status != BLOCK_Status::INIT_LOCK && node->status != BLOCK_Status::WRITE_LOCK && node->status != BLOCK_Status::READ_LOCK);
+        node->lock(BLOCK_Status::READ_LOCK);
+        return node;
+    }
+    BPlusTreeNode* node = node_refer();
+    node_map[offset] = node;
+    node->status = BLOCK_Status::READ_LOCK;
+    nodeFromFileBlock(node, offset);
+    return node;
+}
+template<typename KEY_T>
+inline void BPlusTree<KEY_T>::node_flush_parent(OFF_T offset, BPlusTreeNode* parent)
+{
+    assert(offset != INVALID_OFFSET && parent != nullptr);
+    BPlusTreeNode* child = node_fetch(offset);
+    child->status = BLOCK_Status::WRITE_LOCK;
+    child->parent = parent->self;
+    node_defer(child);
+}
+
+template<typename KEY_T>
+inline BPlusTreeData* BPlusTree<KEY_T>::data_refer()
+{
+    while (true) {
+        if (++data_used_index == BPT_CACHE_DATA_NUM) data_used_index = 0;
+        BPlusTreeData* data = (BPlusTreeData*)((char*)data_caches + sz_data_block_size * data_used_index);
+        if (data->status == BLOCK_Status::INIT_LOCK || data->status == BLOCK_Status::WRITE_LOCK || data->status == BLOCK_Status::READ_LOCK) continue;
+        if (data->status == BLOCK_Status::MODIFY) {
+            dataToFileBlock(data, data->self);
+        }
+        data->lock(BLOCK_Status::INIT_LOCK);
         return data;
     }
-    void* data = (void*)data_refer();
-    BPlusTreeUtils::db_read(fd, offset, data, data_block_size, 1);
-    data_map[offset] = data;
+    assert(0);
+    return nullptr;
+}
+
+template<typename KEY_T>
+inline void BPlusTree<KEY_T>::data_defer(BPlusTreeData* data)
+{
+    assert(data != nullptr);
+    data->unlock();
+}
+
+template<typename KEY_T>
+inline BPlusTreeData* BPlusTree<KEY_T>::data_fetch(OFF_T offset)
+{
+    if (offset == INVALID_OFFSET) {
+        return nullptr;
+    }
+    for (int i = 0; i < BPT_CACHE_DATA_NUM; i++) {
+        BPlusTreeData* data = (BPlusTreeData*)((char*)data_caches + sz_data_block_size * i);
+        if (data->self == offset) {
+            assert(data->status != BLOCK_Status::INIT_LOCK && data->status != BLOCK_Status::WRITE_LOCK && data->status != BLOCK_Status::READ_LOCK);
+            data->lock(BLOCK_Status::READ_LOCK);
+            return data;
+        }
+    }
+    BPlusTreeData* data = data_refer();
+    data->status = BLOCK_Status::READ_LOCK;
+    dataFromFileBlock(data, offset);
     return data;
 }
 
@@ -548,30 +549,46 @@ inline OFF_T BPlusTree<KEY_T>::data_empty_block()
 {
     OFF_T res;
     if (data_block_head == INVALID_OFFSET) {
-        void* buf = data_refer();
+        BPlusTreeData* data = data_refer();
+        data->status = BLOCK_Status::WRITE_LOCK;
         res = BPlusTreeUtils::db_EOF(fd);
-        memmove(buf, &res, sizeof(res));
-        BPlusTreeUtils::db_write(fd, res, buf, data_block_size, 1);
-        data_map[res] = buf;
-        data_defer(buf);
+        memmove(&data->self, &res, sizeof(res));
+        memmove(&data->next, &INVALID_OFFSET, sizeof(INVALID_OFFSET));
+        dataToFileBlock(data, data->self);
+        data_defer(data);
     }
     else {
         res = data_block_head;
-        void* buf = data_fetch(data_block_head);
-        memmove(&data_block_head, (char*)buf + sizeof(data_block_head), sizeof(data_block_head));
-        data_defer(buf);
+        BPlusTreeData* data = data_fetch(data_block_head);
+        memmove(&data_block_head, &data->next, sizeof(data_block_head));
+        data_defer(data);
     }
     return res;
 }
 
 template<typename KEY_T>
-inline void BPlusTree<KEY_T>::dataFromFileBlock(OFF_T file_off)
+inline void BPlusTree<KEY_T>::dataFromFileBlock(BPlusTreeData* data, OFF_T file_off)
 {
+    void* buf = swap_refer();
+    BPlusTreeUtils::db_read(fd, file_off, buf, data_block_size, 1);
+    size_t off = 0;
+    memmove(&data->self, (char*)buf + off, sizeof(data->self)); off += sizeof(data->self);
+    memmove(&data->next, (char*)buf + off, sizeof(data->next)); off += sizeof(data->next);
+    memmove(&(data->data[0]), (char*)buf + off, data_block_size - off);
+    swap_defer(buf);
 }
 
 template<typename KEY_T>
-inline void BPlusTree<KEY_T>::dataToFileBlock(OFF_T file_of)
+inline void BPlusTree<KEY_T>::dataToFileBlock(BPlusTreeData* data, OFF_T file_off)
 {
+    assert(data->self == file_off);
+    void* buf = swap_refer();
+    size_t off = 0;
+    memmove((char*)buf + off, &data->self, sizeof(data->self)); off += sizeof(data->self);
+    memmove((char*)buf + off, &data->next, sizeof(data->next)); off += sizeof(data->next);
+    memmove((char*)buf + off, &(data->data[0]), data_block_size - off);
+    BPlusTreeUtils::db_write(fd, file_off, buf, data_block_size, 1);
+    swap_defer(buf);
 }
 
 template<typename KEY_T>
@@ -579,18 +596,17 @@ inline void BPlusTree<KEY_T>::valueFromFileBlock(OFF_T file_off, void*& value, s
 {
     assert(value == NULL);
 
-    void* buf;
     void* value_tmp;
     value = NULL;
     value_sz = 0;
-    size_t sz = data_block_size - sz_OFF * 2;
+    size_t sz = data_block_size - sizeof(OFF_T) - sizeof(OFF_T);
     while (file_off != INVALID_OFFSET) {
-        buf = data_fetch(file_off);
-        memmove(&file_off, (char*)buf + sz_OFF, sz_OFF);
+        BPlusTreeData* buf = data_fetch(file_off);
+        memmove(&file_off, &buf->next, sizeof(OFF_T));
 
         value_tmp = value;
         value = malloc(value_sz + sz);
-        memmove(value, (char*)buf + sz_OFF * 2, sz);
+        memmove(value, &buf->data, sz);
         memmove((char*)value + value_sz, value_tmp, value_sz);
         value_sz += sz;
         free(value_tmp);
@@ -601,27 +617,30 @@ inline void BPlusTree<KEY_T>::valueFromFileBlock(OFF_T file_off, void*& value, s
 template<typename KEY_T>
 inline OFF_T BPlusTree<KEY_T>::valueToFileBlock(OFF_T file_off, const void* value, const size_t value_sz)
 {
-    void* buf;
+    BPlusTreeData* buf;
     while (file_off != INVALID_OFFSET) {
         buf = data_fetch(file_off);
-        memmove(&file_off, (char*)buf + sz_OFF, sz_OFF);
-        memmove((char*)buf + sz_OFF, &data_block_head, sz_OFF);
-        memmove(&data_block_head, buf, sz_OFF);
+        buf->status = BLOCK_Status::WRITE_LOCK;
+        memmove(&file_off, &buf->next, sizeof(OFF_T));
+        memmove(&buf->next, &data_block_head, sizeof(OFF_T));
+        memmove(&data_block_head, &buf->self, sizeof(OFF_T));
         data_defer(buf);
     }
 
     size_t value_sz_tmp = 0, next_off;
-    assert(value_sz % (data_block_size - sz_OFF * 2) == 0);
+    size_t sz = (data_block_size - sizeof(OFF_T) - sizeof(OFF_T));
+    assert(value_sz % sz == 0);
 
     while (value_sz_tmp < value_sz) {
         next_off = file_off;
         file_off = data_empty_block();
         buf = data_fetch(file_off);
-        memmove(buf, &file_off, sz_OFF);
-        memmove((char*)buf + sz_OFF, &next_off, sz_OFF);
-        memmove((char*)buf + sz_OFF + sz_OFF, (char*)value + value_sz_tmp, data_block_size - sz_OFF * 2);
+        buf->status = BLOCK_Status::WRITE_LOCK;
+        memmove(&buf->self, &file_off, sizeof(OFF_T));
+        memmove(&buf->next, &next_off, sizeof(OFF_T));
+        memmove(&buf->data, (char*)value + value_sz_tmp, sz);
         data_defer(buf);
-        value_sz_tmp += data_block_size - sz_OFF * 2;
+        value_sz_tmp += sz;
     }
     return file_off;
 }
@@ -648,9 +667,10 @@ inline void BPlusTree<KEY_T>::swap_defer(void* node)
 }
 
 template<typename KEY_T>
-inline KEY_T BPlusTree<KEY_T>::node_split(typename BPlusTreeNode* node, const int pos, const KEY_T key, const OFF_T value_off, BPlusTreeNode*& lch, BPlusTreeNode*& rch)
+inline KEY_T BPlusTree<KEY_T>::node_split(BPlusTreeNode* node, const int pos, const KEY_T key, const OFF_T value_off, BPlusTreeNode*& lch, BPlusTreeNode*& rch)
 {
     assert(node->ch_cnt == node_max_order);
+    node->status = BLOCK_Status::WRITE_LOCK;
     BPlusTreeNode* sibling = node_new(node_empty_block(), node->parent, node->type);
 
     int split = (node_max_order + 1) / 2;
@@ -659,6 +679,7 @@ inline KEY_T BPlusTree<KEY_T>::node_split(typename BPlusTreeNode* node, const in
 
     if ((sibling->prev = node->prev) != INVALID_OFFSET) {
         BPlusTreeNode* prev = node_fetch(sibling->prev);
+        prev->status = BLOCK_Status::WRITE_LOCK;
         prev->next = sibling->self;
         node_defer(prev);
     }
@@ -669,22 +690,22 @@ inline KEY_T BPlusTree<KEY_T>::node_split(typename BPlusTreeNode* node, const in
     sibling->next = node->self;
     void* buf = swap_refer();
     size_t off = 0;
-    memmove((char*)buf + off, &(keys(node)[0])  , pos * sz_KEY); off += pos * sz_KEY;
-    memmove((char*)buf + off, &key              , sz_KEY      ); off += sz_KEY;
-    memmove((char*)buf + off, &(keys(node)[pos]), (node_max_order - pos) * sz_KEY);
+    memmove((char*)buf + off, &(keys(node)[0])  , pos * sizeof(KEY_T)); off += pos * sizeof(KEY_T);
+    memmove((char*)buf + off, &key              , sizeof(KEY_T)); off += sizeof(KEY_T);
+    memmove((char*)buf + off, &(keys(node)[pos]), (node_max_order - pos) * sizeof(KEY_T));
     off = 0;
-    memmove(&(keys(sibling)[0]), (char*) buf + off, sibling->ch_cnt * sz_KEY); off += sibling->ch_cnt * sz_KEY;
-    memmove(&(keys(node)[0]),    (char*) buf + off, node->ch_cnt * sz_KEY);
+    memmove(&(keys(sibling)[0]), (char*) buf + off, sibling->ch_cnt * sizeof(KEY_T)); off += sibling->ch_cnt * sizeof(KEY_T);
+    memmove(&(keys(node)[0]),    (char*) buf + off, node->ch_cnt * sizeof(KEY_T));
 
     off = 0;
-    memmove((char*)buf + off, &(offs(node)[0]), pos * sz_OFF); off += pos * sz_OFF;
-    memmove((char*)buf + off, &value_off      , sz_OFF      ); off += sz_OFF;
-    memmove((char*)buf + off, &(offs(node)[pos]), (node_max_order - pos) * sz_OFF);
+    memmove((char*)buf + off, &(offs(node)[0]), pos * sizeof(OFF_T)); off += pos * sizeof(OFF_T);
+    memmove((char*)buf + off, &value_off      , sizeof(OFF_T)); off += sizeof(OFF_T);
+    memmove((char*)buf + off, &(offs(node)[pos]), (node_max_order - pos) * sizeof(OFF_T));
     off = 0;
-    memmove(&(offs(sibling)[0]), (char*) buf + off, sibling->ch_cnt * sz_OFF); off += sibling->ch_cnt * sz_OFF;
-    memmove(&(offs(node)[0]),    (char*) buf + off, node->ch_cnt * sz_OFF);
+    memmove(&(offs(sibling)[0]), (char*) buf + off, sibling->ch_cnt * sizeof(OFF_T)); off += sibling->ch_cnt * sizeof(OFF_T);
+    memmove(&(offs(node)[0]),    (char*) buf + off, node->ch_cnt * sizeof(OFF_T));
     swap_defer(buf);
-    if (sibling->type == BPLUSTREE_INTERNAL) {
+    if (sibling->type == BLOCK_Type::NODE_INTERNAL) {
         for (int i = 0; i < sibling->ch_cnt; i++)
             node_flush_parent(offs(sibling)[i], sibling);
     }
@@ -692,17 +713,17 @@ inline KEY_T BPlusTree<KEY_T>::node_split(typename BPlusTreeNode* node, const in
     KEY_T res = keys(sibling)[split - 1];
     lch = sibling;
     rch = node;
-    
     return res;
 }
 
 template<typename KEY_T>
 inline void BPlusTree<KEY_T>::node_insert(BPlusTreeNode* node, const int pos, const KEY_T key, const OFF_T value_off)
 {
-    memmove(&(keys(node)[pos + 1]), &(keys(node)[pos]), (node->ch_cnt - pos) * sz_KEY);
-    memmove(&(offs(node)[pos + 1]), &(offs(node)[pos]), (node->ch_cnt - pos) * sz_OFF);
+    node->status = BLOCK_Status::WRITE_LOCK;
+    memmove(&(keys(node)[pos + 1]), &(keys(node)[pos]), (node->ch_cnt - pos) * sizeof(KEY_T));
+    memmove(&(offs(node)[pos + 1]), &(offs(node)[pos]), (node->ch_cnt - pos) * sizeof(OFF_T));
     keys(node)[pos] = key;
     offs(node)[pos] = value_off;
     node->ch_cnt++;
-    if (node->type == BPLUSTREE_INTERNAL) node_flush_parent(value_off, node);
+    if (node->type == BLOCK_Type::NODE_INTERNAL) node_flush_parent(value_off, node);
 }

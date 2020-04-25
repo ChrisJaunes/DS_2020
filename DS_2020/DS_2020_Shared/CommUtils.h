@@ -10,3 +10,11 @@ public:
 	CalcTime();
 	~CalcTime();
 };
+
+class NoCopy {
+public:
+	NoCopy() = default;
+private:
+	NoCopy(const NoCopy&) = delete;
+	NoCopy& operator=(const NoCopy&) = delete;
+};

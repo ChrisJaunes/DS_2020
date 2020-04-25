@@ -1,0 +1,148 @@
+const int BPT_NODE_BLOCK_SIZE = 1024*4
+const int BPT_DATA_BLOCK_SIZE = 1024;
+节点缓存大小为1000
+数据缓存大小为5
+含有状态锁
+===============================
+new n = 10000
+
+  std, time: 237
+  me, time: 783; IO(R): 5226.000000 ; IO(W): 9933.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 237
+  me, time: 782; IO(R): 5330.000000 ; IO(W): 9687.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 217
+  me, time: 761; IO(R): 5225.000000 ; IO(W): 9917.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 221
+  me, time: 761; IO(R): 5361.000000 ; IO(W): 9648.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 100000
+
+  std, time: 1965
+  me, time: 7356; IO(R): 74305.000000 ; IO(W): 76089.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 100000
+
+  std, time: 2079
+  me, time: 6489; IO(R): 74181.000000 ; IO(W): 76182.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 221
+  me, time: 760; IO(R): 5374.000000 ; IO(W): 9591.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 220
+  me, time: 765; IO(R): 5285.000000 ; IO(W): 9772.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 218
+  me, time: 775; IO(R): 5353.000000 ; IO(W): 9617.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 10000
+
+  std, time: 232
+  me, time: 822; IO(R): 5314.000000 ; IO(W): 9737.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 100000
+
+  std, time: 1992
+  me, time: 6281; IO(R): 74181.000000 ; IO(W): 76256.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 100000
+
+  std, time: 1776
+  me, time: 7038; IO(R): 74224.000000 ; IO(W): 76159.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000000
+
+  std, time: 15759
+  me, time: 63143; IO(R): 966957.000000 ; IO(W): 533489.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000000
+
+  std, time: 17556
+  me, time: 59559; IO(R): 966981.000000 ; IO(W): 533381.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000000
+
+  std, time: 18465
+  me, time: 70558; IO(R): 966964.000000 ; IO(W): 533453.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
+
+===============================
+new n = 1000000
+
+  std, time: 15553
+  me, time: 49895; IO(R): 966964.000000 ; IO(W): 533490.125000
+Result: 
+正在比较文件 test.out 和 TEST.ANS
+FC: 找不到差异
