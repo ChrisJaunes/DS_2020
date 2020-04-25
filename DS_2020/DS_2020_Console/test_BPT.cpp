@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "config.h"
+#include "CommUtils.h"
 #include "BPlusTree.h"
 #include "BPlusTreeUtils.h"
 namespace FST {
@@ -295,6 +296,49 @@ namespace FST {
 		fclose(_als);
 		system("..\\DS_2020_Test\\test_file\\check.bat >> ..\\DS_2020_Test\\test.als");
 	}
+	void test_BPT4(int n) {
+		printf("***Start test speed. Count=%d\n", n);
+		srand(static_cast<unsigned int>(time(nullptr)));
+		BPlusTree<int> *tree = new BPlusTree<int>(DS_BPT_TEST_DB);
+		std::vector<int> testKey(n);
+		std::vector<int> testValue(n);
+		for (int i = 0; i < n; ++i) {
+			testKey[i] = rand();
+			testValue[i] = rand();
+		}
+		runBlock([&]() {
+			wchar_t* value = new wchar_t[5];
+			for (int i = 0; i < n; ++i) {
+				int a = testKey[i], b = testValue[i];
+				memset(value, 0, 10);
+				memmove(value, &b, sizeof(b));
+				BPTset<int>(tree, a, value);
+			}
+			delete[] value;
+		}, "bp tree insert");
+		runBlock([&]() {
+			wchar_t* value = new wchar_t[5];
+			for (int i = 0; i < n; i++) {
+				void* res = NULL; size_t res_sz = 0;
+				tree->search(testKey[i], res, res_sz);
+				free(res);
+			}
+		}, "bp tree access");
+		std::map<int, int> m;
+		runBlock([&]() {
+			for (int i = 0; i < n; ++i) {
+				m[testKey[i]] = testValue[i];
+			}
+		}, "stl map insert");
+
+		runBlock([&]() {
+			for (int i = 0; i < n; ++i) {
+				m.at(testKey[i]);
+			}
+		}, "stl map access");
+		printf("***End test speed.\n");
+		delete tree;
+	}
 	void test_BPT() {
 //		test_BPT0();
 //		test_BPT1();
@@ -305,11 +349,13 @@ namespace FST {
 //		test_BPT2(100000);
 //		test_BPT2(100000);
 //		test_BPT2(1000000);
-		test_BPT3(10000);
-		test_BPT3(10000);
-		test_BPT3(10000);
-		test_BPT3(100000);
-		test_BPT3(100000);
-		test_BPT3(1000000);
+//		test_BPT3(10000);
+//		test_BPT3(10000);
+//		test_BPT3(10000);
+//		test_BPT3(100000);
+//		test_BPT3(100000);
+//		test_BPT3(1000000);
+		for (int i = 1; i <= 10; i++)
+			test_BPT4(1000000);
 	}
 }

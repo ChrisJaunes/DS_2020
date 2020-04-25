@@ -106,7 +106,7 @@ Author AuthorMarshal::Unmarshal(MYSTR xmlcode)
 			m_pReader->GetLocalName(&localName, NULL);
 
 			// ½âÎöÀàĞÍ
-			vector<MYSTR>::iterator ret;
+			std::vector<MYSTR>::iterator ret;
 			ret = std::find(parseInfo->begin(), parseInfo->end(), MYSTR(localName));
 			if (ret == parseInfo->end()) {
 				continue;

@@ -11,6 +11,7 @@ Release/
 .hg/
 .vs/
 程序设计报告书/
+参考资料/
 
 # File types
 *.dll

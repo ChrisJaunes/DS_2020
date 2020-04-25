@@ -70,7 +70,7 @@ Info XMLParser::ParseSingle(LPCWSTR filename,size_t position)
 			m_pReader->GetLocalName(&localName, NULL);
 
 			// 解析类型
-			vector<MYSTR>::iterator ret;
+			std::vector<MYSTR>::iterator ret;
 			ret = std::find(parseInfo->begin(), parseInfo->end(), MYSTR(localName));
 			if (ret == parseInfo->end()) {
 				continue;
@@ -166,7 +166,7 @@ OPRESULT XMLParser::ParseAll(ISolver *psolver) {
 			pReader->GetLocalName(&localName, NULL);
 
 			// 解析类型, 用这个来限定解析对象
-			vector<MYSTR>::iterator ret;
+			std::vector<MYSTR>::iterator ret;
 			ret = std::find(parseInfo->begin(), parseInfo->end(), MYSTR(localName));
 			if (ret == parseInfo->end()) {
 				continue;
@@ -304,7 +304,7 @@ Info XMLMarshal::Unmarshal(MYSTR xmlcode, DWORD flag)
 			m_pReader->GetLocalName(&localName, NULL);
 
 			// 解析类型
-			vector<MYSTR>::iterator ret;
+			std::vector<MYSTR>::iterator ret;
 			ret = std::find(parseInfo->begin(), parseInfo->end(), MYSTR(localName));
 			if (ret == parseInfo->end()) {
 				continue;
