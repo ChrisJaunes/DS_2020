@@ -193,19 +193,123 @@ namespace FST {
 		fclose(_als);
 		system("..\\DS_2020_Test\\test_file\\check.bat >> ..\\DS_2020_Test\\test.als");
 	}
-	void test_BPT3() {
 
+	static void test_BP_data_insert(std::wstring file_in1, std::wstring file_in2, int n) {
+		FILE* _in1 = _wfopen(file_in1.c_str(), L"w");
+		FILE* _in2 = _wfopen(file_in2.c_str(), L"w");
+		std::vector<int> vec(100, 0);
+		for(int i = 1; i <= n; i++) {
+			int a = rand(), b = rand();
+			fprintf(_in1, "0 %d %d\n", a, b);
+			vec.push_back(a);
+		}
+		for(int i = 1; i <= n; i++) {
+			int a = vec[rand() % vec.size()];
+			fprintf(_in2, "1 %d\n", a);
+		}
+		fclose(_in1);
+		fclose(_in2);
+	}
+	static void test_BP_std2(std::wstring file_in1, std::wstring file_in2, std::wstring file_ans) {
+		FILE* _in = _wfopen(file_in1.c_str(), L"r");
+		std::map<int, int> mp;
+		for (int type; ~fscanf(_in, "%d", &type);) {
+			int a, b;
+			fscanf(_in, "%d %d", &a, &b);
+			mp[a] = b;
+		}
+		fclose(_in);
+		_in = _wfopen(file_in2.c_str(), L"r");
+		FILE* _ans = _wfopen(file_ans.c_str(), L"w");
+		for (int type; ~fscanf(_in, "%d", &type);) {
+			int a;
+			fscanf(_in, "%d", &a);
+			fprintf(_ans, "%d\n", mp[a]);
+		}
+		fclose(_in);
+		fclose(_ans);
+	}
+	static void test_BP_me_ins(std::wstring file_in) {
+		BPlusTree<int>* tmp = new BPlusTree<int>(DS_BPT_TEST_DB);
+		FILE* _in = _wfopen(file_in.c_str(), L"r");
+		int cnt = 0;
+		wchar_t* value = new wchar_t[5];
+		for (int type; ~fscanf(_in, "%d", &type);) {
+			int a, b;
+			fscanf(_in, "%d %d", &a, &b);
+			memset(value, 0, 10);
+			memmove(value, &b, sizeof(b));
+			BPTset<int>(tmp, a, value);
+		}
+		delete tmp;
+		fclose(_in);
+	}
+	static void test_BP_me_que(std::wstring file_in, std::wstring file_out) {
+		BPlusTree<int>* tmp = new BPlusTree<int>(DS_BPT_TEST_DB, 1);
+		FILE* _in = _wfopen(file_in.c_str(), L"r");
+		FILE* _out = _wfopen(file_out.c_str(), L"w");
+		int cnt = 0;
+		wchar_t* value = new wchar_t[5];
+		for (int type; ~fscanf(_in, "%d", &type);) {
+			int a;
+			fscanf(_in, "%d", &a);
+			void* res = NULL; size_t res_sz = 0;
+			if (tmp->search(a, res, res_sz) == BPLUSTRE_FAILED) {
+				fprintf(_out, "0\n");
+			}
+			else {
+				fprintf(_out, "%d\n", *(int*)res);
+			}
+			free(res);
+		}
+		delete tmp;
+		fclose(_in);
+		fclose(_out);
+	}
+	void test_BPT3(int n) {
+		srand((unsigned int)time(0));
+		std::wstring file_als = std::wstring(DS_BPT_TEST_ALS);
+		FILE* _als = _wfopen(file_als.c_str(), L"a");
+		fprintf(_als, "===============================\nnew n = %d\n", n);
+		std::wstring file_in1 = std::wstring(DS_BPT_TEST_IN);
+		std::wstring file_in2 = std::wstring(DS_BPT_TEST_IN2);
+		std::wstring file_out = std::wstring(DS_BPT_TEST_OUT);
+		std::wstring file_ans = std::wstring(DS_BPT_TEST_ANS);
+		test_BP_data_insert(file_in1, file_in2, n);
+
+		int begin_time = clock();
+		test_BP_std2(file_in1, file_in2, file_ans);
+		fprintf(_als, "\n  std, time: %d\n", clock() - begin_time);
+
+		begin_time = clock();
+		BPlusTreeUtils::bptcntR = BPlusTreeUtils::bptcntW = 0;
+		test_BP_me_ins(file_in1);
+		fprintf(_als, "  me, time: %d; IO(R): %.6lf ; IO(W): %.6lf\n", clock() - begin_time, BPlusTreeUtils::bptcntR, BPlusTreeUtils::bptcntW);
+
+		begin_time = clock();
+		BPlusTreeUtils::bptcntR = BPlusTreeUtils::bptcntW = 0;
+		test_BP_me_que(file_in2, file_out);
+		fprintf(_als, "  me, time: %d; IO(R): %.6lf ; IO(W): %.6lf\n", clock() - begin_time, BPlusTreeUtils::bptcntR, BPlusTreeUtils::bptcntW);
+		
+		fprintf(_als, "Result: \n");
+		fclose(_als);
+		system("..\\DS_2020_Test\\test_file\\check.bat >> ..\\DS_2020_Test\\test.als");
 	}
 	void test_BPT() {
-		test_BPT0();
-		test_BPT1();
-		test_BPT2(10000);
-		test_BPT2(10000);
-		test_BPT2(10000);
-		test_BPT2(10000);
-		test_BPT2(100000);
-		test_BPT2(100000);
-		test_BPT2(1000000);
-		test_BPT3();
+//		test_BPT0();
+//		test_BPT1();
+//		test_BPT2(10000);
+//		test_BPT2(10000);
+//		test_BPT2(10000);
+//		test_BPT2(10000);
+//		test_BPT2(100000);
+//		test_BPT2(100000);
+//		test_BPT2(1000000);
+		test_BPT3(10000);
+		test_BPT3(10000);
+		test_BPT3(10000);
+		test_BPT3(100000);
+		test_BPT3(100000);
+		test_BPT3(1000000);
 	}
 }
