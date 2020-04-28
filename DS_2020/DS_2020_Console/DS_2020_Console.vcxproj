@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="generate_cache.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="test_AUTHOR.cpp" />
     <ClCompile Include="test_BPT.cpp" />
