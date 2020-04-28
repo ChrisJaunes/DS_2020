@@ -14,11 +14,10 @@
 
 int _tmain()
 {
-    //INFO的序列化和反序列化对中文支持仍然有问题
     CalcTime timer;
     FST::test_BPT();
-    FST::test_AUTHOR0();
-    FST::test_INFO0();
+    //FST::test_AUTHOR0();
+    //FST::test_INFO0();
     FST::test_INFO1();
     return 0;
 }

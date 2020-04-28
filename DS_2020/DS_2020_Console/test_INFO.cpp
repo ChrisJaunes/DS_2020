@@ -24,14 +24,14 @@ namespace FST {
 		fwprintf(fd, L" \n====******====\n\n");
 		fclose(fd);
 		Info a;
-		info_a.SetClsid(L"article");
-		info_a.AddProperty(L"测试中文", MYSTR(L"这是一个中文测试"));
-		info_a.AddProperty(L"test_ASCII", MYSTR(L"ASCII is OK"));
-		info_a.AddProperty(L"number_0", MYSTR(L"1234567890"));
-		info_a.AddProperty(L"symbol", MYSTR(L"~!@#$%^&*()_+=-`|\\{}[];:'\"<>?/.,"));
-		info_a.AddProperty(L"测试", MYSTR("检查0是否有问题"));
+		a.SetClsid(L"article");
+		a.AddProperty(L"测试中文", MYSTR(L"这是一个中文测试"));
+		a.AddProperty(L"test_ASCII", MYSTR(L"ASCII is OK"));
+		a.AddProperty(L"number_0", MYSTR(L"1234567890"));
+		a.AddProperty(L"symbol", MYSTR(L"~!@#$%^&*()_+=-`|\\{}[];:'\"<>?/.,"));
+		a.AddProperty(L"测试", MYSTR("检查0是否有问题"));
 
-		test_Info_P(info_a);
+		test_Info_P(a);
 
 		fd = _wfopen(DS_BPT_TEST_ALS, L"a");
 		_wsetlocale(0, L"chs");
@@ -40,7 +40,7 @@ namespace FST {
 		fwprintf(fd, L"%s; ", (wchar_t*)ser);
 		fclose(fd);
 
-		Info b = a.deserialize(ser);
+		Info b = Info::deserialize(ser);
 		test_Info_P(b);
 		delete[] ser;
 	}
@@ -77,7 +77,7 @@ namespace FST {
 		fwprintf(fd, L"%s; ", (wchar_t*)ser);
 		fclose(fd);
 
-		Info b = a.deserialize(ser);
+		Info b = Info::deserialize(ser);
 		test_Info_P(b);
 		delete[] ser;
 	}
