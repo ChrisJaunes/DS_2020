@@ -58,7 +58,7 @@ namespace DS_BPlusTree {
     //page
     struct BPlusTreePage {
         PAGE_Status P_Status;
-        BPlusTreePage *P_Prev, *P_Next;
+        //BPlusTreePage *P_Prev, *P_Next;
         BPlusTreePage(const BPlusTreePage&) = delete;
         BPlusTreePage& operator=(const BPlusTreePage&) = delete;
         inline void lock(const PAGE_Status _status) {
@@ -141,26 +141,34 @@ namespace DS_BPlusTree {
         FILE* fd;
         unsigned int _block_size;
         unsigned int _page_size;
-        BPlusTreePage *head, *tail;
         void* caches;
         std::unordered_map<OFF_T, PAGE_T*> pool_map;
+
+        unsigned int _used_index;
+        //BPlusTreePage *head, *tail;
+        
         BPlusTreePool(FILE* const fd, const unsigned int _block_size) : fd(fd), _block_size(_block_size) {
             _page_size = ((size_t)_block_size - PAGE_T::getSize() + sizeof(PAGE_T));
             size_t sz = _page_size * BPT_CACHE_NODE_NUM;
             caches = malloc(sz);
             memset(caches, 0, sz);
-            for (int i = 0; i < BPT_CACHE_NODE_NUM; i++) {
-                PAGE_T* page = (PAGE_T*)((char*)caches + _page_size * i);
-                page->P_Status = PAGE_Status::NON_MODIFY;
-                if (i == 0) head = page;
-                else {
-                    page->P_Prev = (PAGE_T*)((char*)caches + _page_size * (i - 1));
-                }
-                if (i == BPT_CACHE_NODE_NUM - 1) tail = page;
-                else {
-                    page->P_Next = (PAGE_T*)((char*)caches + _page_size * (i + 1));
-                }
-            }
+            //时钟置换页面算法
+            for (int i = 0; i < BPT_CACHE_NODE_NUM; i++)
+                ((BPlusTreeNode*)((char*)caches + _page_size * i))->P_Status = PAGE_Status::NON_MODIFY;
+            _used_index = 0;
+            //LRU实现
+            //for (int i = 0; i < BPT_CACHE_NODE_NUM; i++) {
+            //    PAGE_T* page = (PAGE_T*)((char*)caches + _page_size * i);
+            //    page->P_Status = PAGE_Status::NON_MODIFY;
+            //    if (i == 0) head = page;
+            //    else {
+            //        page->P_Prev = (PAGE_T*)((char*)caches + _page_size * (i - 1));
+            //    }
+            //    if (i == BPT_CACHE_NODE_NUM - 1) tail = page;
+            //    else {
+            //        page->P_Next = (PAGE_T*)((char*)caches + _page_size * (i + 1));
+            //    }
+            //}
         }
         ~BPlusTreePool() {
             for (int i = 0; i < BPT_CACHE_NODE_NUM; i++) {
@@ -173,24 +181,42 @@ namespace DS_BPlusTree {
             //fclose(fd);
         }
         PAGE_T* refer(size_t offset) {
-            //assert(head->P_Status == PAGE_Status::MODIFY || head->P_Status == PAGE_Status::NON_MODIFY);
-            PAGE_T* page = nullptr;
-            do {
-                page = (PAGE_T*)head;
-                head = head->P_Next;
-                head->P_Prev = nullptr;
-                tail->P_Next = page;
-                page->P_Prev = tail;
-                page->P_Next = nullptr;
-                tail = page;
-            } while (page->P_Status != PAGE_Status::MODIFY && page->P_Status != PAGE_Status::NON_MODIFY);
-            pool_map.erase(page->self);
-            if (page->P_Status == PAGE_Status::MODIFY) {
-                page->serialize(fd, page->self, _block_size);
+            //时钟置换页面算法
+            while (true) {
+                if (_used_index == BPT_CACHE_NODE_NUM) _used_index = 0;
+                ++_used_index;
+                PAGE_T* page = (PAGE_T*)((char*)caches + _page_size * (_used_index - 1));
+                if (page->P_Status == PAGE_Status::INIT_LOCK || page->P_Status == PAGE_Status::WRITE_LOCK || page->P_Status == PAGE_Status::READ_LOCK) continue;
+                if (page->P_Status == PAGE_Status::MODIFY) {
+                    page->serialize(fd, page->self, _block_size); 
+                }
+                pool_map.erase(page->self);
+                page->lock(PAGE_Status::INIT_LOCK);
+                pool_map[offset] = page;
+                return page;
             }
-            page->P_Status = PAGE_Status::INIT_LOCK;
-            pool_map[offset] = page;
-            return page;
+            assert(0);
+            return nullptr;
+            //LRU
+            //assert(head->P_Status == PAGE_Status::MODIFY || head->P_Status == PAGE_Status::NON_MODIFY);
+            //PAGE_T* page = nullptr;
+            //do {
+            //    page = (PAGE_T*)head;
+            //    head = head->P_Next;
+            //    head->P_Prev = nullptr;
+            //    tail->P_Next = page;
+            //    page->P_Prev = tail;
+            //    page->P_Next = nullptr;
+            //    tail = page;
+            //} while (page->P_Status != PAGE_Status::MODIFY && page->P_Status != PAGE_Status::NON_MODIFY);
+            //pool_map.erase(page->self);
+            //if (page->P_Status == PAGE_Status::MODIFY) {
+            //    page->serialize(fd, page->self, _block_size);
+            //}
+            //page->P_Status = PAGE_Status::INIT_LOCK;
+            //pool_map[offset] = page;
+            //return page;
+
         };
         void defer(PAGE_T* page) {
             assert(page != nullptr);
@@ -202,14 +228,14 @@ namespace DS_BPlusTree {
             }
             if (pool_map.count(offset)) {
                 PAGE_T* page = pool_map[offset];
-                if (page->P_Prev == nullptr) head = page->P_Next;
-                else page->P_Prev->P_Next = page->P_Next;
-                if (page->P_Next == nullptr) tail = page->P_Prev;
-                else page->P_Next->P_Prev = page->P_Prev; 
-                tail->P_Next = page;
-                page->P_Prev = tail;
-                page->P_Next = nullptr;
-                tail = page;
+                //if (page->P_Prev == nullptr) head = page->P_Next;
+                //else page->P_Prev->P_Next = page->P_Next;
+                //if (page->P_Next == nullptr) tail = page->P_Prev;
+                //else page->P_Next->P_Prev = page->P_Prev; 
+                //tail->P_Next = page;
+                //page->P_Prev = tail;
+                //page->P_Next = nullptr;
+                //tail = page;
                 assert(page->P_Status != PAGE_Status::INIT_LOCK && page->P_Status != PAGE_Status::WRITE_LOCK && page->P_Status != PAGE_Status::READ_LOCK);
                 page->lock(PAGE_Status::READ_LOCK);
                 return page;
