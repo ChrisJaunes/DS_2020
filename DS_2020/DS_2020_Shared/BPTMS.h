@@ -15,17 +15,17 @@
 template<typename KEY_T, typename OBJ>
 class BPTMS{
 public:
-    BPTMS(const wchar_t* filename, int exist = 0);
+    BPTMS(const wchar_t* filename, FILE_Status exist = FILE_Status::NON_EXIST);
     void insertMulti(KEY_T key, OBJ obj);
     void insertReplace(KEY_T key, OBJ obj);
     std::vector<OBJ> search(KEY_T);
 //private:
-    BPlusTree<KEY_T> db;
+    DS_BPlusTree::BPlusTree<KEY_T> db;
     size_t value_block_sz;
 };
 
 template<typename KEY_T, typename OBJ>
-inline BPTMS<KEY_T, OBJ>::BPTMS(const wchar_t* filepath, int exist)
+inline BPTMS<KEY_T, OBJ>::BPTMS(const wchar_t* filepath, FILE_Status exist)
     : db(filepath, exist)
 {
     value_block_sz = db.data_block_size - sizeof(OFF_T) * 2;
@@ -79,7 +79,7 @@ inline std::vector<OBJ> BPTMS<KEY_T, OBJ>::search(KEY_T key)
 {
     void* _value = nullptr;
     size_t _value_sz;
-    if (db.search(key, _value, _value_sz) == BPLUSTRE_FAILED) return std::vector<OBJ>();
+    if (db.search(key, _value, _value_sz) == DS_BPlusTree::BPT_Res::FAILED) return std::vector<OBJ>();
     std::vector<OBJ> res;
     res.push_back(OBJ::deserialize((wchar_t*)_value));
     free(_value);
