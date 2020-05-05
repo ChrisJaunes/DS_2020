@@ -30,6 +30,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Author.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AuthorMarshal.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTree.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreePool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPTMS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPTrees.h" />

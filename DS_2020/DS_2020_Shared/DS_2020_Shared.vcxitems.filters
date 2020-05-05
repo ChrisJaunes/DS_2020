@@ -104,5 +104,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)FrequencyRanking.h">
       <Filter>Solver</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreePool.h">
+      <Filter>B+Tree</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
