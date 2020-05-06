@@ -157,6 +157,4 @@ Author AuthorMarshal::Unmarshal(MYSTR xmlcode)
 	delete parseInfo;
 	return temp;
 }
-
-
 #undef W

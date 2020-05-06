@@ -30,9 +30,6 @@
     <ClCompile Include="test_INFO.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="generate_cache.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test_BPT.h">

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "config.h"
 #include "Info.h"
-#include "xmlhelper.h"
+#include "InfoMarshal.h"
 
 #ifdef TEST_DEBUG_INFO
 unsigned int Info::Info_cnt = 0;
@@ -91,10 +91,10 @@ std::map<MYSTR, std::vector<MYSTR>> Info::GetProperties()
 
 wchar_t* Info::serialize()
 {
-	return XMLMarshal::Marshal(*this);
+	return InfoMarshal::Marshal(*this);
 }
 
 Info Info::deserialize(MYSTR xmlcode)
 {
-	return XMLMarshal::Unmarshal(xmlcode);
+	return InfoMarshal::Unmarshal(xmlcode);
 }

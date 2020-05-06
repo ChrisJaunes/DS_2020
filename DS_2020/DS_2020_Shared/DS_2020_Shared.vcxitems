@@ -18,10 +18,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AuthorMarshal.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CommUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)F0Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)F1Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)F3Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FrequencyRanking.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)generate_cache.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Info.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)InfoMarshal.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)xmlhelper.cpp" />
@@ -37,10 +40,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CommUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)config.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)error.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)F0Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)F1Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)F3Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FrequencyRanking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Info.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InfoMarshal.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)xmlhelper.h" />

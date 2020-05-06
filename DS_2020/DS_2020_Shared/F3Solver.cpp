@@ -7,7 +7,7 @@ using namespace std;
 F3Solver::F3Solver(const TCHAR* xmlfile, DWORD parseInfo)
 {
     pParser = new XMLParser(parseInfo);
-    pParser->ParseFile(xmlfile, this);
+    //pParser->ParseFile(xmlfile, this);
     delete pParser;
 }
 

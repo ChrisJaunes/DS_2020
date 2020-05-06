@@ -14,6 +14,14 @@ Author::Author() {
 	name = ""; 
 }
 
+Author::Author(const MYSTR& _name)
+{
+#ifdef TEST_DEBUG_AUTHOR
+	++Author_cnt;
+#endif
+	name = _name;
+}
+
 Author::Author(const MYSTR& _name, const std::map<MYSTR, std::vector<MYSTR> >& _articles)
 {
 #ifdef TEST_DEBUG_AUTHOR

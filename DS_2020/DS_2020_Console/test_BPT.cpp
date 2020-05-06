@@ -341,7 +341,7 @@ namespace FST {
         delete tree;
     }
     void test_BPT() {
-        test_BPT0();
+        /*test_BPT0();
         test_BPT1();
         test_BPT2(10000);
         test_BPT2(10000);
@@ -356,9 +356,12 @@ namespace FST {
         test_BPT3(100000);
         test_BPT3(100000);
         test_BPT3(1000000);
-        //for (int i = 0; i < 100; i++) {
-        //    test_BPT3(1000000);
-        //}
+        for (int i = 0; i < 100; i++) {
+            test_BPT3(1000000);
+        }*/
+        for (int i = 0; i < 100; i++) {
+            test_BPT4(1000000);
+        }
     }
 }
 

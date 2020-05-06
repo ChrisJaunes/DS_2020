@@ -69,7 +69,7 @@ namespace DS_BPlusTree {
         void treeToFileBlock();
         FILE* fd;
         //节点块缓存池
-        BPlusTreePool2<BPlusTreeNode> *nodes;
+        BPlusTreePool1<BPlusTreeNode> *nodes;
         OFF_T node_empty_block();
         //数据块缓存池
         OFF_T data_empty_block();
@@ -123,7 +123,7 @@ namespace DS_BPlusTree {
         p_KEYS = sizeof(BPlusTreeNode);
         p_OFFS = sizeof(BPlusTreeNode) + node_max_order * sizeof(KEY_T);
 
-        nodes = new BPlusTreePool2<BPlusTreeNode>(fd, node_block_size, BPT_CACHE_NODE_NUM);
+        nodes = new BPlusTreePool1<BPlusTreeNode>(fd, node_block_size, BPT_CACHE_NODE_NUM);
         datas = new BPlusTreePool3<BPlusTreeData>(fd, data_block_size, BPT_CACHE_DATA_NUM);
 
         temp_block_size = max(node_block_size, data_block_size) * 3;

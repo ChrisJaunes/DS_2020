@@ -1,7 +1,4 @@
 #pragma once
-#include "Info.h"
-
-
 /*
 ISolver接口, 实现对具体问题的解决方案
 
@@ -15,22 +12,6 @@ InsertObject是当拿到了一个Info结构体时对InitMemory初始化的结构体进行插入的操作
 */
 class ISolver {
 public:
-	virtual void InitMemory()=0;
-	virtual void InsertObject(Info)=0;
+	//virtual void InitMemory()=0;
+	//virtual void InsertObject(Info)=0;
 };
-
-// 可以选择的解析对象, 也就是参数parseInfo的值, 其中article和...数量最多
-#ifndef ENUMPARSEINFO
-#define ENUMPARSEINFO
-#define article 1
-#define book 2
-#define incollection 4
-#define inproceedings 8
-#define mastersthesis 16
-#define phdthesis 32
-#define proceedings 64
-#define www 128
-#define alltypes (article|book|incollection|inproceedings|mastersthesis|phdthesis|proceedings|www)
-#endif // !ENUMPARSEINFO
-
-

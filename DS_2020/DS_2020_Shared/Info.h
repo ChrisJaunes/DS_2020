@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "error.h"
 #include "config.h"
 // update: title为必要属性
 class Info {

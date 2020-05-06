@@ -33,6 +33,7 @@ protected:
 
 public:
 	Author();
+	Author(const MYSTR&);
 	Author(const MYSTR&, const std::map<MYSTR, std::vector<MYSTR> >&);
 	Author(const Author&);
 	Author& operator = (Author&);

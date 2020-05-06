@@ -1,7 +1,14 @@
 #pragma once
 #include "pch.h"
+#include "config.h"
 struct key_t {
     wchar_t a[20];
+    key_t() {}
+    key_t(MYSTR _s) {
+        int len = min(19, (int)wcslen(_s));
+        wcscpy(a, _s);
+        a[len + 1] = L'\0';
+    }
     bool operator != (const key_t& x) const {
         return wcscmp(&a[0], &(x.a[0])) != 0;
     }

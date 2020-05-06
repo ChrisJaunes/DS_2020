@@ -1,3 +1,4 @@
+#pragma once
 #include "pch.h"
 #include "BPlusTree.h"
 #include "BPlusTreeUtils.h"
@@ -68,7 +69,7 @@ inline void BPTMS<KEY_T, OBJ>::insertReplace(KEY_T key, OBJ obj) {
     memset(_value, 0, _value_sz);
     memcpy(_value, value, value_sz);
 
-    insert(key, _value, _value_sz);
+    db.insert(key, _value, _value_sz);
 
     free(_value);
     delete[] value;
