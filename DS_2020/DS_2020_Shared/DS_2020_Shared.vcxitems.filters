@@ -63,6 +63,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)generate_cache.cpp">
       <Filter>Solver</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)f4.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)F4Solver.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Author.h">
@@ -121,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)InfoMarshal.h">
       <Filter>XMLhelper</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)f4.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)F4Solver.h">
+      <Filter>Solver</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
