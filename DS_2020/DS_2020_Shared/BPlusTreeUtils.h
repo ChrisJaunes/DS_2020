@@ -6,8 +6,8 @@ struct key_t {
     key_t() {}
     key_t(MYSTR _s) {
         int len = min(19, (int)wcslen(_s));
-        wcscpy(a, _s);
-        a[len + 1] = L'\0';
+        wcscpy_s(a, len, _s);
+        a[len] = L'\0';
     }
     bool operator != (const key_t& x) const {
         return wcscmp(&a[0], &(x.a[0])) != 0;
@@ -29,8 +29,8 @@ namespace DS_BPlusTree {
     //文件IO控制
     extern double bptcntR, bptcntW;
     size_t db_EOF(FILE*);
-    size_t db_read(FILE*, off_t, void*, size_t, size_t);
-    size_t db_write(FILE*, off_t, const void*, size_t, size_t);
+    size_t db_read(FILE*, size_t, void*, size_t, size_t);
+    size_t db_write(FILE*, size_t, const void*, size_t, size_t);
     //B+树常量
     enum class PAGE_Status {
         INIT_LOCK = 0x00,
@@ -59,8 +59,8 @@ namespace DS_BPlusTree {
     //const int BPT_CACHE_BUF_UNUSED = 0;
     //const int BPT_MAX_ORDER = 1000;
     const int BPT_ROOT_SIZE = 64;
-    const int BPT_NODE_BLOCK_SIZE = 1024 * 4;
-    const int BPT_DATA_BLOCK_SIZE = 1024;
+    const int BPT_NODE_BLOCK_SIZE = 1024 * 16;
+    const int BPT_DATA_BLOCK_SIZE = 1024 * 4;
 
     //page
     struct BPlusTreePage {

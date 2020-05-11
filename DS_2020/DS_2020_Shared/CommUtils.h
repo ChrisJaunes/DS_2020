@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 #include "FrequencyRanking.h"
 wchar_t* charToWChar(const char* text);
 

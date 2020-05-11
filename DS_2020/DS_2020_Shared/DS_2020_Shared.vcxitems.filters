@@ -36,9 +36,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
       <Filter>Header</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp">
-      <Filter>Solver</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)xmlhelper.cpp">
       <Filter>XMLhelper</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AuthorMarshal.cpp">
       <Filter>XMLhelper</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)F0Solver.cpp">
-      <Filter>Solver</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InfoMarshal.cpp">
       <Filter>XMLhelper</Filter>
     </ClCompile>
@@ -69,6 +63,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)F4Solver.cpp">
       <Filter>Solver</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DblpBptMs.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Author.h">
@@ -78,9 +78,6 @@
       <Filter>B+Tree</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.h">
-      <Filter>B+Tree</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BPTMS.h">
       <Filter>B+Tree</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)config.h">
@@ -101,9 +98,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h">
-      <Filter>Solver</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)xmlhelper.h">
       <Filter>XMLhelper</Filter>
     </ClInclude>
@@ -122,9 +116,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreePool.h">
       <Filter>B+Tree</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)F0Solver.h">
-      <Filter>Solver</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)InfoMarshal.h">
       <Filter>XMLhelper</Filter>
     </ClInclude>
@@ -133,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)F4Solver.h">
       <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\MyClass\数据结构\DS_2020\DS_2020\DS_2020_Shared\generate_cache.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DblpBptMs.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

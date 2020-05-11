@@ -14,6 +14,6 @@
 class InfoMarshal {
 public:
 	static wchar_t* Marshal(Info);
-	static Info Unmarshal(MYSTR, DWORD flag = alltypes);
+	static Info Unmarshal(MYSTR, DWORD flag = XMLPARSETYPE_alltypes);
 };
 

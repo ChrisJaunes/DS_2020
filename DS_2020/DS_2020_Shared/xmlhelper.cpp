@@ -7,31 +7,31 @@ XMLParser::XMLParser()
 	parseInfo = new std::vector<MYSTR>;
 	parseInfo->push_back(MYSTR(L"article"));
 }
-XMLParser::XMLParser(DWORD flag)
+XMLParser::XMLParser(const DWORD flag)
 {
 	parseInfo = new std::vector<MYSTR>;
-	if (flag & article) {
+	if (flag & XMLPARSETYPE_article) {
 		parseInfo->push_back(MYSTR(L"article"));
 	}
-	if (flag & book) {
+	if (flag & XMLPARSETYPE_book) {
 		parseInfo->push_back(MYSTR(L"book"));
 	}
-	if (flag & incollection) {
+	if (flag & XMLPARSETYPE_incollection) {
 		parseInfo->push_back(MYSTR(L"incollection"));
 	}
-	if (flag & inproceedings) {
+	if (flag & XMLPARSETYPE_inproceedings) {
 		parseInfo->push_back(MYSTR(L"inproceedings"));
 	}
-	if (flag & mastersthesis) {
+	if (flag & XMLPARSETYPE_mastersthesis) {
 		parseInfo->push_back(MYSTR(L"mastersthesis"));
 	}
-	if (flag & phdthesis) {
+	if (flag & XMLPARSETYPE_phdthesis) {
 		parseInfo->push_back(MYSTR(L"phdthesis"));
 	}
-	if (flag & proceedings) {
+	if (flag & XMLPARSETYPE_proceedings) {
 		parseInfo->push_back(MYSTR(L"proceedings"));
 	}
-	if (flag & www) {
+	if (flag & XMLPARSETYPE_www) {
 		parseInfo->push_back(MYSTR(L"www"));
 	}
 }
@@ -116,7 +116,7 @@ XMLParser::~XMLParser()
 	}
 	return Info();
 }*/
-OPRESULT XMLParser::ParseFile(LPCWSTR filename, F0Solver* pSolver)
+OPRESULT XMLParser::ParseFile(LPCWSTR filename, ISolver* pSolver)
 {
 	OPRESULT hr = OpenFile(filename);
 	if (FAILED(hr)) { return hr; }
@@ -145,7 +145,7 @@ OPRESULT XMLParser::OpenFile(LPCWSTR filename)
 	return 0;
 }
 
-OPRESULT XMLParser::ParseAll(F0Solver*psolver) {
+OPRESULT XMLParser::ParseAll(ISolver*psolver) {
 	HRESULT hr;
 	LPCWSTR szValue = NULL, curSection = NULL, localName = NULL;
 	XmlNodeType nodeType;

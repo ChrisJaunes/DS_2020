@@ -17,7 +17,7 @@ namespace DS_BPlusTree {
             , _block_size(_block_size)
             , _page_num(_page_num)
         {
-            _page_size = ((size_t)_block_size - PAGE_T::getSize() + sizeof(PAGE_T));
+            _page_size = (unsigned int) ((size_t)_block_size - PAGE_T::getSize() + sizeof(PAGE_T));
             size_t sz = _page_size * _page_num;
             caches = malloc(sz);
             memset(caches, 0, sz);
@@ -182,7 +182,7 @@ namespace DS_BPlusTree {
             , _block_size(_block_size)
             , _page_num(_page_num)
         {
-            _page_size = ((size_t)_block_size - PAGE_T::getSize() + sizeof(PAGE_T));
+            _page_size = (unsigned int)((size_t)_block_size - PAGE_T::getSize() + sizeof(PAGE_T));
             size_t sz = _page_size * _page_num;
             caches = malloc(sz);
             memset(caches, 0, sz);

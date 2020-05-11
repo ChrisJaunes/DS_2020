@@ -7,7 +7,7 @@ class Info {
 protected:
 	// 标识当前大类属性
 	MYSTR clsid;
-	std::map<MYSTR, std::vector<MYSTR>>* properties;
+	std::map<MYSTR, std::vector<MYSTR>> properties;
 public:
 	Info();
 	Info(const Info&);

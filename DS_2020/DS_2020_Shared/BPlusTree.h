@@ -53,7 +53,7 @@ namespace DS_BPlusTree {
         size_t p_KEYS;
         size_t p_OFFS;
         //节点类
-        int binary_search_by_key(BPlusTreeNode* node, const KEY_T& key);
+        unsigned int binary_search_by_key(BPlusTreeNode* node, const KEY_T& key);
         //B+树基本信息
         void* BPT_caches;
         size_t node_max_order;
@@ -170,7 +170,7 @@ namespace DS_BPlusTree {
         }
         pos = binary_search_by_key(node, key);
         if (pos < node->ch_cnt && keys(node)[pos] == key) {
-            valueToFileBlock(offs(node)[pos], value, value_sz);
+            offs(node)[pos] = valueToFileBlock(offs(node)[pos], value, value_sz);
             nodes->defer(node);
             return BPT_Res::SUCCESS_REPLACE;
         }
@@ -233,11 +233,11 @@ namespace DS_BPlusTree {
     }
 
     template<typename KEY_T>
-    inline int BPlusTree<KEY_T>::binary_search_by_key(BPlusTreeNode* node, const KEY_T& key)
+    inline unsigned int BPlusTree<KEY_T>::binary_search_by_key(BPlusTreeNode* node, const KEY_T& key)
     {
         int len = node->type == PAGE_Type::NODE_LEAF ? node->ch_cnt : node->ch_cnt - 1;
         KEY_T* beg = &(keys(node)[0]), * end = &(keys(node)[len]);
-        int pos = std::lower_bound(beg, end, key) - beg;
+        unsigned int pos = (unsigned int)(std::lower_bound(beg, end, key) - beg);
         return pos;
     }
 
@@ -326,7 +326,7 @@ namespace DS_BPlusTree {
             value_tmp = value;
             value = malloc(value_sz + sz);
             memmove(value, &buf->data, sz);
-            memmove((char*)value + value_sz, value_tmp, value_sz);
+            memmove((char*)value + sz, value_tmp, value_sz);
             value_sz += sz;
             free(value_tmp);
             datas->defer(buf);
@@ -381,7 +381,7 @@ namespace DS_BPlusTree {
     inline void BPlusTree<KEY_T>::swap_defer(void* node)
     {
         if (node == nullptr) return;
-        int i = ((char*)node - temp_caches) / temp_block_size;
+        int i = (int)(((char*)node - (char*)temp_caches) / temp_block_size);
         temp_used[i] = 0;
     }
     template<typename KEY_T>
@@ -416,9 +416,9 @@ namespace DS_BPlusTree {
         node->P_Status = PAGE_Status::WRITE_LOCK;
         BPlusTreeNode* sibling = node_new(node_empty_block(), node->parent, node->type);
 
-        int split = (node_max_order + 1) / 2;
+        int split = (int)((node_max_order + 1) / 2);
         sibling->ch_cnt = split;
-        node->ch_cnt = node_max_order - split + 1;
+        node->ch_cnt = (unsigned int)(node_max_order - split + 1);
 
         if ((sibling->prev = node->prev) != INVALID_OFFSET) {
             BPlusTreeNode* prev = nodes->fetch(sibling->prev);

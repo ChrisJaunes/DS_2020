@@ -18,7 +18,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AuthorMarshal.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CommUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)F0Solver.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DblpBptMs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)F1Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)F3Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)f4.cpp" />
@@ -37,12 +37,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTree.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreePool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)BPTMS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPTrees.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)config.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DblpBptMs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)error.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)F0Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)F1Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)F3Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)f4.h" />
@@ -53,5 +52,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)xmlhelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)generate_cache.h" />
   </ItemGroup>
 </Project>

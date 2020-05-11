@@ -1,4 +1,5 @@
 #pragma once
+#include "Info.h"
 /*
 ISolver接口, 实现对具体问题的解决方案
 
@@ -12,6 +13,10 @@ InsertObject是当拿到了一个Info结构体时对InitMemory初始化的结构体进行插入的操作
 */
 class ISolver {
 public:
-	//virtual void InitMemory()=0;
-	//virtual void InsertObject(Info)=0;
+	virtual void InitMemory()=0;
+	virtual void InsertObject(Info&)=0;
+};
+
+//解决
+class Solver {
 };

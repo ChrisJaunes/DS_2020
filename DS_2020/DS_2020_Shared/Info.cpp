@@ -8,24 +8,21 @@ unsigned int Info::Info_cnt = 0;
 #endif
 
 Info::Info()
+	: clsid(L"")
 {
 #ifdef TEST_DEBUG_INFO
 	++Info_cnt;
 #endif
-	clsid = "";
-	properties = new std::map<MYSTR, std::vector<MYSTR>>;
+	
 }
 
 Info::Info(const Info& Src)
+	: clsid(Src.clsid)
+	, properties(Src.properties)
 {
 #ifdef TEST_DEBUG_INFO
 	++Info_cnt;
 #endif
-	clsid = Src.clsid;
-	properties = new std::map<MYSTR, std::vector<MYSTR>>;
-	for (auto i : *Src.properties) {
-		properties->insert(i);
-	}
 }
 
 Info& Info::operator=(const Info& Src)
@@ -33,14 +30,8 @@ Info& Info::operator=(const Info& Src)
 #ifdef TEST_DEBUG_INFO
 	++Info_cnt;
 #endif
-	if (properties != nullptr) delete[] properties;
 	clsid = Src.clsid;
-	if (Src.deserialize != nullptr) {
-		properties = new std::map<MYSTR, std::vector<MYSTR> >(*Src.properties);
-	}
-	else {
-		assert(0);
-	}
+	properties = Src.properties;
 	return *this;
 }
 
@@ -49,18 +40,15 @@ Info::~Info()
 #ifdef TEST_DEBUG_INFO
 	--Info_cnt;
 #endif
-	delete properties;
 }
 
 void Info::AddProperty(MYSTR ProPertyName, MYSTR ProPertyValue)
 {
-	if (this->properties->count(ProPertyName)) {
-		this->properties->at(ProPertyName).push_back(ProPertyValue);
+	if (properties.count(ProPertyName)) {
+		properties.at(ProPertyName).push_back(ProPertyValue);
 	}
 	else {
-		std::vector<MYSTR>* tmp = new std::vector<MYSTR>;
-		tmp->push_back(ProPertyValue);
-		this->properties->insert(std::make_pair(ProPertyName,*tmp));
+		properties.insert(std::make_pair(ProPertyName,std::vector<MYSTR>(1, ProPertyValue)));
 	}
 }
 
@@ -76,8 +64,8 @@ MYSTR Info::GetClsid()
 
 std::vector<MYSTR> Info::GetProperty(MYSTR ProPertyName)
 {
-	if (this->properties->count(ProPertyName)) {
-		return std::vector<MYSTR>(this->properties->at(ProPertyName));
+	if (properties.count(ProPertyName)) {
+		return std::vector<MYSTR>(properties.at(ProPertyName));
 	}
 	else {
 		return std::vector<MYSTR>();
@@ -86,7 +74,7 @@ std::vector<MYSTR> Info::GetProperty(MYSTR ProPertyName)
 
 std::map<MYSTR, std::vector<MYSTR>> Info::GetProperties()
 {
-	return std::map<MYSTR, std::vector<MYSTR>>(*properties);
+	return properties;
 }
 
 wchar_t* Info::serialize()

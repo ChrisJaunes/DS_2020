@@ -1,16 +1,11 @@
 #include "pch.h"
 #include "config.h"
-#include "Info.h"
-#include "Author.h"
-#include "BPTMS.h"
-#include "F0Solver.h"
+#include "DblpBptMs.h"
 #include "xmlhelper.h"
-void generate_cache(const TCHAR* xmlfile, DWORD parseInfo, 
-	BPTMS<key_t, Info> *info_ms,
-	BPTMS<key_t, Author> *author_ms)
-{
+void generate_cache(const wchar_t* xmlfile, const DWORD parseInfo)
+{	
 	XMLParser *pParser = new XMLParser(parseInfo);
-	F0Solver *f = new F0Solver(info_ms, author_ms);
+	DblpBptMs*f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author);
 	pParser->ParseFile(xmlfile, f);
 	delete f;
 	delete pParser;
