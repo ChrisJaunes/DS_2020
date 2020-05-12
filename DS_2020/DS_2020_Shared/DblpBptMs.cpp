@@ -21,7 +21,7 @@ void DblpBptMs::InsertObject(Info& _info)
 {
 #ifdef TEST_DEBUG
 	++info_cnt;
-	if(info_cnt % 10000 == 0) printf("%d\n", info_cnt);
+	if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
 #endif
 	insertInfo(_info);
 	

@@ -125,14 +125,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)F4Solver.h">
       <Filter>Solver</Filter>
     </ClInclude>
-    <ClInclude Include="G:\MyClass\数据结构\DS_2020\DS_2020\DS_2020_Shared\generate_cache.h">
-      <Filter>Solver</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)DblpBptMs.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)generate_cache.h" />
   </ItemGroup>
 </Project>
