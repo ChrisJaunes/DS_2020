@@ -30,7 +30,7 @@ collaborators:
 */
 #define W int
 
-wchar_t* AuthorMarshal::Marshal(Author inobj)
+wchar_t* AuthorMarshal::Marshal(Author &inobj)
 {
 	CComPtr<IStream> pStream;
 	CComPtr<IXmlWriter> pWriter;
@@ -76,7 +76,7 @@ wchar_t* AuthorMarshal::Marshal(Author inobj)
 	return pv;
 }
 
-Author AuthorMarshal::Unmarshal(MYSTR xmlcode)
+Author AuthorMarshal::Unmarshal(MYSTR &xmlcode)
 {
 	std::vector<MYSTR>* parseInfo = new std::vector<MYSTR>;
 	parseInfo->push_back(L"AUTHOR");

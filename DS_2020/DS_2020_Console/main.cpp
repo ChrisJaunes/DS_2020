@@ -23,9 +23,10 @@ int _tmain()
     CalcTime timer;
     //FST::test_xmlparse();
     generate_cache(DS_DBLP, XMLPARSETYPE_alltypes);
+
     //FST::test_BPT();
     //FST::test_AUTHOR0();
-    //FST::test_INFO0();
+    //FST::test_INFO1();
     //FST::test_INFO1
     _CrtDumpMemoryLeaks();
     return 0;

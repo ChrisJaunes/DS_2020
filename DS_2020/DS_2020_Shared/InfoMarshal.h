@@ -13,7 +13,10 @@
 */
 class InfoMarshal {
 public:
-	static wchar_t* Marshal(Info);
+	static wchar_t* Marshal(Info&);
 	static Info Unmarshal(MYSTR, DWORD flag = XMLPARSETYPE_alltypes);
+
+	static wchar_t* Marshal2v(std::vector<Info>&);
+	static std::vector<Info> Unmarshal2v(MYSTR, DWORD flag = XMLPARSETYPE_alltypes);
 };
 

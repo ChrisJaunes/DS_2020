@@ -38,6 +38,6 @@
 class AuthorMarshal {
 public:
 	// 用到了CommUtils.h -> charToWchar函数, 好像不支持中文
-	static wchar_t* Marshal(Author);
-	static Author Unmarshal(MYSTR);
+	static wchar_t* Marshal(Author&);
+	static Author Unmarshal(MYSTR&);
 };
