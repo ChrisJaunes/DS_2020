@@ -9,7 +9,7 @@
 struct InfoKey {
     wchar_t a[150];
     InfoKey() { memset(a, 0, sizeof(a)); }
-    InfoKey(MYSTR &_s) {
+    InfoKey(const MYSTR &_s) {
         int len = min(149, (int)wcslen(_s));
         for (int i = 0; i < len; i++) a[i] = ((const wchar_t *) _s)[i];
         a[len] = L'\0';
@@ -60,7 +60,7 @@ public:
 	void insertInfo(Info&);
 	void updateAuthor(Author&);
     std::pair<OPRESULT, Author> getAuthorByName(const MYSTR&);
-	void getInfoByTitle(const MYSTR&);
+    std::pair<OPRESULT, Info> getInfoByTitle(const MYSTR&);
 
 #ifdef TEST_DEBUG
     int info_cnt;

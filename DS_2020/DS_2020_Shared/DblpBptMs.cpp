@@ -84,6 +84,13 @@ std::pair<OPRESULT, Author> DblpBptMs::getAuthorByName(const MYSTR& key)
 	return std::make_pair(true, author);
 }
 
-void DblpBptMs::getInfoByTitle(const MYSTR&)
+std::pair<OPRESULT, Info> DblpBptMs::getInfoByTitle(const MYSTR& key)
 {
+	InfoKey _key(key);
+	void* _value = nullptr;
+	size_t _value_sz;
+	if (info_bpt.search(_key, _value, _value_sz) == DS_BPlusTree::BPT_Res::FAILED) return std::make_pair(false, Info());
+	Info info = Info::deserialize((wchar_t*)_value);
+	free(_value);
+	return std::make_pair(true, info);
 }

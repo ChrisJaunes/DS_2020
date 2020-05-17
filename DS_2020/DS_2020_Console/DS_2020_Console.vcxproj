@@ -22,16 +22,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="test_AUTHOR.cpp" />
     <ClCompile Include="test_BPT.cpp" />
-    <ClCompile Include="test_BPTMS.cpp" />
     <ClCompile Include="test_INFO.cpp" />
-    <ClCompile Include="test_xml.cpp" />
+    <ClCompile Include="test_DBLP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test_AUTHOR.h" />
     <ClInclude Include="test_BPT.h" />
-    <ClInclude Include="test_BPTMS.h" />
     <ClInclude Include="test_INFO.h" />
-    <ClInclude Include="test_xml.h" />
+    <ClInclude Include="test_DBLP.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

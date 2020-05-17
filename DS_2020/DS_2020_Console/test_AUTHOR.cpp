@@ -1,9 +1,7 @@
 #include "test_AUTHOR.h"
-
 #include "Author.h"
 
 namespace FST {
-	Author author_a;
 	void test_Author_P(Author& a) {
 		FILE* fd = _wfopen(DS_BPT_TEST_ALS, L"a");
 		_wsetlocale(0, L"chs");
@@ -37,7 +35,7 @@ namespace FST {
 		FILE* fd = _wfopen(DS_BPT_TEST_ALS, L"a");
 		fwprintf(fd, L" \n====******====\n");
 		fclose(fd);
-		author_a;
+		Author author_a;
 		author_a.SetName(L"测试中文");
 		author_a.AddArticle(L"测试中文", std::vector<MYSTR>(2, L"这是一个中文测试"));
 		author_a.AddArticle(L"test_ASCII", std::vector<MYSTR>(3, L"ASCII is OK"));
@@ -58,6 +56,7 @@ namespace FST {
 		test_Author_P(b);
 		delete[] ser;
 	}
-	void FST::test_AUTHOR1() {
+	void FST::test_AUTHOR(DWORD flag) {
+		if (flag & 1) test_AUTHOR0();
 	}
 }

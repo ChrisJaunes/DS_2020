@@ -1,11 +1,11 @@
-#include "test_xml.h"
+#include "test_DBLP.h"
 #include "config.h"
 #include "xmlhelper.h"
 #include "CommUtils.h"
 namespace FST {
 	test_xml::test_xml(const DWORD types)
 	{
-		printf("\t test : ");
+		MyLog::d("\t test : ");
 		if (types & XMLPARSETYPE_article) printf("article;");
 		if (types & XMLPARSETYPE_book)    printf("book;");
 		if (types & XMLPARSETYPE_incollection) printf("incollection");
@@ -14,16 +14,16 @@ namespace FST {
 		if (types & XMLPARSETYPE_phdthesis) printf("phdthesis");
 		if (types & XMLPARSETYPE_proceedings) printf("proceedings");
 		if (types & XMLPARSETYPE_www) printf("www");
-		puts("");
+		MyLog::d("\n");
 		info_cnt = 0;
 		XMLParser* pParser = new XMLParser(types);
-		DblpBptMs* f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author);
+		f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author, FILE_Status::EXIST);
 		pParser->ParseFile(DS_DBLP, this);
-		delete f;
 		delete pParser;
 	}
 	test_xml::~test_xml() {
-		printf("\t count %d:\n", info_cnt);
+		MyLog::d("\t count %d:\n", info_cnt);
+		delete f;
 	}
 	void test_xml::InitMemory()
 	{
@@ -31,17 +31,35 @@ namespace FST {
 
 	void test_xml::InsertObject(Info& _info)
 	{
-#ifdef TEST_DEBUG
 		++info_cnt;
-#endif
-		auto authors = _info.GetProperty(L"author");
-		for (auto it : authors) {
+		auto title = _info.GetProperty(L"title").at(0);
+		auto jt = f->getInfoByTitle(title);
+		if (jt.first == false) {
+			MyLog::ew(L"info:%s ", title);
 		}
+
+		auto authors = _info.GetProperty(L"author");
+		for (auto &it : authors) {
+			auto jt = f->getAuthorByName(it);
+			if (jt.first == false) {
+				MyLog::ew(L"info:%s, author: %s", _info.GetProperty(L"title").at(0), it);
+			}
+		}
+
 	}
 
-	void test_xmlparse() {
+	static void test_xmlparse() {
 		runBlock([&] {
 			test_xml((DWORD)XMLPARSETYPE_article);
-			}, "test");
+			}, "test xmlparse");
 	};
+
+	static void test_bptfile() {
+		//DblpBptMs* f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author);
+
+	}
+	void test_DBLP(DWORD flag) {
+		if (flag & 1) test_xmlparse();
+		if (flag & 2) test_bptfile();
+	}
 }

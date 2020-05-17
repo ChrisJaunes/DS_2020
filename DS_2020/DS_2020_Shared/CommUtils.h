@@ -25,3 +25,33 @@ void runBlock(Function func, const char* msg) {
 	clock_t end = clock();
 	printf("%s use: %f ms\n", msg, 1000.0 * (end - start) / CLOCKS_PER_SEC);
 }
+
+class MyLog {
+public:
+	static void v(const char* msg) {
+		printf("%s", msg);
+	}
+	static void d(const char* msg, ...) {
+		va_list ap;
+		va_start(ap, msg);
+		vprintf(msg, ap);
+		va_end(ap);
+	}
+	static void i(const char* msg) {
+		printf("%s", msg);
+	}
+	static void e(const char* msg, ...) {
+		puts("ERROR!!!!!!!!!!!!!!!");
+		va_list ap;
+		va_start(ap, msg);
+		vprintf(msg, ap);
+		va_end(ap);
+	}
+	static void ew(const wchar_t* msg, ...) {
+		puts("ERROR!!!!!!!!!!!!!!!");
+		va_list ap;
+		va_start(ap, msg);
+		vwprintf(msg, ap);
+		va_end(ap);
+	}
+};

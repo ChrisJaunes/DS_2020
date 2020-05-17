@@ -2,7 +2,6 @@
 #include "Info.h"
 #include "InfoMarshal.h"
 namespace FST {
-	Info info_a;
 	void test_Info_P(Info& a) {
 		FILE* fd = _wfopen(DS_BPT_TEST_ALS, L"a");
 		_wsetlocale(0, L"chs");
@@ -13,8 +12,8 @@ namespace FST {
 		fwprintf(fd, L" \n====GetProperties====\n");
 		auto properties = a.GetProperties();
 		for (auto& it : properties) {
-			fwprintf(fd, L" %s: ", (wchar_t *)it.first);
-			for(auto& jt : it.second)
+			fwprintf(fd, L" %s: ", (wchar_t*)it.first);
+			for (auto& jt : it.second)
 				fwprintf(fd, L"%s; ", (wchar_t*)jt);
 		}
 		fclose(fd);
@@ -60,7 +59,7 @@ namespace FST {
 		a.AddProperty(L"author", L"Werner Haas");
 		a.AddProperty(L"author", L"Mike Hamburg");
 		a.AddProperty(L"author", L"Moritz Lipp");
-		a.AddProperty(L"author", L"Stefan Mangard"); 
+		a.AddProperty(L"author", L"Stefan Mangard");
 		a.AddProperty(L"author", L"Thomas Prescher");
 		a.AddProperty(L"author", L"Michael Schwarz 0001");
 		a.AddProperty(L"author", L"Yuval Yarom");
@@ -90,5 +89,9 @@ namespace FST {
 
 		std::vector<Info> b = InfoMarshal::Unmarshal2v(ser);
 		delete[] ser;
+	}
+	void test_INFO(DWORD flag) {
+		if (flag & 1) test_INFO0();
+		if (flag & 2) test_INFO1();
 	}
 }

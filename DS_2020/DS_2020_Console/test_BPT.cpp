@@ -13,32 +13,23 @@ namespace FST {
         return res;
     }
     void test_BPT0() {
-        FILE* file;
-
-        file = _wfopen(DS_BPT_TEST_DB, L"wb+");
+        FILE* file = _wfopen(DS_BPT_TEST_DB, L"wb+");
 
         int sz; wchar_t a_out[100] = L"作为中文测试,Hello World test,{!@#$%^&*()<>?|[123456789]}";
         sz = sizeof(a_out);
         DS_BPlusTree::db_write(file, 0, a_out, sizeof(a_out), 1);
-
         wchar_t a_in[100];
         sz = sizeof(a_in);
         DS_BPlusTree::db_read(file, 0, a_in, sizeof(a_in), 1);
-
         assert(wcscmp(a_in, a_out) == 0);
 
-        //key_t b_in = { L"hhh, 这是数据结构大作业的key_t类型测试, 987654321！@#￥%……&*（）" };
-        key_t b_in = { L"hhh, 这是数据结构大作&*（）" };
+        key_t b_in = { L"hi, 数据结构!（^_^" };
         DS_BPlusTree::db_write(file, 200, &b_in, sizeof(b_in), 1);
-
         key_t b_out;
         DS_BPlusTree::db_read(file, 200, &b_out, sizeof(b_out), 1);
 
         assert(b_in == b_out);
-
-        char c[100];
-        memset(c, 'A', sizeof(c));
-        DS_BPlusTree::db_write(file, 50, c, sizeof(c), 1);
+        MyLog::d("db_read and db_write is ok！");
     }
 
     template <typename KEY_T>
@@ -103,6 +94,7 @@ namespace FST {
         BPTget<key_t>(tmp, key_t{ L"5. OK" }, value);
         assert(wcscmp(value, L"OK") == 0); value = NULL;
         delete tmp;
+        MyLog::d("bpt(small test) is ok");
     }
 
     static void test_BP_data(std::wstring file_in, int n) {
@@ -196,7 +188,7 @@ namespace FST {
         system("..\\DS_2020_Test\\test_file\\check.bat >> ..\\DS_2020_Test\\test.als");
     }
 
-    static void test_BP_data_insert(std::wstring file_in1, std::wstring file_in2, int n) {
+    static void test_BP_data2(std::wstring file_in1, std::wstring file_in2, int n) {
         FILE* _in1 = _wfopen(file_in1.c_str(), L"w");
         FILE* _in2 = _wfopen(file_in2.c_str(), L"w");
         std::vector<int> vec(100, 0);
@@ -231,7 +223,7 @@ namespace FST {
         fclose(_in);
         fclose(_ans);
     }
-    static void test_BP_me_ins(std::wstring file_in) {
+    static void test_BP_me2_ins(std::wstring file_in) {
         BPlusTree<int>* tmp = new BPlusTree<int>(DS_BPT_TEST_DB);
         FILE* _in = _wfopen(file_in.c_str(), L"r");
         int cnt = 0;
@@ -246,7 +238,7 @@ namespace FST {
         delete tmp;
         fclose(_in);
     }
-    static void test_BP_me_que(std::wstring file_in, std::wstring file_out) {
+    static void test_BP_me2_que(std::wstring file_in, std::wstring file_out) {
         BPlusTree<int>* tmp = new BPlusTree<int>(DS_BPT_TEST_DB, FILE_Status::EXIST);
         FILE* _in = _wfopen(file_in.c_str(), L"r");
         FILE* _out = _wfopen(file_out.c_str(), L"w");
@@ -277,7 +269,7 @@ namespace FST {
         std::wstring file_in2 = std::wstring(DS_BPT_TEST_IN2);
         std::wstring file_out = std::wstring(DS_BPT_TEST_OUT);
         std::wstring file_ans = std::wstring(DS_BPT_TEST_ANS);
-        test_BP_data_insert(file_in1, file_in2, n);
+        test_BP_data2(file_in1, file_in2, n);
 
         int begin_time = clock();
         test_BP_std2(file_in1, file_in2, file_ans);
@@ -285,12 +277,12 @@ namespace FST {
 
         begin_time = clock();
         bptcntR = bptcntW = 0;
-        test_BP_me_ins(file_in1);
+        test_BP_me2_ins(file_in1);
         fprintf(_als, "  me, time: %d; IO(R): %.6lf ; IO(W): %.6lf\n", clock() - begin_time, bptcntR, bptcntW);
 
         begin_time = clock();
         bptcntR = bptcntW = 0;
-        test_BP_me_que(file_in2, file_out);
+        test_BP_me2_que(file_in2, file_out);
         fprintf(_als, "  me, time: %d; IO(R): %.6lf ; IO(W): %.6lf\n", clock() - begin_time, bptcntR, bptcntW);
 
         fprintf(_als, "Result: \n");
@@ -340,28 +332,18 @@ namespace FST {
         printf("***End test speed.\n");
         delete tree;
     }
-    void test_BPT() {
-        /*test_BPT0();
-        test_BPT1();
-        test_BPT2(10000);
-        test_BPT2(10000);
-        test_BPT2(10000);
-        test_BPT2(10000);
-        test_BPT2(100000);
-        test_BPT2(100000);
-        test_BPT2(1000000);
-        test_BPT3(10000);
-        test_BPT3(10000);
-        test_BPT3(10000);
-        test_BPT3(100000);
-        test_BPT3(100000);
-        test_BPT3(1000000);
-        for (int i = 0; i < 100; i++) {
-            test_BPT3(1000000);
-        }*/
-        for (int i = 0; i < 100; i++) {
-            test_BPT4(1000000);
-        }
+    void test_BPT(DWORD flag) {
+        if (flag & 1) test_BPT0();
+        if (flag & 2) test_BPT1();
+        if (flag & 4) test_BPT2(10000);
+        if (flag & 8) test_BPT2(100000);
+        if (flag & 16) test_BPT2(1000000);
+        if (flag & 32) test_BPT3(10000);
+        if (flag & 64) test_BPT3(100000);
+        if (flag & 128) test_BPT3(1000000);
+        if (flag & 256) test_BPT4(10000);
+        if (flag & 512) test_BPT4(100000);
+        if (flag & 1024) test_BPT4(1000000);
     }
 }
 

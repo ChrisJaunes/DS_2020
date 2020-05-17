@@ -21,24 +21,18 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_BPTMS.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="test_AUTHOR.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="test_INFO.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test_xml.cpp">
+    <ClCompile Include="test_DBLP.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test_BPT.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="test_BPTMS.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="test_AUTHOR.h">
@@ -47,7 +41,7 @@
     <ClInclude Include="test_INFO.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="test_xml.h">
+    <ClInclude Include="test_DBLP.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

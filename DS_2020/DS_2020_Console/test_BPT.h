@@ -1,8 +1,19 @@
 #pragma once
+/*
+ * @ChrisJaunes_hjj
+ * test_BPT
+ * 1:    测试文件io
+ * 2：   测试key类的文件io
+ * 4：   测试混合状态下的bpt效率（10000级别）
+ * 8：   测试混合状态下的bpt效率（100000级别）
+ * 16：  测试混合状态下的bpt效率（100000级别）
+ * 32：  测试分开状态下的bpt效率（10000级别）
+ * 64：  测试分开状态下的bpt效率（100000级别）
+ * 128： 测试分开状态下的bpt效率（1000000级别）
+ * 256： 测试无文件输入状态下的bpt效率（10000级别）
+ * 512： 测试无文件输入状态下的bpt效率（100000级别）
+ * 1024：测试无文件输入状态下的bpt效率（1000000级别）
+**/
 namespace FST {
-	void test_BPT0();
-	void test_BPT1();
-	void test_BPT2(int);
-	void test_BPT3();
-	void test_BPT();
+	void test_BPT(DWORD);
 }
