@@ -1,5 +1,8 @@
 #pragma once
+#include "pch.h"
+#include "config.h"
 #include "Info.h"
+#include "Author.h"
 /*
 ISolver接口, 实现对具体问题的解决方案
 
@@ -15,8 +18,4 @@ class ISolver {
 public:
 	virtual void InitMemory()=0;
 	virtual void InsertObject(Info&)=0;
-};
-
-//解决
-class Solver {
 };

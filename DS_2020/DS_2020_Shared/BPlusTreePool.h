@@ -18,17 +18,17 @@ namespace DS_BPlusTree {
             , _page_num(_page_num)
         {
             _page_size = (unsigned int) ((size_t)_block_size - PAGE_T::getSize() + sizeof(PAGE_T));
-            size_t sz = _page_size * _page_num;
+            size_t sz = (size_t)_page_size * _page_num;
             caches = malloc(sz);
             memset(caches, 0, sz);
             
-            for (int i = 0; i < _page_num; i++)
-                ((BPlusTreeNode*)((char*)caches + _page_size * i))->P_Status = PAGE_Status::NON_MODIFY;
+            for (unsigned int i = 0; i < _page_num; i++)
+                ((BPlusTreeNode*)((char*)caches + (size_t)_page_size * i))->P_Status = PAGE_Status::NON_MODIFY;
             _used_index = 0;
         }
         ~BPlusTreePool1() {
-            for (int i = 0; i < _page_num; i++) {
-                PAGE_T* page = (PAGE_T*)((char*)caches + _page_size * i);
+            for (unsigned int i = 0; i < _page_num; i++) {
+                PAGE_T* page = (PAGE_T*)((char*)caches + (size_t)_page_size * i);
                 assert(page->P_Status == PAGE_Status::NON_MODIFY || page->P_Status == PAGE_Status::MODIFY);
                 if (page->P_Status == PAGE_Status::MODIFY) {
                     page->serialize(fd, page->self, _block_size);
@@ -40,7 +40,7 @@ namespace DS_BPlusTree {
             while (true) {
                 if (_used_index == _page_num) _used_index = 0;
                 ++_used_index;
-                PAGE_T* page = (PAGE_T*)((char*)caches + _page_size * (_used_index - 1));
+                PAGE_T* page = (PAGE_T*)((char*)caches + (size_t)_page_size * (_used_index - 1));
                 if (page->P_Status == PAGE_Status::INIT_LOCK || page->P_Status == PAGE_Status::WRITE_LOCK || page->P_Status == PAGE_Status::READ_LOCK) continue;
                 if (page->P_Status == PAGE_Status::MODIFY) {
                     page->serialize(fd, page->self, _block_size);
@@ -183,16 +183,16 @@ namespace DS_BPlusTree {
             , _page_num(_page_num)
         {
             _page_size = (unsigned int)((size_t)_block_size - PAGE_T::getSize() + sizeof(PAGE_T));
-            size_t sz = _page_size * _page_num;
+            size_t sz = (size_t)_page_size * _page_num;
             caches = malloc(sz);
             memset(caches, 0, sz);
-            for (int i = 0; i < _page_num; i++)
-                ((PAGE_T*)((char*)caches + _page_size * i))->P_Status = PAGE_Status::NON_MODIFY;
+            for (unsigned int i = 0; i < _page_num; i++)
+                ((PAGE_T*)((char*)caches + (size_t)_page_size * i))->P_Status = PAGE_Status::NON_MODIFY;
             _used_index = 0;
         }
         ~BPlusTreePool3() {
-            for (int i = 0; i < _page_num; i++) {
-                PAGE_T* page = (PAGE_T*)((char*)caches + _page_size * i);
+            for (unsigned int i = 0; i < _page_num; i++) {
+                PAGE_T* page = (PAGE_T*)((char*)caches + (size_t)_page_size * i);
                 assert(page->P_Status == PAGE_Status::NON_MODIFY || page->P_Status == PAGE_Status::MODIFY);
                 if (page->P_Status == PAGE_Status::MODIFY) {
                     page->serialize(fd, page->self, _block_size);
@@ -203,7 +203,7 @@ namespace DS_BPlusTree {
         PAGE_T* refer(size_t offset) {
             while (true) {
                 if (++_used_index == _page_num) _used_index = 0;
-                PAGE_T* page = (PAGE_T*)((char*)caches + _page_size * _used_index);
+                PAGE_T* page = (PAGE_T*)((char*)caches + (size_t)_page_size * _used_index);
                 if (page->P_Status == PAGE_Status::INIT_LOCK || page->P_Status == PAGE_Status::WRITE_LOCK || page->P_Status == PAGE_Status::READ_LOCK) continue;
                 if (page->P_Status == PAGE_Status::MODIFY) {
                     page->serialize(fd, page->self, _block_size);
@@ -222,8 +222,8 @@ namespace DS_BPlusTree {
             if (offset == INVALID_OFFSET) {
                 return nullptr;
             }
-            for (int i = 0; i < _page_num; i++) {
-                PAGE_T* page = (PAGE_T*)((char*)caches + _page_size * i);
+            for (unsigned int i = 0; i < _page_num; i++) {
+                PAGE_T* page = (PAGE_T*)((char*)caches + (size_t)_page_size * i);
                 if (page->self == offset) {
                     assert(page->P_Status != PAGE_Status::INIT_LOCK && page->P_Status != PAGE_Status::WRITE_LOCK && page->P_Status != PAGE_Status::READ_LOCK);
                     page->lock(PAGE_Status::READ_LOCK);

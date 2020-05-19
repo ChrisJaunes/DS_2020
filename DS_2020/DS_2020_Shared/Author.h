@@ -36,7 +36,7 @@ public:
 	Author(const MYSTR&);
 	Author(const MYSTR&, const std::map<MYSTR, std::vector<MYSTR> >&);
 	Author(const Author&);
-	Author& operator= (Author&);
+	Author& operator= (const Author&);
 	~Author();
 
 	void SetName(MYSTR);
@@ -59,7 +59,7 @@ public:
 };
 
 struct AuthorCmpByNumOfArticle {
-	bool operator()(const Author *a, const Author *b) {
-		return a->GetNumOfArticle() < b->GetNumOfArticle();
+	bool operator()(const Author &a, const Author &b) {
+		return a.GetNumOfArticle() < b.GetNumOfArticle();
 	}
 };

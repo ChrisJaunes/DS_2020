@@ -120,7 +120,7 @@ OPRESULT XMLParser::ParseFile(LPCWSTR filename, ISolver* pSolver)
 {
 	OPRESULT hr = OpenFile(filename);
 	if (FAILED(hr)) { 
-		printf("%s not exist?\n", filename);
+		printf("%S not exist?\n", filename);
 		return hr; 
 	}
 	hr = ParseAll(pSolver);

@@ -27,9 +27,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)F3Solver.cpp">
       <Filter>Solver</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)F1Solver.cpp">
-      <Filter>Solver</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Info.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -63,11 +60,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)F4Solver.cpp">
       <Filter>Solver</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DblpBptMs.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DblpBptMs.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FSolver.cpp">
+      <Filter>Solver</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,12 +89,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)F3Solver.h">
       <Filter>Solver</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)F1Solver.h">
-      <Filter>Solver</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Info.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h">
       <Filter>Header</Filter>
     </ClInclude>
@@ -106,9 +100,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)BPTrees.h">
       <Filter>废弃</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CommUtils.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)FrequencyRanking.h">
       <Filter>Solver</Filter>
@@ -131,6 +122,17 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DblpBptMs.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)generate_cache.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)generate_cache.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Info.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CommUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FSolver.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -61,6 +61,7 @@ public:
 	void updateAuthor(Author&);
     std::pair<OPRESULT, Author> getAuthorByName(const MYSTR&);
     std::pair<OPRESULT, Info> getInfoByTitle(const MYSTR&);
+    std::vector<Author> getTop100();
 
 #ifdef TEST_DEBUG
     int info_cnt;

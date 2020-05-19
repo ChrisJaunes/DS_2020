@@ -45,7 +45,7 @@ Author::Author(const Author& _author)
 	collaborators = _author.collaborators;
 }
 
-Author& Author::operator= (Author& _author)
+Author& Author::operator= (const Author& _author)
 {
 	name = _author.name;
 	articles      = _author.articles;

@@ -42,18 +42,18 @@ namespace DS_BPlusTree {
     template<typename KEY_T = key_t>
     class BPlusTree {
     public:
-        explicit BPlusTree(const wchar_t* filepath, FILE_Status exist = FILE_Status::NON_EXIST, int _node_block_size = BPT_NODE_BLOCK_SIZE, int _data_block_size = BPT_DATA_BLOCK_SIZE);
+        explicit BPlusTree(const wchar_t* filepath, const FILE_Status exist = FILE_Status::NON_EXIST, const int _node_block_size = BPT_NODE_BLOCK_SIZE, const int _data_block_size = BPT_DATA_BLOCK_SIZE);
         BPlusTree(const BPlusTree& a) = delete;
         void operator=(const BPlusTree& a) = delete;
         ~BPlusTree();
-        BPT_Res insert(KEY_T key, const void* value, const size_t value_sz);
-        BPT_Res search(KEY_T key, void*& value, size_t& value_sz);
+        BPT_Res insert(const KEY_T key, const void* value, const size_t value_sz);
+        BPT_Res search(const KEY_T key, void*& value, size_t& value_sz);
     //private:
         //BPT常用量
         size_t p_KEYS;
         size_t p_OFFS;
         //节点类
-        unsigned int binary_search_by_key(BPlusTreeNode* node, const KEY_T& key);
+        unsigned int binary_search_by_key(const BPlusTreeNode* node, const KEY_T& key);
         //B+树基本信息
         void* BPT_caches;
         size_t node_max_order;
@@ -74,8 +74,8 @@ namespace DS_BPlusTree {
         //数据块缓存池
         OFF_T data_empty_block();
         BPlusTreePool3<BPlusTreeData> *datas;
-        void valueFromFileBlock(OFF_T file_off, void*& value, size_t& value_sz);
-        OFF_T valueToFileBlock(OFF_T file_off, const void* value, const size_t value_sz);
+        void valueFromFileBlock(const OFF_T file_off, void*& value, size_t& value_sz);
+        OFF_T valueToFileBlock(const OFF_T file_off, const void* value, const size_t value_sz);
 
         //临时使用缓存池
         unsigned int temp_block_size;
@@ -88,10 +88,43 @@ namespace DS_BPlusTree {
         void node_flush_parent(OFF_T offset, BPlusTreeNode* parent);
         KEY_T node_split(BPlusTreeNode* node, const int pos, const KEY_T key, const OFF_T value_off, BPlusTreeNode*& lch, BPlusTreeNode*& rch);
         void node_insert(BPlusTreeNode* node, const int pos, const KEY_T key, const OFF_T value_off);
+
+        class iterator {
+        private:
+            const BPlusTree* bpt;
+            BPlusTreeNode* leaf;
+            unsigned int pos;
+        public:
+            iterator(const BPlusTree* _bpt, const OFF_T leaf_off = INVALID_OFFSET, const unsigned int _pos = 0) {
+                bpt = _bpt;
+                leaf = bpt->nodes->fetch(leaf_off); 
+                pos = _pos;
+            }
+            ~iterator() { bpt->nodes->defer(leaf); }
+            OFF_T operator*() const { return ((char*)(leaf)+bpt->p_OFFS)[pos]; }
+            //BPlusTreeNode* operator->() const { return leaf; }
+            iterator& operator++() {
+                ++pos;
+                if (pos == leaf->ch_cnt) {
+                    bpt->nodes->defer(leaf);
+                    leaf = bpt->nodes->fetch(leaf->next);
+                }
+                return *this;
+            }
+            bool operator != (const iterator& x) const {
+                return bpt != x.bpt && this->leaf != x.leaf && this->pos != x.pos;
+            }
+        };
+        iterator begin() const {
+            return iterator(this, leaf_head, 0);
+        }
+        iterator end() const {
+            return iterator(this, INVALID_OFFSET, 0);
+        }
     };
 
     template<typename KEY_T>
-    inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, FILE_Status exist, int _node_block_size, int _data_block_size)
+    inline BPlusTree<KEY_T>::BPlusTree(const wchar_t* filepath, const FILE_Status exist, const int _node_block_size, const int _data_block_size)
     {
         size_t sz = wcslen(filepath) + 1;
         wchar_t* fdpath = new wchar_t[sz];
@@ -160,7 +193,7 @@ namespace DS_BPlusTree {
             nodes->defer(node);
             return BPT_Res::SUCCESS;
         }
-        int pos;
+        unsigned int pos;
         BPlusTreeNode* node = nodes->fetch(root);
         while (node->type == PAGE_Type::NODE_INTERNAL) {
             pos = binary_search_by_key(node, key);
@@ -209,12 +242,12 @@ namespace DS_BPlusTree {
     }
 
     template<typename KEY_T>
-    inline BPT_Res BPlusTree<KEY_T>::search(KEY_T key, void*& value, size_t& value_sz)
+    inline BPT_Res BPlusTree<KEY_T>::search(const KEY_T key, void*& value, size_t& value_sz)
     {
         if (root == INVALID_OFFSET) {
             return BPT_Res::FAILED;
         }
-        int pos;
+        unsigned int pos;
         BPlusTreeNode* node = nodes->fetch(root);
         while (node->type == PAGE_Type::NODE_INTERNAL) {
             pos = binary_search_by_key(node, key);
@@ -233,7 +266,7 @@ namespace DS_BPlusTree {
     }
 
     template<typename KEY_T>
-    inline unsigned int BPlusTree<KEY_T>::binary_search_by_key(BPlusTreeNode* node, const KEY_T& key)
+    inline unsigned int BPlusTree<KEY_T>::binary_search_by_key(const BPlusTreeNode* node, const KEY_T& key)
     {
         int len = node->type == PAGE_Type::NODE_LEAF ? node->ch_cnt : node->ch_cnt - 1;
         KEY_T* beg = &(keys(node)[0]), * end = &(keys(node)[len]);
@@ -370,7 +403,7 @@ namespace DS_BPlusTree {
         for (int i = 0; i < BPT_CACHE_TEMP_NUM; i++) {
             if (!temp_used[i]) {
                 temp_used[i] = 1;
-                return (char*)temp_caches + temp_block_size * i;
+                return (char*)temp_caches + (size_t)temp_block_size * i;
             }
         }
         assert(0);
@@ -449,7 +482,7 @@ namespace DS_BPlusTree {
         memmove(&(offs(node)[0]), (char*)buf + off, node->ch_cnt * sizeof(OFF_T));
         swap_defer(buf);
         if (sibling->type == PAGE_Type::NODE_INTERNAL) {
-            for (int i = 0; i < sibling->ch_cnt; i++)
+            for (unsigned int i = 0; i < sibling->ch_cnt; i++)
                 node_flush_parent(offs(sibling)[i], sibling);
         }
 
@@ -463,8 +496,8 @@ namespace DS_BPlusTree {
     inline void BPlusTree<KEY_T>::node_insert(BPlusTreeNode* node, const int pos, const KEY_T key, const OFF_T value_off)
     {
         node->P_Status = PAGE_Status::WRITE_LOCK;
-        memmove(&(keys(node)[pos + 1]), &(keys(node)[pos]), (node->ch_cnt - pos) * sizeof(KEY_T));
-        memmove(&(offs(node)[pos + 1]), &(offs(node)[pos]), (node->ch_cnt - pos) * sizeof(OFF_T));
+        memmove(&(keys(node)[pos + 1]), &(keys(node)[pos]), ((size_t)node->ch_cnt - pos) * sizeof(KEY_T));
+        memmove(&(offs(node)[pos + 1]), &(offs(node)[pos]), ((size_t)node->ch_cnt - pos) * sizeof(OFF_T));
         keys(node)[pos] = key;
         offs(node)[pos] = value_off;
         node->ch_cnt++;

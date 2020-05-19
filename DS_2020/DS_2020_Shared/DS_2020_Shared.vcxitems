@@ -19,11 +19,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CommUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DblpBptMs.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)F1Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)F3Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)f4.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)F4Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FrequencyRanking.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)FSolver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)generate_cache.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Info.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InfoMarshal.cpp" />
@@ -42,11 +42,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)config.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DblpBptMs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)error.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)F1Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)F3Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)f4.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)F4Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FrequencyRanking.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FSolver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Info.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InfoMarshal.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />

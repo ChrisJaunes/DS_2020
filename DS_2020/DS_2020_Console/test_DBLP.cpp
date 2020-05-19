@@ -33,16 +33,21 @@ namespace FST {
 	{
 		++info_cnt;
 		auto title = _info.GetProperty(L"title").at(0);
+		printf("%d\n", info_cnt);
+		//if (info_cnt % 23790 == 0) {
+		//	wprintf(L"%S", (const wchar_t*)title);
+		//	wprintf(L"%S", (const wchar_t*)_info.serialize());
+		//}
 		auto jt = f->getInfoByTitle(title);
 		if (jt.first == false) {
-			MyLog::ew(L"info:%s ", title);
+			MyLog::ew(L"info:%S ", title);
 		}
 
 		auto authors = _info.GetProperty(L"author");
 		for (auto &it : authors) {
 			auto jt = f->getAuthorByName(it);
 			if (jt.first == false) {
-				MyLog::ew(L"info:%s, author: %s", _info.GetProperty(L"title").at(0), it);
+				MyLog::ew(L"info:%s, author: %S", _info.GetProperty(L"title").at(0), it);
 			}
 		}
 
@@ -50,7 +55,7 @@ namespace FST {
 
 	static void test_xmlparse() {
 		runBlock([&] {
-			test_xml((DWORD)XMLPARSETYPE_article);
+			test_xml((DWORD)XMLPARSETYPE_alltypes);
 			}, "test xmlparse");
 	};
 
@@ -59,6 +64,7 @@ namespace FST {
 
 	}
 	void test_DBLP(DWORD flag) {
+		MyLog::d("start test flag\n");
 		if (flag & 1) test_xmlparse();
 		if (flag & 2) test_bptfile();
 	}

@@ -12,7 +12,6 @@
 #include "CommUtils.h"
 
 #include "generate_cache.h"
-#include "F1Solver.h"
 
 #include "test_BPT.h"
 #include "test_AUTHOR.h"
@@ -21,7 +20,7 @@
 
 int _tmain()
 {
-    generate_cache(DS_DBLP, XMLPARSETYPE_alltypes);
+    generate_cache(DS_DBLP, XMLPARSETYPE_article);
     CalcTime timer;
     FST::test_BPT(0);
     FST::test_AUTHOR(0);

@@ -1,4 +1,5 @@
 #include "DblpBptMs.h"
+#include "CommUtils.h"
 
 DblpBptMs::DblpBptMs(const wchar_t* info_bpt_file, const wchar_t* author_bpt_file, FILE_Status exist)
 	: info_bpt(info_bpt_file, exist)
@@ -21,10 +22,15 @@ void DblpBptMs::InsertObject(Info& _info)
 {
 #ifdef TEST_DEBUG
 	++info_cnt;
+	//if (info_cnt % 23790 == 0) {
+		//printf("%d\n", info_cnt);
+		//wprintf(L"%s", (const wchar_t*)_info.serialize());
+	//}
+	//printf("%d\n", info_cnt);
 	if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
 #endif
+
 	insertInfo(_info);
-	
 	auto authors = _info.GetProperty(L"author");
 	for (auto it : authors) {
 		AuthorKey key(it);
@@ -34,6 +40,13 @@ void DblpBptMs::InsertObject(Info& _info)
 		kt.AddArticle(it, authors);
 		updateAuthor(kt);
 	}
+#ifdef TEST_DEBUG
+	//auto title = _info.GetProperty(L"title").at(0);
+	//auto jt = getInfoByTitle(title);
+	//if (jt.first == false) {
+	//	MyLog::e("info:%S ", title);
+	//}
+#endif
 }
 
 void DblpBptMs::insertInfo(Info& _info)
@@ -93,4 +106,23 @@ std::pair<OPRESULT, Info> DblpBptMs::getInfoByTitle(const MYSTR& key)
 	Info info = Info::deserialize((wchar_t*)_value);
 	free(_value);
 	return std::make_pair(true, info);
+}
+
+std::vector<Author> DblpBptMs::getTop100()
+{
+	std::priority_queue<Author, std::vector<Author>, AuthorCmpByNumOfArticle> q;
+	for (auto it = author_bpt.begin(); it != author_bpt.end(); ++it) {
+		auto off = *it;
+		void* value = nullptr; size_t value_sz = 0;
+		author_bpt.valueFromFileBlock(off, value, value_sz);
+		Author author = Author::deserialize((wchar_t*)value);
+		q.push(author);
+		free(value);
+		if (q.size() > 100) q.pop();
+	}
+	std::vector<Author> vec;
+	for (; !q.empty();) {
+		vec.push_back(q.top()); q.pop();
+	}
+	return vec;
 }
