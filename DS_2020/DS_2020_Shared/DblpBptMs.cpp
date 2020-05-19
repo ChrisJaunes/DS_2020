@@ -22,10 +22,10 @@ void DblpBptMs::InsertObject(Info& _info)
 {
 #ifdef TEST_DEBUG
 	++info_cnt;
-	//if (info_cnt % 23790 == 0) {
-		//printf("%d\n", info_cnt);
-		//wprintf(L"%s", (const wchar_t*)_info.serialize());
-	//}
+	if (info_cnt % 1878286 == 0) {
+		printf("%d\n", info_cnt);
+		wprintf(L"%s", (const wchar_t*)_info.serialize());
+	}
 	//printf("%d\n", info_cnt);
 	if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
 #endif
@@ -41,11 +41,11 @@ void DblpBptMs::InsertObject(Info& _info)
 		updateAuthor(kt);
 	}
 #ifdef TEST_DEBUG
-	//auto title = _info.GetProperty(L"title").at(0);
-	//auto jt = getInfoByTitle(title);
-	//if (jt.first == false) {
-	//	MyLog::e("info:%S ", title);
-	//}
+	auto title = _info.GetProperty(L"title").at(0);
+	auto jt = getInfoByTitle(title);
+	if (jt.first == false) {
+		MyLog::e("info:%S ", title);
+	}
 #endif
 }
 

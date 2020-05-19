@@ -40,14 +40,14 @@ namespace FST {
 		//}
 		auto jt = f->getInfoByTitle(title);
 		if (jt.first == false) {
-			MyLog::ew(L"info:%S ", title);
+			MyLog::ew(L"info:%S ", (const wchar_t*)title);
 		}
 
 		auto authors = _info.GetProperty(L"author");
 		for (auto &it : authors) {
 			auto jt = f->getAuthorByName(it);
 			if (jt.first == false) {
-				MyLog::ew(L"info:%s, author: %S", _info.GetProperty(L"title").at(0), it);
+				MyLog::ew(L"info:%s, author: %S", (const wchar_t*)_info.GetProperty(L"title").at(0), it);
 			}
 		}
 

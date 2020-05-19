@@ -203,6 +203,7 @@ namespace DS_BPlusTree {
         }
         pos = binary_search_by_key(node, key);
         if (pos < node->ch_cnt && keys(node)[pos] == key) {
+            node->P_Status = PAGE_Status::WRITE_LOCK;
             offs(node)[pos] = valueToFileBlock(offs(node)[pos], value, value_sz);
             nodes->defer(node);
             return BPT_Res::SUCCESS_REPLACE;
