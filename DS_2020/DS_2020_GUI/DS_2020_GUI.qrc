@@ -6,5 +6,7 @@
         <file>image/astronomy-beautiful-clouds-constellation.jpg</file>
         <file>image/feather-pen.png</file>
         <file>image/planet.png</file>
+        <file>image/delete.png</file>
+        <file>image/test.png</file>
     </qresource>
 </RCC>

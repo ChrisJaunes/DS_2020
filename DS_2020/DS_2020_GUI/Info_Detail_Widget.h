@@ -1,4 +1,6 @@
 #pragma once
+#include "FSolver.h"
+extern FSolver fsolver;
 
 #include <QWidget>
 #include <QObjectUserData>
@@ -42,6 +44,5 @@ public:
 
 private:
 	Ui::Info_Detail_Widget  *ui;
-	QStandardItemModel      *info_model;
-	Info_Property_Delegate  *info_delegate;
+	std::vector<std::pair<QStandardItemModel*, Info_Property_Delegate*> > mvc;
 };

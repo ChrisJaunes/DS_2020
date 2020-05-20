@@ -504,4 +504,6 @@ namespace DS_BPlusTree {
         node->ch_cnt++;
         if (node->type == PAGE_Type::NODE_INTERNAL) node_flush_parent(value_off, node);
     }
+    #undef keys
+    #undef offs
 }

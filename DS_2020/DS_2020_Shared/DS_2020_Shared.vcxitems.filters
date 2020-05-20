@@ -63,10 +63,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DblpBptMs.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)FSolver.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp">
       <Filter>Solver</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,22 +116,22 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)F4Solver.h">
       <Filter>Solver</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)DblpBptMs.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)generate_cache.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Info.h">
-      <Filter>Solver</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)FSolver.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Info.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Solver.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)generate_cache.h">
       <Filter>Solver</Filter>
     </ClInclude>
   </ItemGroup>

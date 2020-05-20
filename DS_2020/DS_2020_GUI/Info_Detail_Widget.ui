@@ -38,9 +38,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>30</y>
+      <y>10</y>
       <width>600</width>
-      <height>50</height>
+      <height>100</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -49,27 +49,32 @@ color:rgb(255, 255, 255);
 font: 75 20pt &quot;Consolas&quot;;</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>详细细节</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QListView" name="listView">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>100</y>
+      <y>120</y>
       <width>600</width>
-      <height>420</height>
+      <height>400</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image:url();
-background-color:rgba(244,244,244,100)</string>
+     <string notr="true">QTabWidget::pane{
+    border: none;
+}
+QTabWidget QStackedWidget{
+	border-image:url();
+    border-background: transparent;    
+}</string>
     </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::NoEditTriggers</set>
+    <property name="currentIndex">
+     <number>-1</number>
     </property>
    </widget>
   </widget>

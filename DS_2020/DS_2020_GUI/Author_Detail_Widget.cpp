@@ -133,14 +133,26 @@ Author_Detail_Widget::~Author_Detail_Widget()
 }
 
 void Author_Detail_Widget::initData(QString& parameter) {
-#ifndef TEST_DEBUG_AUTHOR
-    author = Author::getAuthorByName(bstr_t(parameter.toStdWString().c_str()));
-#else
+#ifdef TEST_DEBUG_GUI_AUTHOR
     Author author = *FST::AUTHORS[0];
+#else
+    auto data = fsolver.F1_getAuthorByName((MYSTR)(parameter.toStdWString().c_str()));
 #endif
     ui->name->setFont(QFont("Consolas", 20, QFont::Bold));
     ui->name->setText("Detail about " + parameter);
+    
+    if (data.first == false) {
+        ui->lvw_collaborator->setVisible(false);
+        ui->lvw_info->setVisible(false);
+        ui->horizontalLayoutWidget->setVisible(false);
+        QLabel* label = new QLabel(ui->frame);
+        label->setGeometry(QRect(100, 130, 600, 30 * 4));
+        label->setStyleSheet(QString::fromUtf8("border-image:url();\n""background-color:rgba(244,244,244,100)"));
+        label->setFont(QFont("Consolas", 20, QFont::Bold));
+        label->setText("no author");
+    }
     QString tmp_STR;
+    Author author = data.second;
     auto collaborator = author.GetCollaborators().second;
     collaborator_model = new QStandardItemModel(collaborator.size() + 1, 1);
     collaborator_model->setData(collaborator_model->index(0, 0), QString("ALL"));

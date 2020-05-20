@@ -1,4 +1,5 @@
 #include "DblpBptMs.h"
+#include "InfoMarshal.h"
 #include "CommUtils.h"
 
 DblpBptMs::DblpBptMs(const wchar_t* info_bpt_file, const wchar_t* author_bpt_file, FILE_Status exist)
@@ -22,30 +23,31 @@ void DblpBptMs::InsertObject(Info& _info)
 {
 #ifdef TEST_DEBUG
 	++info_cnt;
-	if (info_cnt % 1878286 == 0) {
-		printf("%d\n", info_cnt);
-		wprintf(L"%s", (const wchar_t*)_info.serialize());
-	}
-	//printf("%d\n", info_cnt);
-	if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
+	//if (info_cnt % 1878286 == 0) {
+	//	printf("%d\n", info_cnt);
+	//	wprintf(L"%s", (const wchar_t*)_info.serialize());
+	//}
+	printf("%d\n", info_cnt);
+	//if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
 #endif
 
 	insertInfo(_info);
 	auto authors = _info.GetProperty(L"author");
+	auto title = _info.GetProperty(L"title").at(0);
 	for (auto it : authors) {
 		AuthorKey key(it);
 		auto jt = getAuthorByName(key.a);
 		Author kt(jt.second);
 		if (jt.first == false) kt.SetName(it);
-		kt.AddArticle(it, authors);
+		kt.AddArticle(title, authors);
 		updateAuthor(kt);
 	}
 #ifdef TEST_DEBUG
-	auto title = _info.GetProperty(L"title").at(0);
-	auto jt = getInfoByTitle(title);
-	if (jt.first == false) {
-		MyLog::e("info:%S ", title);
-	}
+	//auto title = _info.GetProperty(L"title").at(0);
+	//auto jt = getInfoByTitle(title);
+	//if (jt.first == false) {
+	//	MyLog::e("info:%S ", title);
+	//}
 #endif
 }
 
@@ -69,9 +71,6 @@ void DblpBptMs::insertInfo(Info& _info)
 void DblpBptMs::updateAuthor(Author& _author)
 {
 	AuthorKey key(_author.GetName().second);
-	if (wcscmp(key.a, L"Francisco Fernndez ") == 0) {
-		int debug = 0;
-	}
 	wchar_t* value = _author.serialize();
 	size_t value_sz = (wcslen(value) + 1) * sizeof(wchar_t);
 
@@ -97,13 +96,13 @@ std::pair<OPRESULT, Author> DblpBptMs::getAuthorByName(const MYSTR& key)
 	return std::make_pair(true, author);
 }
 
-std::pair<OPRESULT, Info> DblpBptMs::getInfoByTitle(const MYSTR& key)
+std::pair<OPRESULT, std::vector<Info> > DblpBptMs::getInfoByTitle(const MYSTR& key)
 {
 	InfoKey _key(key);
 	void* _value = nullptr;
 	size_t _value_sz;
-	if (info_bpt.search(_key, _value, _value_sz) == DS_BPlusTree::BPT_Res::FAILED) return std::make_pair(false, Info());
-	Info info = Info::deserialize((wchar_t*)_value);
+	if (info_bpt.search(_key, _value, _value_sz) == DS_BPlusTree::BPT_Res::FAILED) return std::make_pair(false,std::vector<Info>());
+	std::vector<Info> info = InfoMarshal::Unmarshal2v((wchar_t*)_value);
 	free(_value);
 	return std::make_pair(true, info);
 }

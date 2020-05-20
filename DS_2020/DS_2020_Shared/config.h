@@ -39,3 +39,4 @@
 
 //GUI ¿ØÖÆºê
 //#define TEST_DEBUG_HOTSPOT
+//#define TEST_DEBUG_GUI_INFO

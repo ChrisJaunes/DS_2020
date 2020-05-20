@@ -3,10 +3,12 @@
 #include <QStyle>
 #include <QEvent>
 #include <QDebug>
-#include "Info.h"
+#include <QListView>
+#include <QTabWidget>
 #include "Info_Detail_Widget.h"
 #include "ui_Info_Detail_Widget.h"
 #include "config.h"
+#include "Info.h"
 #include "test_GUI.h"
 
 Info_Property_Item::Info_Property_Item()
@@ -108,11 +110,6 @@ Info_Detail_Widget::Info_Detail_Widget(QString& parameter, QWidget *parent)
 	ui->setupUi(this);
 
 	initData(parameter);
-    info_delegate = new Info_Property_Delegate(this);
-    ui->listView->setSpacing(5);
-    ui->listView->setItemDelegate(info_delegate);
-    ui->listView->setModel(info_model);
-    ui->listView->setDragEnabled(false);
 }
 
 Info_Detail_Widget::~Info_Detail_Widget()
@@ -122,30 +119,55 @@ Info_Detail_Widget::~Info_Detail_Widget()
 #endif // TEST_DEBUG
 
 	delete ui;
-    delete info_model;
-    delete info_delegate;
+    for (auto it : mvc) {
+        delete it.first;
+        delete it.second;
+    }
 }
 
 void Info_Detail_Widget::initData(const QString& parameter) {
-#ifndef TEST_DEBUG_INFO
-	
-#else:
+#ifdef TEST_DEBUG_GUI_INFO
     Info data = *FST::INFO[0];
+#else:
+    auto data = fsolver.F1_getInfoByTitle((MYSTR)parameter.toStdWString().c_str());
 #endif
-    ui->title->setFont(QFont("Consolas", 20, QFont::Bold));
-    ui->title->setText("Detail about " + parameter);
-	auto tmp_mp = data.GetProperties();
-    Info_Property_Item tmp_IPI;
-    int i = 0;
-    if (tmp_mp.empty()) {
-        info_model = new QStandardItemModel(1, 1);
-        tmp_IPI.setProperty("NULL", "没有关于这个关键词的信息哦");
-        info_model->setData(info_model->index(i++, 0), QVariant::fromValue(tmp_IPI), Qt::UserRole);
+    int font_size = min(20, (int)sqrt(600 * 10 / (parameter.size() + 10)));
+    ui->title->setFont(QFont("Consolas", font_size, QFont::Bold));
+    ui->title->setText("Detail About " + parameter);
+    //ui->title->setGeometry(QRect(100, 30, 600, 30 * 4));
+    //ui->title->adjustSize();
+    ui->title->setWordWrap(true);
+
+    if (data.first == false) {
+        QLabel* label = new QLabel();
+        label->setGeometry(QRect(100, 30, 600, 30 * 4));
+        label ->setStyleSheet(QString::fromUtf8("border-image:url();\n""background-color:rgba(244,244,244,100)"));
+        label->setFont(QFont("Consolas", 20, QFont::Bold));
+        label->setText("no article");
+        ui->tabWidget->addTab(label, QIcon(":/DS_2020_GUI/image/delete.png"), QString("error"));
+        return;
     }
-    else {
-        info_model = new QStandardItemModel(tmp_mp.size(), 1);
-        for (auto &it : tmp_mp) {
-            tmp_IPI.setProperty(QString((QChar*)(wchar_t*)(it.first)), "");
+    auto info_vec = data.second;
+    for (auto info : info_vec) {
+        auto tmp_mp = info.GetProperties();
+        QStandardItemModel* info_model = new QStandardItemModel(tmp_mp.size(), 1);
+        Info_Property_Delegate* info_delegate = new Info_Property_Delegate(this);
+        mvc.push_back(std::make_pair(info_model, info_delegate));
+        QListView* listView = new QListView();
+        listView->setSpacing(5);
+        listView->setItemDelegate(info_delegate);
+        listView->setModel(info_model);
+        listView->setDragEnabled(false);
+        listView->setObjectName(QString::fromUtf8("listView"));
+        //listView->setGeometry(QRect(100, 100, 600, 420));
+        listView->setStyleSheet(QString::fromUtf8("border-image:url();\n""background-color:rgba(244,244,244,100)"));
+        listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        ui->tabWidget->addTab(listView, QIcon(":/DS_2020_GUI/image/test.png"), parameter);
+
+        Info_Property_Item tmp_IPI;
+        int i = 0;
+        for (auto& it : tmp_mp) {
+            tmp_IPI.setProperty(QString((QChar*)(wchar_t*)it.first, wcslen(it.first)),"");
             bool fg = 0;
             for (auto& jt : it.second) {
                 if (fg) tmp_IPI.addPropertyData(QString("; ")); else fg = 1;

@@ -60,7 +60,7 @@ public:
 	void insertInfo(Info&);
 	void updateAuthor(Author&);
     std::pair<OPRESULT, Author> getAuthorByName(const MYSTR&);
-    std::pair<OPRESULT, Info> getInfoByTitle(const MYSTR&);
+    std::pair<OPRESULT, std::vector<Info> > getInfoByTitle(const MYSTR&);
     std::vector<Author> getTop100();
 
 #ifdef TEST_DEBUG

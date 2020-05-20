@@ -1,4 +1,6 @@
 #pragma once
+#include "FSolver.h"
+extern FSolver fsolver;
 
 #include <QWidget>
 #include <QObjectUserData>
@@ -49,6 +51,6 @@ private:
 	Ui::Author_Detail_Widget  *ui;
 	QStandardItemModel        *author_model;
 	QStandardItemModel        *collaborator_model;
-	Author_Property_Delegate            *author_delegate;
+	Author_Property_Delegate  *author_delegate;
 	QSortFilterProxyModel     *author_proxyModel;
 };
