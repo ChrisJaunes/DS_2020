@@ -86,3 +86,13 @@ Info Info::deserialize(MYSTR xmlcode)
 {
 	return InfoMarshal::Unmarshal(xmlcode);
 }
+
+wchar_t* Info::serializeall(std::vector<Info>& v)
+{
+	return InfoMarshal::Marshal2v(v);
+}
+
+std::vector<Info> Info::deserializeall(MYSTR xmlcode)
+{
+	return InfoMarshal::Unmarshal2v(xmlcode);
+}

@@ -25,6 +25,9 @@ public:
 
 	wchar_t* serialize();
 	static Info deserialize(MYSTR);
+
+	static wchar_t* serializeall(std::vector<Info>&);
+	static std::vector<Info> deserializeall(MYSTR xmlcode);
 #ifdef TEST_DEBUG_INFO
 	static unsigned int Info_cnt;
 #endif

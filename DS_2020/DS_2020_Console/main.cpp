@@ -20,13 +20,12 @@
 
 int _tmain()
 {
-    generate_cache(DS_DBLP, XMLPARSETYPE_article);
     CalcTime timer;
+    generate_cache(DS_DBLP, XMLPARSETYPE_alltypes);
     FST::test_BPT(0);
     FST::test_AUTHOR(0);
     FST::test_INFO(0);
-    FST::test_DBLP(1);
-    
+    FST::test_DBLP(0);
     
     //FST::test_xmlparse();
 
