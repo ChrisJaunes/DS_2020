@@ -55,12 +55,12 @@ namespace FST {
 
 	static void test_xmlparse() {
 		runBlock([&] {
-			test_xml((DWORD)XMLPARSETYPE_alltypes);
+			test_xml((DWORD)XMLPARSETYPE_book);
 			}, "test xmlparse");
 	};
 
 	static void test_bptfile() {
-		//DblpBptMs* f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author);
+		DblpBptMs* f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author);
 
 	}
 	void test_DBLP(DWORD flag) {

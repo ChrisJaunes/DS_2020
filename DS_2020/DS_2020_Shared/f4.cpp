@@ -78,6 +78,16 @@ void f4func::insert(std::string&s, std::string & num) {
 			f4func::hashtable[sepp[i]] += ("+" + num);
 	}
 }
+bool f4func::insert(Info& info) {
+	bstr_t title;
+	if (info.GetProperty(MYSTR(L"title")).empty()) {
+		//fail
+		return 1;
+	}
+	else {
+		title = info.GetProperty(MYSTR(L"title")).at(0);
+	}
+}
 //µ¥×Ö·û´®·Ö¸î
 void f4func::str_split(const std::string& s, const std::string& sep, std::vector<std::string>& v)
 {

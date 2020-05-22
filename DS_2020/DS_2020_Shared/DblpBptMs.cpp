@@ -1,6 +1,7 @@
 #include "DblpBptMs.h"
 #include "InfoMarshal.h"
 #include "CommUtils.h"
+#include "f4.h"
 
 DblpBptMs::DblpBptMs(const wchar_t* info_bpt_file, const wchar_t* author_bpt_file, FILE_Status exist)
 	: info_bpt(info_bpt_file, exist)
@@ -27,8 +28,8 @@ void DblpBptMs::InsertObject(Info& _info)
 	//	printf("%d\n", info_cnt);
 	//	wprintf(L"%s", (const wchar_t*)_info.serialize());
 	//}
-	printf("%d\n", info_cnt);
-	//if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
+	//printf("%d\n", info_cnt);
+	if(info_cnt % 5000 == 0) printf("%d\n", info_cnt);
 #endif
 
 	insertInfo(_info);
@@ -125,3 +126,4 @@ std::vector<Author> DblpBptMs::getTop100()
 	}
 	return vec;
 }
+

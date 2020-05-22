@@ -5,6 +5,7 @@
 #include "Solver.h"
 #include "BPlusTree.h"
 #include "BPlusTreeUtils.h"
+#include "f4.h"
 
 struct InfoKey {
     wchar_t a[150];
@@ -62,6 +63,7 @@ public:
     std::pair<OPRESULT, Author> getAuthorByName(const MYSTR&);
     std::pair<OPRESULT, std::vector<Info> > getInfoByTitle(const MYSTR&);
     std::vector<Author> getTop100();
+
 
 #ifdef TEST_DEBUG
     int info_cnt;

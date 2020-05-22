@@ -1,4 +1,6 @@
 #pragma once
+#include "FSolver.h"
+extern FSolver fsolver;
 
 #include <QWidget>
 #include <QObjectUserData>

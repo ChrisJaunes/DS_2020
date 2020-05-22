@@ -3,6 +3,7 @@
 #include "DblpBptMs.h"
 #include "CommUtils.h"
 #include "xmlhelper.h"
+#include "f4.h"
 
 bool is_bptfile_exist(LPCWSTR info_bptfile, LPCWSTR author_bptfile) {
     WIN32_FIND_DATA  FindFileData, FindFileData1;

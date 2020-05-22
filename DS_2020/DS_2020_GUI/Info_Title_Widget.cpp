@@ -6,6 +6,7 @@
 #include "Info_Title_Widget.h"
 #include "ui_Info_Title_Widget.h"
 #include "config.h"
+#include "Info.h"
 #include "test_GUI.h"
 
 Info_Title_Item::Info_Title_Item()
@@ -77,7 +78,7 @@ void Info_Title_Delegate::paint(QPainter* painter, const QStyleOptionViewItem& o
         QRect numberRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 20, 25);
 
         painter->setPen(QPen(Qt::black));
-        painter->setFont(QFont("Consolas", 14, QFont::Bold));
+        painter->setFont(QFont("Consolas", 8, QFont::Normal));
         painter->drawText(nameRect, Qt::AlignLeft, data.title);
 
         painter->restore();
@@ -125,16 +126,18 @@ void Info_Title_Widget::initData(const QString& parameter)
 
 #ifndef TEST_DEBUG_INFO_TITLE
 
-
 #else
+	std::vector<std::string> titles;
+	bool data = fsolver.F4_KeywordSearch(parameter.toStdString(), titles);
     ui->label->setFont(QFont("Consolas", 20, QFont::Bold));
-    ui->label->setText("Detail about " + parameter);
-    title_model = new QStandardItemModel(100, 1);
-    int i = 0;
-    for (int j = 0; j < 100; j++) {
-        title_model->setData(title_model->index(i, 0), QVariant::fromValue(Info_Title_Item(QString::number(j))), Qt::UserRole);
-        i++;
-    }
+	ui->label->setText("Details");
+	title_model = new QStandardItemModel(titles.size(),1);
+	if (data == false) {
+		return;
+	}
+	for (int i = 0; i < titles.size(); i++) {
+		title_model->setData(title_model->index(i, 0), QVariant::fromValue(Info_Title_Item(QString::fromStdString(titles[i]))), Qt::UserRole);
+	}
 #endif
     qDebug() << " Hotspot_Detail_Widget" << "\n";
 }
