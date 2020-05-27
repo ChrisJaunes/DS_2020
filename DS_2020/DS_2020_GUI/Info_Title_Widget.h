@@ -1,4 +1,6 @@
 #pragma once
+#include "FSolver.h"
+extern FSolver fsolver;
 
 #include <QWidget>
 #include <QObjectUserData>
@@ -39,8 +41,11 @@ public:
 	~Info_Title_Widget();
 	void initData(const QString&);
 
+public slots:
+	void on_btn_title_to_info_clicked();
 private:
 	Ui::Info_Title_Widget *ui;
 	QStandardItemModel    *title_model;
 	Info_Title_Delegate   *title_delegate;
+	std::vector<std::string> titles;
 };
