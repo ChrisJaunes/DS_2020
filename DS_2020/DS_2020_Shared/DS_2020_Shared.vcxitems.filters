@@ -69,6 +69,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Solver.cpp">
       <Filter>Solver</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CliquesCounting.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)f5Solver.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Author.h">
@@ -132,6 +138,12 @@
       <Filter>Solver</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)generate_cache.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CliquesCounting.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)f5Solver.h">
       <Filter>Solver</Filter>
     </ClInclude>
   </ItemGroup>

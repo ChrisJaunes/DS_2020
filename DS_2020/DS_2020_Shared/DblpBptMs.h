@@ -5,6 +5,7 @@
 #include "Solver.h"
 #include "BPlusTree.h"
 #include "BPlusTreeUtils.h"
+#include "f4.h"
 
 struct InfoKey {
     wchar_t a[150];

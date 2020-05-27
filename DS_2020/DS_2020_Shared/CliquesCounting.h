@@ -1,9 +1,13 @@
 #pragma once
 #include "pch.h"
+#include "config.h"
+#include "error.h"
+#include "Info.h"
+#include "DblpBptMs.h"
 #include "Author.h"
 
 #define STR bstr_t
-#define W int
+#define W ULONG64
 /*
 Need:函数Author getAuthorByName(bstr_t);
 
@@ -23,17 +27,36 @@ GetResult()可获得结果map<阶数，个数>
 class CliquesCounting{
 public:
 	CliquesCounting() {
-		MaxSize = 0;
 		CliquesCount.clear();
+		ms = nullptr;
+		ins_cnt = 0;
 	};
-	OPRESULT StartCount(Author*);
+	CliquesCounting(DblpBptMs* Dp) {
+		CliquesCount.clear();
+		ms = Dp;
+		ins_cnt = 0;
+	};
+	~CliquesCounting() {
+		//delete ms;
+	}
+	void initial();
+	void writefile_f5result();
+	void readfile_f5result();
+
+	void set_ms(DblpBptMs* Dp);
+	void InsertObject();
+	OPRESULT Insert(Author*);
 	bool Check(std::vector<STR>*, STR);
 	OPRESULT Counting(std::vector<Author*>, W, W);
-	W GetSize();
+	//W GetSize();
 	std::map<W, W> GetResult();
 
 protected:
-	W MaxSize;
+	DblpBptMs* ms;
 	std::map<W, W> CliquesCount;
 	//map<size,number>
+
+#ifdef TEST_DEBUG
+	int ins_cnt;
+#endif
 };

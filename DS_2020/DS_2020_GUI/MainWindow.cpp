@@ -8,6 +8,7 @@
 #include "Hotspot_Detail_Widget.h"
 #include "Author_Top_Widget.h"
 #include "Info_Title_Widget.h"
+#include "Cliques_Widget.h"
 #include "Help.h"
 #include "pch.h"
 #include "config.h"
@@ -66,7 +67,10 @@ void MainWindow::on_btn_F2_TopAuthor_clicked()
 
 void MainWindow::on_btn_F5_clicked()
 {
-	QMessageBox::information(NULL, "F5", "F5", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+	//QMessageBox::information(NULL, "聚团分析", "聚团分析", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+	Cliques_Widget* tmp = new Cliques_Widget();
+	tmp->show();
+	tmp->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void MainWindow::on_btn_help_clicked()

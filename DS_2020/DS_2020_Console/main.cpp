@@ -17,6 +17,7 @@
 #include "test_AUTHOR.h"
 #include "test_INFO.h"
 #include "test_dblp.h"
+#include "test_f5.h"
 
 int _tmain()
 {
@@ -27,7 +28,7 @@ int _tmain()
     FST::test_INFO(0);
     FST::test_DBLP(4);
     
-    
+	//FST::test_f5(0);
     //FST::test_xmlparse();
 
     //FST::test_BPT();

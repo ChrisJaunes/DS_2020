@@ -8,12 +8,13 @@
 #define DS_BPT_TEST_OUT L"../DS_2020_Test/test_file/test.out"
 #define DS_BPT_TEST_ANS L"../DS_2020_Test/test_file/test.ans"
 #define DS_DBLP         L"../DS_2020_Test/test_file/dblp.xml"
-#define DS_DBLP_Info    L"../DS_2020_Test/test_file/dblp_info.bpt"
-#define DS_DBLP_Author  L"../DS_2020_Test/test_file/dblp_author.bpt"
+#define DS_DBLP_Info    L"../DS_2020_Test/test_file/dblp_info1.bpt"
+#define DS_DBLP_Author  L"../DS_2020_Test/test_file/dblp_author1.bpt"
 #define DS_F4_HASHTABLE "../DS_2020_Test/f4/hashtable.txt"
 #define DS_F4_HASHTABLE_INFO "../DS_2020_Test/f4/hashtable_info.txt"
 #define DS_F4_INFO_TO_TITLE "../DS_2020_Test/f4/info_to_title.dat"
 #define DS_F4_TITLE "../DS_2020_Test/f4/title.txt"
+#define DS_F5_TEST_OUT L"../DS_2020_Test/f5/result.txt"
 
 // 可以选择的解析对象, 也就是参数parseInfo的值, 其中article和...数量最多
 #ifndef ENUMPARSEINFO

@@ -30,6 +30,9 @@
     <ClCompile Include="test_DBLP.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="test_f5.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test_BPT.h">
@@ -42,6 +45,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="test_DBLP.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="test_f5.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

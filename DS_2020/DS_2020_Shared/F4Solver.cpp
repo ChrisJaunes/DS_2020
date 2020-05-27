@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "F4Solver.h"
 #include <fstream>
+#include <stdlib.h>
 using namespace std;
 
 F4Solver::F4Solver(const TCHAR* xmlfile, DWORD parseInfo)
 {
 	pParser = new XMLParser(parseInfo);
-	//pParser->ParseFile(xmlfile, this);
+	pParser->ParseFile(xmlfile, this);
 	delete pParser;
 }
 
@@ -60,19 +61,26 @@ F4Solver::~F4Solver()
 
 void F4Solver::InitMemory() {
 	pF4 = new f4func();
-	pF4->initial();
 }
+
+void F4Solver::InsertObject(Info& temp)
+{
+	pF4->insert(temp);
+}
+
 bool F4Solver::SearchTitles(std::string&keywords, std::vector<std::string>&titles) {
 	return pF4->keyword_search(keywords, titles);
 }
-std::vector<Info> F4Solver::SearchInfo(std::vector<std::string>&titles) {
-	std::vector<Info> res;
-	for (int i = 0; i < titles.size(); i++) {
-		//string转换wchar*
 
-		//wchar*获取info
+std::pair<OPRESULT, std::vector<Info> > F4Solver::SearchInfo(std::string &title) {
+	//string转MYSTR
+	const char* p = title.c_str();
+	MYSTR temp_title = bstr_t(p);
+	//use BPTree title-->info
+	DblpBptMs* f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author);
+	return f->getInfoByTitle(temp_title);
+}
 
-		//info放入res
-	}
-	return res;
+void F4Solver::ImportFromFile() {
+	pF4->initial();
 }
