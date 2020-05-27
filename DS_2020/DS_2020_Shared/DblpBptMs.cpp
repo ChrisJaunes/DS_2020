@@ -27,8 +27,8 @@ void DblpBptMs::InsertObject(Info& _info)
 	//	printf("%d\n", info_cnt);
 	//	wprintf(L"%s", (const wchar_t*)_info.serialize());
 	//}
-	printf("%d\n", info_cnt);
-	//if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
+	//printf("%d\n", info_cnt);
+	if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
 #endif
 
 	insertInfo(_info);
@@ -110,7 +110,9 @@ std::pair<OPRESULT, std::vector<Info> > DblpBptMs::getInfoByTitle(const MYSTR& k
 std::vector<Author> DblpBptMs::getTop100()
 {
 	std::priority_queue<Author, std::vector<Author>, AuthorCmpByNumOfArticle> q;
+	int author_num = 0;
 	for (auto it = author_bpt.begin(); it != author_bpt.end(); ++it) {
+		MyLog::d("%d\n", ++author_num);
 		auto off = *it;
 		void* value = nullptr; size_t value_sz = 0;
 		author_bpt.valueFromFileBlock(off, value, value_sz);

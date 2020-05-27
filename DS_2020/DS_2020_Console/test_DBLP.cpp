@@ -55,17 +55,22 @@ namespace FST {
 
 	static void test_xmlparse() {
 		runBlock([&] {
-			test_xml((DWORD)XMLPARSETYPE_alltypes);
+			test_xml((DWORD)XMLPARSETYPE_article);
 			}, "test xmlparse");
 	};
 
-	static void test_bptfile() {
+	static void test_article() {
 		//DblpBptMs* f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author);
 
+	}
+	static void test_author() {
+		DblpBptMs f(DS_DBLP_Info, DS_DBLP_Author, FILE_Status::EXIST);
+		f.getTop100();
 	}
 	void test_DBLP(DWORD flag) {
 		MyLog::d("start test flag\n");
 		if (flag & 1) test_xmlparse();
-		if (flag & 2) test_bptfile();
+		if (flag & 2) test_article();
+		if (flag & 4) test_author();
 	}
 }

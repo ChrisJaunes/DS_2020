@@ -54,7 +54,8 @@ namespace DS_BPlusTree {
             return nullptr;
         };
         void defer(PAGE_T* page) {
-            assert(page != nullptr);
+            if (page == nullptr) return;
+            //assert(page != nullptr);
             page->unlock();
         }
         PAGE_T* fetch(OFF_T offset) {

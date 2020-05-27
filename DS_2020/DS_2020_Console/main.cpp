@@ -25,7 +25,7 @@ int _tmain()
     FST::test_BPT(0);
     FST::test_AUTHOR(0);
     FST::test_INFO(0);
-    FST::test_DBLP(1);
+    FST::test_DBLP(4);
     
     
     //FST::test_xmlparse();
