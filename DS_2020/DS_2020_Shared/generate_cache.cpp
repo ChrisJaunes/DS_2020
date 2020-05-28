@@ -48,7 +48,17 @@ void generate_bptfile_cache(const wchar_t* xmlfile, const DWORD parseInfo)
 	delete f;
 	delete pParser;
 }
-
+void generate_f2_cache() {
+    FILE* f2 = fopen(DS_F2, "a");
+    DblpBptMs* f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author, FILE_Status::EXIST);
+    auto vec = f->getTop100();
+    for (auto it : vec) {
+        fprintf(f2, "%ls %d\n", (wchar_t*) it.GetName().second, it.GetNumOfArticle());
+    }
+    delete f;
+    fclose(f2);
+}
 void generate_cache(const wchar_t* xmlfile, const DWORD parseInfo) {
     generate_bptfile_cache(xmlfile, parseInfo);
+    generate_f2_cache();
 }

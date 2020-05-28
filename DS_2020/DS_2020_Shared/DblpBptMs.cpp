@@ -111,8 +111,10 @@ std::pair<OPRESULT, std::vector<Info> > DblpBptMs::getInfoByTitle(const MYSTR& k
 
 std::vector<Author> DblpBptMs::getTop100()
 {
+	int author_cnt = 0;
 	std::priority_queue<Author, std::vector<Author>, AuthorCmpByNumOfArticle> q;
 	for (auto it = author_bpt.begin(); it != author_bpt.end(); ++it) {
+		MyLog::d("%d\n", ++author_cnt);
 		auto off = *it;
 		void* value = nullptr; size_t value_sz = 0;
 		author_bpt.valueFromFileBlock(off, value, value_sz);

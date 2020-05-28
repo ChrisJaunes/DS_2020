@@ -81,7 +81,7 @@ struct BigNumber {
 		}
 		return ret;
 	}
-	BigNumber& operator = (BigNumber& value)
+	BigNumber& operator = (const BigNumber& value)
 	{
 		len = value.len;
 		for (int i = 1; i <= len; i++) a[i] = value.a[i];

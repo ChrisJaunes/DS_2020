@@ -110,6 +110,7 @@ namespace DS_BPlusTree {
 				if (pos == leaf->ch_cnt) {
 					bpt->nodes->defer(leaf);
 					leaf = bpt->nodes->fetch(leaf->next);
+					pos = 0;
 				}
 				return *this;
 			}

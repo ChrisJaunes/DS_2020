@@ -23,7 +23,7 @@
 int _tmain()
 {
     CalcTime timer;
-    //generate_cache(DS_DBLP, XMLPARSETYPE_book);
+    generate_cache(DS_DBLP, XMLPARSETYPE_book);
     /*FST::test_BPT(0);
     FST::test_AUTHOR(0);
     FST::test_INFO(0);
