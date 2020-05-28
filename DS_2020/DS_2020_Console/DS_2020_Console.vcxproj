@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -23,6 +23,7 @@
     <ClCompile Include="testf4.cpp" />
     <ClCompile Include="test_AUTHOR.cpp" />
     <ClCompile Include="test_BPT.cpp" />
+    <ClCompile Include="test_f5.cpp" />
     <ClCompile Include="test_INFO.cpp" />
     <ClCompile Include="test_DBLP.cpp" />
   </ItemGroup>
@@ -30,6 +31,7 @@
     <ClInclude Include="testf4.h" />
     <ClInclude Include="test_AUTHOR.h" />
     <ClInclude Include="test_BPT.h" />
+    <ClInclude Include="test_f5.h" />
     <ClInclude Include="test_INFO.h" />
     <ClInclude Include="test_DBLP.h" />
   </ItemGroup>

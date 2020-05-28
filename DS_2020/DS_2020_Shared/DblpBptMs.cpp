@@ -29,7 +29,8 @@ void DblpBptMs::InsertObject(Info& _info)
 	//	wprintf(L"%s", (const wchar_t*)_info.serialize());
 	//}
 	//printf("%d\n", info_cnt);
-	if(info_cnt % 5000 == 0) printf("%d\n", info_cnt);
+	if(info_cnt % 50000 == 0) printf("%d\n", info_cnt);
+
 #endif
 
 	insertInfo(_info);

@@ -31,6 +31,7 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="testf4.cpp">
+    <ClCompile Include="test_f5.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -48,6 +49,7 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="testf4.h">
+    <ClInclude Include="test_f5.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

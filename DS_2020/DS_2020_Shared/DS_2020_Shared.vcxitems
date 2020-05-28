@@ -17,11 +17,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Author.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AuthorMarshal.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CliquesCounting.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CommUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DblpBptMs.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)F3Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)f4.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)F4Solver.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)f5Solver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FrequencyRanking.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FSolver.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)generate_cache.cpp" />
@@ -38,6 +40,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreePool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPlusTreeUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BPTrees.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CliquesCounting.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)config.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DblpBptMs.h" />
@@ -45,6 +48,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)F3Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)f4.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)F4Solver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)f5Solver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FrequencyRanking.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FSolver.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Info.h" />

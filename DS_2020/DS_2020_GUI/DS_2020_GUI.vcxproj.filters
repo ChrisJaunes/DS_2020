@@ -64,6 +64,9 @@
     <QtUic Include="MainWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="Cliques_Widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Author_Detail_Widget.cpp">
@@ -93,6 +96,9 @@
     <ClCompile Include="test_GUI.cpp">
       <Filter>Test Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cliques_Widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Author_Detail_Widget.h">
@@ -114,6 +120,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="MainWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Cliques_Widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

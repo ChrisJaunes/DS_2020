@@ -135,11 +135,14 @@ font: 75 28pt &quot;Consolas&quot;;</string>
    <widget class="QPushButton" name="btn_F5">
     <property name="geometry">
      <rect>
-      <x>225</x>
-      <y>-10</y>
-      <width>100</width>
-      <height>100</height>
+      <x>220</x>
+      <y>0</y>
+      <width>101</width>
+      <height>101</height>
      </rect>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::DefaultContextMenu</enum>
     </property>
     <property name="styleSheet">
      <string notr="true">border-image:url(:/DS_2020_GUI/image/planet.png);
@@ -147,14 +150,20 @@ color:rgb(255, 255, 255);
 font: 75 12pt &quot;Consolas&quot;;</string>
     </property>
     <property name="text">
-     <string>F5</string>
+     <string>聚团分析</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_F2_TopAuthor">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>15</y>
+      <y>30</y>
       <width>125</width>
       <height>125</height>
      </rect>
@@ -165,16 +174,17 @@ color:rgb(255, 255, 255);
 font: 75 12pt &quot;Consolas&quot;;</string>
     </property>
     <property name="text">
-     <string>作者(Top100)</string>
+     <string>作者
+(Top100)</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_F3">
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>0</y>
-      <width>110</width>
-      <height>110</height>
+      <y>10</y>
+      <width>111</width>
+      <height>111</height>
      </rect>
     </property>
     <property name="styleSheet">

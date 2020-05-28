@@ -100,8 +100,10 @@ namespace DS_BPlusTree {
                 leaf = bpt->nodes->fetch(leaf_off); 
                 pos = _pos;
             }
-            ~iterator() { bpt->nodes->defer(leaf); }
-            OFF_T operator*() const { return ((char*)(leaf)+bpt->p_OFFS)[pos]; }
+            ~iterator() { 
+                if(leaf) bpt->nodes->defer(leaf); 
+            }
+            OFF_T operator*() const { return ((OFF_T*)((char*)(leaf)+bpt->p_OFFS))[pos]; }
             //BPlusTreeNode* operator->() const { return leaf; }
             iterator& operator++() {
                 ++pos;
@@ -112,7 +114,7 @@ namespace DS_BPlusTree {
                 return *this;
             }
             bool operator != (const iterator& x) const {
-                return bpt != x.bpt && this->leaf != x.leaf && this->pos != x.pos;
+                return bpt != x.bpt || this->leaf != x.leaf || this->pos != x.pos;
             }
         };
         iterator begin() const {
