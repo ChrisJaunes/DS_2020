@@ -75,6 +75,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)f5Solver.cpp">
       <Filter>Solver</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)I5Solver.cpp">
+      <Filter>Solver</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Author.h">
@@ -144,6 +147,9 @@
       <Filter>Solver</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)f5Solver.h">
+      <Filter>Solver</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)I5Solver.h">
       <Filter>Solver</Filter>
     </ClInclude>
   </ItemGroup>

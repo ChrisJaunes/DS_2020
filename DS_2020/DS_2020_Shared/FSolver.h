@@ -18,4 +18,5 @@ public:
 	std::vector<Author> F2_getTop100();
 	bool F4_KeywordSearch(std::string&, std::vector<std::string>&);
 	std::map<W, W> F5_getResult();
+	std::map<W, MYSTR> F5_getResult_2();
 };

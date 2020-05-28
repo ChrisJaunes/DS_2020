@@ -39,7 +39,7 @@ void CliquesCountDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
 
 		//QVariant variant = index.data(Qt::UserRole);
 		//Cliques_Item data = variant.value<Cliques_Item>();
-		
+
 		QRectF rect;
 		rect.setX(option.rect.x());
 		rect.setY(option.rect.y());
@@ -60,7 +60,7 @@ void CliquesCountDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
 		path.quadTo(rect.topRight(), rect.topRight() + QPointF(-radius, -0));
 
 		//选中状态
-		if (option.state.testFlag(QStyle::State_Selected)) 
+		if (option.state.testFlag(QStyle::State_Selected))
 		{
 			painter->setPen(QPen(Qt::blue));
 			painter->setBrush(QColor(229, 241, 255));
@@ -91,18 +91,18 @@ void CliquesCountDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
 		//绘制数据位置
 		QRect nameRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 10, 25);
 		QRect numberRect = QRect(rect.left() + 10, rect.top() + 10, rect.width() - 20, 25);
-		
+
 		painter->setPen(QPen(Qt::black));
 		painter->setFont(QFont("Times", 14, QFont::Bold));
 		painter->drawText(nameRect, Qt::AlignCenter, QString::number(data.order));
-		
+
 		painter->setPen(QPen(Qt::black));
 		painter->setFont(QFont("Times", 14));
 		painter->drawText(numberRect, Qt::AlignRight, QString::number(data.number));
 		*/
 		painter->restore();
 	}
-	
+
 }
 
 QSize CliquesCountDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
@@ -130,7 +130,12 @@ Cliques_Widget::Cliques_Widget(QWidget* parent)
 	ui->f5_tableView->setDragEnabled(false);
 
 	//列宽自适应
-	ui->f5_tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	//ui->f5_tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+	//手动设置列宽
+	ui->f5_tableView->setColumnWidth(0, 180);
+	ui->f5_tableView->setColumnWidth(1, 650);
+	//修改行高
+	ui->f5_tableView->verticalHeader()->setDefaultSectionSize(60);
 	//隐藏行号
 	ui->f5_tableView->verticalHeader()->hide();
 	//设置表头样式
@@ -170,16 +175,23 @@ void Cliques_Widget::initData()
 #else
 	cliques_model = new QStandardItemModel();
 	cliques_model->setColumnCount(2);
-	cliques_model->setHeaderData(0,Qt::Horizontal,QString::fromLocal8Bit("完全子图的阶数"));
+	cliques_model->setHeaderData(0, Qt::Horizontal, QString::fromLocal8Bit("完全子图的阶数"));
 	cliques_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("数量"));
 
 	int i = 0;
-	std::map<W, W> f5_result = fsolver.F5_getResult();
+	//std::map<W, W> f5_result = fsolver.F5_getResult();
+	std::map<W, MYSTR> f5_result = fsolver.F5_getResult_2();
+
 	//QVector<Cliques_Item> data;
 	for (auto it : f5_result)
 	{
 		QStandardItem *itemID1 = new QStandardItem(QString("%0").arg(it.first));
-		QStandardItem *itemID2 = new QStandardItem(QString("%0").arg(it.second));
+		//QStandardItem *itemID2 = new QStandardItem(QString("%0").arg(it.second));
+		QString text = QString((QChar*)(wchar_t*)it.second, wcslen(it.second));
+		if (wcslen(it.second) > 40) {
+			text.insert(wcslen(it.second) / 2, "\n");
+		}
+		QStandardItem *itemID2 = new QStandardItem(text);
 		cliques_model->setItem(i, 0, itemID1);
 		cliques_model->setItem(i, 1, itemID2);
 		//cliques_model->setData(cliques_model->index(i, 0), QVariant::fromValue(Cliques_Item(it.first, it.second)), Qt::UserRole + 1);
@@ -190,8 +202,8 @@ void Cliques_Widget::initData()
 	{
 		for (W j = 0; j < 2; j++)
 		{
-			QStandardItem *itemID = new QStandardItem(QString("%0").arg(i));
-			cliques_model->setItem(i, j, itemID);//每次都要重新new QStandardItem();
+		QStandardItem *itemID = new QStandardItem(QString("%0").arg(i));
+		cliques_model->setItem(i, j, itemID);//每次都要重新new QStandardItem();
 		}
 	}
 	*/

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>599</width>
-    <height>799</height>
+    <width>990</width>
+    <height>777</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>601</width>
-     <height>801</height>
+     <width>991</width>
+     <height>781</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -34,7 +34,7 @@
    <widget class="QLabel" name="f5_title">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>290</x>
       <y>60</y>
       <width>441</width>
       <height>51</height>
@@ -60,7 +60,7 @@ font: 20pt &quot;Consolas&quot;;</string>
      <rect>
       <x>70</x>
       <y>150</y>
-      <width>461</width>
+      <width>851</width>
       <height>571</height>
      </rect>
     </property>

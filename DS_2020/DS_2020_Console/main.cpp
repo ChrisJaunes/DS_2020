@@ -32,7 +32,7 @@ int _tmain()
 	FST::test_f4();
     FST::test_DBLP(4);*/
     
-	FST::test_f5(0);
+	FST::test_f5(2);
     //FST::test_xmlparse();
 
     //FST::test_BPT();
