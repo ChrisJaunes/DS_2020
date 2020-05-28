@@ -151,6 +151,8 @@ std::vector<std::string> f4func::intersect(std::vector<std::string>&a, std::vect
 bool f4func::keyword_search(std::string&str, std::vector<std::string> &titles) {
 	//获取关键字集
 	std::vector<std::string> keywords = this->split(str, " -\'");
+	if (keywords.size() == 0)
+		return false;
 	//获取一个数据块的内容
 	FILE*fp = fopen(DS_F4_HASHTABLE_INFO, "r+");
 	//获取交集的逻辑地址集vstr1

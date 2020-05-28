@@ -132,6 +132,12 @@ void Info_Title_Widget::initData(const QString& parameter)
 
 #else
 	titles.clear();
+	if (parameter == "") {
+		title_model = new QStandardItemModel(2, 1);
+		title_model->setData(title_model->index(0, 0), QVariant::fromValue(Info_Title_Item(QString::fromStdString("ERROR"))), Qt::UserRole);
+		title_model->setData(title_model->index(1, 0), QVariant::fromValue(Info_Title_Item(QString::fromStdString("No result found! "))), Qt::UserRole);
+		return;
+	}
 	bool data = fsolver.F4_KeywordSearch(parameter.toStdString(), titles);
     ui->label->setFont(QFont("Consolas", 20, QFont::Bold));
 	ui->label->setText("Details");
