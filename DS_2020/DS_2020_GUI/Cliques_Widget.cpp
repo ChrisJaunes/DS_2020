@@ -173,7 +173,7 @@ void Cliques_Widget::initData()
 	cliques_model->setHeaderData(0,Qt::Horizontal,QString::fromLocal8Bit("完全子图的阶数"));
 	cliques_model->setHeaderData(1, Qt::Horizontal, QString::fromLocal8Bit("数量"));
 
-	/*int i = 0;
+	int i = 0;
 	std::map<W, W> f5_result = fsolver.F5_getResult();
 	//QVector<Cliques_Item> data;
 	for (auto it : f5_result)
@@ -184,8 +184,8 @@ void Cliques_Widget::initData()
 		cliques_model->setItem(i, 1, itemID2);
 		//cliques_model->setData(cliques_model->index(i, 0), QVariant::fromValue(Cliques_Item(it.first, it.second)), Qt::UserRole + 1);
 		i++;
-	}*/
-
+	}
+	/*
 	for (W i = 0; i < 100; i++)
 	{
 		for (W j = 0; j < 2; j++)
@@ -194,7 +194,7 @@ void Cliques_Widget::initData()
 			cliques_model->setItem(i, j, itemID);//每次都要重新new QStandardItem();
 		}
 	}
-	
+	*/
 #endif
 	qDebug() << " Cliques_Widget" << "\n";
 }

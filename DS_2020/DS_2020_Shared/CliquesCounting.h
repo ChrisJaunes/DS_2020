@@ -41,7 +41,9 @@ public:
 	}
 	void initial();
 	void writefile_f5result();
-	void readfile_f5result();
+	void readfile_f5result();	
+	void writefile_f5result(int);
+	int readfile_f5result(int);
 
 	void set_ms(DblpBptMs* Dp);
 	void InsertObject();

@@ -17,7 +17,7 @@ F5Solver::~F5Solver()
 
 void F5Solver::ExportToFile()
 {
-	pF5->initial();
+	//pF5->initial();
 	pF5->InsertObject();
 	pF5->writefile_f5result();
 }
