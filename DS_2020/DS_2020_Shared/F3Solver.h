@@ -35,4 +35,6 @@ public:
 	// 这个是自己拓展的
 	void ExportToFile(const TCHAR*);
 	static std::map < MYSTR, std::map<MYSTR, ULONG64> > ImportFromFile(const TCHAR*);
+
+	static std::vector<PAIR> sort2v(std::map<MYSTR, ULONG64>);
 };

@@ -59,6 +59,13 @@ std::map < MYSTR, std::map<MYSTR, ULONG64> > F3Solver::ImportFromFile(const TCHA
     return result;
 }
 
+std::vector<PAIR> F3Solver::sort2v(std::map<MYSTR, ULONG64> sm)
+{
+    std::vector<PAIR> name_score_vec = std::vector<PAIR>(sm.begin(), sm.end());
+    sort(name_score_vec.begin(), name_score_vec.end(), cmp_by_value);
+    return name_score_vec;
+}
+
 void F3Solver::InitMemory() {
     pF3 = new FrequencyRanking(ignoresWords());
 }

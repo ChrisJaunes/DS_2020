@@ -106,3 +106,4 @@ protected:
 };
 
 std::vector<bstr_t> ignoresWords();
+bool cmp_by_value(const PAIR& lhs, const PAIR& rhs);

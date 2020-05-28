@@ -153,7 +153,8 @@ void Hotspot_Detail_Widget::initData()
     for (int j = 0; j < HOTSPOTTYPEN; j++) {
         for (auto it : hotspot[j]) {
             years.push_back(QString(it.first));
-            for (auto jt : it.second) {
+
+            for (auto jt : F3Solver::sort2v(it.second)) {
                 hotspot_model->setData(hotspot_model->index(i, 0), QString(it.first) + "|" + QString(HOTSPOTTYPE[j]), Qt::UserRole);
                 hotspot_model->setData(hotspot_model->index(i, 0), QVariant::fromValue(Hotspot_Property_Item(QString(jt.first), jt.second)), Qt::UserRole + 1); //ÕûÌå´æÈ¡
                 i++;
