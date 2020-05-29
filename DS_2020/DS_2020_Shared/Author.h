@@ -60,6 +60,6 @@ public:
 
 struct AuthorCmpByNumOfArticle {
 	bool operator()(const Author &a, const Author &b) {
-		return a.GetNumOfArticle() < b.GetNumOfArticle();
+		return a.GetNumOfArticle() > b.GetNumOfArticle();
 	}
 };

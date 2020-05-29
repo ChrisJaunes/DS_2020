@@ -1,7 +1,6 @@
 #include "DblpBptMs.h"
 #include "InfoMarshal.h"
 #include "CommUtils.h"
-#include "f4.h"
 
 DblpBptMs::DblpBptMs(const wchar_t* info_bpt_file, const wchar_t* author_bpt_file, FILE_Status exist)
 	: info_bpt(info_bpt_file, exist)
@@ -114,7 +113,7 @@ std::vector<Author> DblpBptMs::getTop100()
 	int author_cnt = 0;
 	std::priority_queue<Author, std::vector<Author>, AuthorCmpByNumOfArticle> q;
 	for (auto it = author_bpt.begin(); it != author_bpt.end(); ++it) {
-		MyLog::d("%d\n", ++author_cnt);
+		if((++author_cnt) % 10000 == 0) MyLog::d("%d\n", ++author_cnt);
 		auto off = *it;
 		void* value = nullptr; size_t value_sz = 0;
 		author_bpt.valueFromFileBlock(off, value, value_sz);
