@@ -6,6 +6,7 @@
 #include "Author.h"
 #include "Author_Detail_Widget.h"
 #include "ui_Author_Detail_Widget.h"
+#include "Info_Detail_Widget.h"
 #include "config.h"
 
 #include "test_GUI.h"
@@ -169,6 +170,7 @@ void Author_Detail_Widget::initData(QString& parameter) {
     for (auto &it : articles) {
         tmp_FG = "";
         QString tmp_title((QChar*)(wchar_t*)it.first, wcslen(it.first));
+        author_model->setData(author_model->index(i, 0), QVariant::fromValue(tmp_title), Qt::UserRole + 2); //整体存取
         if (wcslen(it.first) > 90) tmp_title.insert(90, '\n');
         if (wcslen(it.first) > 60) tmp_title.insert(60, '\n');
         if (wcslen(it.first) > 30) tmp_title.insert(30, '\n');
@@ -184,6 +186,14 @@ void Author_Detail_Widget::initData(QString& parameter) {
         author_model->setData(author_model->index(i, 0), QVariant::fromValue(tmp_API), Qt::UserRole + 1); //整体存取
         i++;
     }
+}
+
+void Author_Detail_Widget::showInfoDetail(QModelIndex index)
+{
+    QString p = index.data(Qt::UserRole + 2).toString();
+    Info_Detail_Widget* tmp = new Info_Detail_Widget(p);
+    tmp->show();
+    tmp->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void Author_Detail_Widget::showInfo(QModelIndex index) {

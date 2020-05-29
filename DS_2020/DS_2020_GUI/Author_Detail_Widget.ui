@@ -103,11 +103,48 @@ background-color:rgba(244,244,244,100)</string>
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>560</y>
+      <width>701</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image:url();
+background-color:rgba(244,244,244,100)</string>
+    </property>
+    <property name="text">
+     <string>！ 点击左边可以查看与该合作者相关的文章， 点击右边Info可以跳转到对应的文章</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="DS_2020_GUI.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>lvw_info</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>Author_Detail_Widget</receiver>
+   <slot>showInfoDetail(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>610</x>
+     <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>334</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>showInfoDetail(QModelIndex)</slot>
+ </slots>
 </ui>

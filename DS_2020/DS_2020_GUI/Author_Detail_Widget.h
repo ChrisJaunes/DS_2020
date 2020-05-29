@@ -46,6 +46,7 @@ public:
 
 private slots:
 	void showInfo(QModelIndex index);
+	void showInfoDetail(QModelIndex index);
 
 private:
 	Ui::Author_Detail_Widget  *ui;
