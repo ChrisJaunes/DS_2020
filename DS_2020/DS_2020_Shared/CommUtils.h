@@ -23,7 +23,7 @@ void runBlock(Function func, const char* msg) {
 	clock_t start = clock();
 	func();
 	clock_t end = clock();
-	printf("%s use: %f ms\n", msg, 1000.0 * (end - start) / CLOCKS_PER_SEC);
+	printf("%s use: %f ms\n", msg, 1000.0 * ((LONG64)end - start) / CLOCKS_PER_SEC);
 }
 
 class MyLog {

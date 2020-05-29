@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image:url(:/DS_2020_GUI/image/astronomy-beautiful-clouds-constellation.jpg)</string>
+    <string notr="true">border-image:url(:/DS_2020_GUI/image/astronomy-clouds-dark-evening.jpg)</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>

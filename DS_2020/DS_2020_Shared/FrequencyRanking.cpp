@@ -239,6 +239,7 @@ OPRESULT FrequencyRanking2::Insert(Info inobj) {
 
 	if (bakup->at(year).count(left)) { bakup->at(year).at(left) += 1; }
 	else { bakup->at(year)[left] = 1; }
+	return 0;
 }
 
 bool CompCb(const PAIR& lhs, const PAIR& rhs) {

@@ -29,11 +29,6 @@ namespace DS_BPlusTree {
 	* level: 树高
 	* leaf_head: 叶子节点链的文件指针
 	* 手动内存管理
-	* BPT_BLOCK_SIZE：BPlusTreeNode块大小
-	* caches: 内存管理
-	* used[]: 内存管理
-	* cache_refer: 获取一块内存空间
-	* cache_refer: 释放一块内存空间
 	*/
 
 #define keys(node) ( (KEY_T *)( (char *)(node) + p_KEYS) )

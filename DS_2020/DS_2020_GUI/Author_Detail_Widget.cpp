@@ -86,8 +86,8 @@ void Author_Property_Delegate::paint(QPainter* painter, const QStyleOptionViewIt
         painter->drawText(titleRect, Qt::AlignCenter, data.title);
 
         painter->setPen(QPen(Qt::black));
-        painter->setFont(QFont("Consolas", 12));
-        painter->drawText(authorsRect, Qt::AlignHCenter, data.authors);
+        painter->setFont(QFont("Consolas", 14));
+        QApplication::style()->drawItemText(painter, authorsRect, Qt::AlignCenter | Qt::AlignVCenter, QApplication::palette(), true, data.authors);
 
         painter->restore();
     }
@@ -95,7 +95,7 @@ void Author_Property_Delegate::paint(QPainter* painter, const QStyleOptionViewIt
 
 QSize Author_Property_Delegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-    return QSize(200, 300);
+    return QSize(450, 300);
 }
 
 Author_Detail_Widget::Author_Detail_Widget(QString parameter, QWidget *parent)
@@ -168,7 +168,11 @@ void Author_Detail_Widget::initData(QString& parameter) {
     int i = 0;
     for (auto &it : articles) {
         tmp_FG = "";
-        tmp_API = Author_Property_Item(QString((QChar*)(wchar_t*)it.first, wcslen(it.first)), QString(""));
+        QString tmp_title((QChar*)(wchar_t*)it.first, wcslen(it.first));
+        if (wcslen(it.first) > 90) tmp_title.insert(90, '\n');
+        if (wcslen(it.first) > 60) tmp_title.insert(60, '\n');
+        if (wcslen(it.first) > 30) tmp_title.insert(30, '\n');
+        tmp_API = Author_Property_Item(tmp_title, QString(""));
         bool fg = 0;
         for (auto &jt : it.second) {
             tmp_STR = QString((QChar*)(wchar_t*)jt, wcslen(jt));

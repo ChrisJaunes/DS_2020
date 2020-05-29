@@ -1,6 +1,7 @@
 # Directories
 test_file/*
 !test_file/check.bat
+f4/*
 
 # File types
 dblp.xml
@@ -8,3 +9,4 @@ dblp.xml
 *.als
 *.bak
 *.bpt
+f4.zip

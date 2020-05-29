@@ -1,4 +1,6 @@
 #pragma once
+#include "FSolver.h"
+extern FSolver fsolver;
 
 #include <QWidget>
 #include <QObjectUserData>
@@ -7,12 +9,11 @@
 #include <QModelIndex>
 #include <QSortFilterProxyModel>
 
-#define W int
 struct Author_Top_Item {
 	QString name;
-	W number;
+	MYW number;
 	Author_Top_Item();
-	Author_Top_Item(QString&, W&);
+	Author_Top_Item(QString&, MYW&);
 	~Author_Top_Item();
 };
 Q_DECLARE_METATYPE(Author_Top_Item)
@@ -46,4 +47,3 @@ private:
 	QStandardItemModel    *top_model;
 	AuthorTopDelegate     *top_delegate;
 };
-#undef W

@@ -24,7 +24,7 @@ void f4func::writefile_hashtable() {
 		str = it->first + " " + s1;
 		os1 << str;
 		os2 << it->second + "\n";
-		last_size = last_size + it->second.size() + 1;
+		last_size = (int)(last_size + it->second.size() + 1);
 		it++;
 	}
 	os1.close();
@@ -87,6 +87,7 @@ bool f4func::insert(Info& info) {
 	else {
 		title = info.GetProperty(MYSTR(L"title")).at(0);
 	}
+	return 0;
 }
 //µ¥×Ö·û´®·Ö¸î
 void f4func::str_split(const std::string& s, const std::string& sep, std::vector<std::string>& v)

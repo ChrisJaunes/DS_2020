@@ -27,7 +27,7 @@ void F5Solver::ExportToFile_2()
 	//pF5->CountDir();
 	//pF5->writefile_f5result();
 }
-std::map<W, W> F5Solver::ImportFromFile()
+std::map<MYW, MYW> F5Solver::ImportFromFile()
 {
 	pF5->readfile_f5result();
 	return pF5->GetResult();

@@ -26,7 +26,7 @@ public:
 	// 这个是自己拓展的
 	void ExportToFile();
 	void ExportToFile_2();
-	std::map<W, W> ImportFromFile();
+	std::map<MYW, MYW> ImportFromFile();
 	//void ExportToFile(const TCHAR*);
 	//static std::map < MYSTR, std::map<MYSTR, ULONG64> > ImportFromFile(const TCHAR*);
 

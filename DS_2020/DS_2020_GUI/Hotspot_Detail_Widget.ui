@@ -76,9 +76,9 @@ background-color:rgba(244,244,244,100)</string>
     <property name="geometry">
      <rect>
       <x>500</x>
-      <y>100</y>
+      <y>90</y>
       <width>91</width>
-      <height>51</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -106,8 +106,9 @@ background-color:rgba(244,244,244,100)</string>
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-image:url();
-font: 75 12pt &quot;Consolas&quot;;</string>
+     <string notr="true">border-image:url(:/DS_2020_GUI/image/search.png);
+font: 24pt &quot;Agency FB&quot;;
+color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>ok</string>

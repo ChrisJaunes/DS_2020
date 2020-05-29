@@ -6,9 +6,6 @@
 #include "DblpBptMs.h"
 #include "Author.h"
 #include <iomanip>
-
-#define STR bstr_t
-#define W ULONG64
 /*
 Need:函数Author getAuthorByName(bstr_t);
 
@@ -26,8 +23,8 @@ GetResult()返回结果map
 GetResult()可获得结果map<阶数，个数>
 */
 struct BigNumber {
-	W a[110], len;
-	const W mod = 100;
+	MYW a[110], len;
+	const MYW mod = 100;
 	BigNumber() {
 		memset(a, 0, sizeof(a)); len = 1;
 	}
@@ -44,7 +41,7 @@ struct BigNumber {
 			x.a[x.len] %= x.mod;
 		}
 	}
-	BigNumber operator +(const W &b)  const
+	BigNumber operator +(const MYW &b)  const
 	{
 		BigNumber ret;
 		ret.len = len;
@@ -87,9 +84,9 @@ struct BigNumber {
 		for (int i = 1; i <= len; i++) a[i] = value.a[i];
 		return *this;
 	}
-	bool operator == (const W &b) const
+	bool operator == (const MYW &b) const
 	{
-		W t = b;
+		MYW t = b;
 		for (int i = 1; i <= len; i++)
 		{
 			if (a[i] != t % mod) return false;
@@ -101,7 +98,7 @@ struct BigNumber {
 	friend std::ostream & operator << (std::ostream &out, BigNumber &t)
 	{
 		out << t.a[t.len];
-		for (int i = t.len - 1; i >= 1; i--) out << std::setw(2) << std::setfill('0') << t.a[i];
+		for (int i = (int)t.len - 1; i >= 1; i--) out << std::setw(2) << std::setfill('0') << t.a[i];
 		return out;
 	}
 };
@@ -128,16 +125,16 @@ public:
 	void set_ms(DblpBptMs* Dp);
 	void InsertObject();
 	OPRESULT Insert(Author*);
-	bool Check(std::vector<STR>*, STR);
-	OPRESULT Counting(std::vector<Author*>, W, W);
+	bool Check(std::vector<MYSTR>*, MYSTR);
+	OPRESULT Counting(std::vector<Author*>, MYW, MYW);
 	//W GetSize();
-	std::map<W, W> GetResult();
-	std::map<W, MYSTR> GetResult_2();
+	std::map<MYW, MYW> GetResult();
+	std::map<MYW, MYSTR> GetResult_2();
 	int getcnt();
 
 protected:
 	DblpBptMs* ms;
-	std::map<W, W> CliquesCount;
+	std::map<MYW, MYW> CliquesCount;
 	BigNumber CC_test[300];
 	//map<size,number>
 	BigNumber C[300][300];

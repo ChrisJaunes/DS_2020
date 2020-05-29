@@ -2,9 +2,6 @@
 #include "CliquesCounting.h"
 #include <fstream>
 
-#define STR _bstr_t
-#define W ULONG64
-
 void CliquesCounting::pre_C(int lim) {
 	//memset(C, 0, sizeof(C));
 	//C[1][0] = 1; C[1][1] = 1;
@@ -92,7 +89,7 @@ int CliquesCounting::readfile_f5result(int flag) {
 		//std::string mp1 = text.substr(pos1, pos2 - pos1);
 		//std::string mp2 = text.substr(pos2);
 
-		W x1 = 0, x2 = 0;
+		MYW x1 = 0, x2 = 0;
 		for (i = pos1; i < pos2; i++)
 			x1 = x1 * 10 + (text[i] - '0');
 		for (i = pos2 + 1; i < text.length(); i++)
@@ -127,7 +124,7 @@ void CliquesCounting::readfile_f5result() {
 		//std::string mp1 = text.substr(pos1, pos2 - pos1);
 		//std::string mp2 = text.substr(pos2);
 
-		W x1 = 0, x2 = 0;
+		MYW x1 = 0, x2 = 0;
 		for (i = pos1; i < pos2; i++)
 			x1 = x1 * 10 + (text[i] - '0');
 		for (i = pos2 + 1; i < text.length(); i++)
@@ -208,7 +205,7 @@ writefile_f5result(ins_cnt);
 void CliquesCounting::insert(Info& temp) {
 
 	auto authors = temp.GetProperty(L"author");
-	int w = authors.size();
+	int w = (int)authors.size();
 	for (int i = 1; i <= w; i++) {
 		//CliquesCount[i] = (CliquesCount[i]+C[w][i]);
 		CC_test[i] = (CC_test[i] + C[w][i]);
@@ -227,7 +224,7 @@ void CliquesCounting::insert(Info& temp) {
 #endif
 }
 
-bool b_Comp(STR str_x, STR str_y) {
+bool b_Comp(MYSTR str_x, MYSTR str_y) {
 	std::string x = (char*)str_x;
 	std::string y = (char*)str_y;
 	return x < y;
@@ -236,26 +233,26 @@ OPRESULT CliquesCounting::Insert(Author* st) {
 
 	/*std::vector<STR>* Collaborators = nullptr;
 	*Collaborators = st->GetCollaboratorsNoWeight().second;*/
-	std::vector<STR> Collaborators = st->GetCollaboratorsNoWeight().second;
+	std::vector<MYSTR> Collaborators = st->GetCollaboratorsNoWeight().second;
 
 	CliquesCount[1]++;
 
 	std::vector<Author* > Q;
 	Q.push_back(st);
 
-	W l = 1, r = Collaborators.size() - 1, ret = -1;
+	MYW l = 1, r = Collaborators.size() - 1, ret = -1;
 	while (l <= r)
 	{
-		W mid = (l + r) >> 1;
-		//if (b_Comp(st->GetName().second , Collaborators[mid])){
-		if (((char*)st->GetName().second) < ((char*)Collaborators[mid])) {
+		MYW mid = (l + r) >> 1;
+		if (b_Comp(st->GetName().second , Collaborators[mid])){
+		//if (((char*)st->GetName().second) < ((char*)Collaborators[mid])) {
 			ret = mid;
 			r = mid - 1;
 		}
 		else l = mid + 1;
 	}
 	if (ret != -1) {
-		for (W i = ret; i < Collaborators.size(); i++)
+		for (MYW i = ret; i < Collaborators.size(); i++)
 		{
 			Author temp = ms->getAuthorByName(Collaborators[i]).second;
 			Q.push_back(&temp);
@@ -267,35 +264,35 @@ OPRESULT CliquesCounting::Insert(Author* st) {
 }
 
 //≈–∂œx «∑Ò‘⁄cot÷–
-bool CliquesCounting::Check(std::vector<STR>* cot, STR x) {
+bool CliquesCounting::Check(std::vector<MYSTR>* cot, MYSTR x) {
 
-	std::vector<STR>::iterator it = find(cot->begin(), cot->end(), x);
+	std::vector<MYSTR>::iterator it = find(cot->begin(), cot->end(), x);
 
 	if (it != cot->end()) return true;
 	return false;
 
 }
 
-OPRESULT CliquesCounting::Counting(std::vector<Author* > Clique, W Size, W st) {
+OPRESULT CliquesCounting::Counting(std::vector<Author* > Clique, MYW Size, MYW st) {
 
 	/*std::vector<STR>* Collaborators = nullptr;
 	*Collaborators = Clique[0]->GetCollaboratorsNoWeight().second;*/
-	std::vector<STR> Collaborators = Clique[0]->GetCollaboratorsNoWeight().second;
+	std::vector<MYSTR> Collaborators = Clique[0]->GetCollaboratorsNoWeight().second;
 
 	CliquesCount[Size]++;
 
-	for (W i = st; i < Collaborators.size(); i++)
+	for (MYW i = st; i < Collaborators.size(); i++)
 	{
 		Author now;
 		now = ms->getAuthorByName(Collaborators[i]).second;
 
-		STR name = now.GetName().second;
+		MYSTR name = now.GetName().second;
 		bool bk = true;
-		for (W j = 1; j < Size; j++)
+		for (MYW j = 1; j < Size; j++)
 		{
 			/*std::vector<STR>* cot = nullptr;
 			*cot = Clique[j]->GetCollaboratorsNoWeight().second;*/
-			std::vector<STR> cot = Clique[j]->GetCollaboratorsNoWeight().second;
+			std::vector<MYSTR> cot = Clique[j]->GetCollaboratorsNoWeight().second;
 
 			if (!Check(&cot, name)) {
 				bk = false;
@@ -316,7 +313,7 @@ W CliquesCounting::GetSize() {
 return MaxSize;
 }
 */
-std::map<W, W> CliquesCounting::GetResult()
+std::map<MYW, MYW> CliquesCounting::GetResult()
 {
 	return CliquesCount;
 }
@@ -324,12 +321,12 @@ int CliquesCounting::getcnt() {
 	return ins_cnt;
 }
 
-std::map<W, MYSTR> CliquesCounting::GetResult_2()
+std::map<MYW, MYSTR> CliquesCounting::GetResult_2()
 {
 	std::ifstream readfile;
 	readfile.open(DS_F5_TEST_OUT);
 
-	std::map<W, MYSTR> ret;
+	std::map<MYW, MYSTR> ret;
 
 	std::string text;
 	std::string::size_type pos1, pos2, i;
@@ -339,7 +336,7 @@ std::map<W, MYSTR> CliquesCounting::GetResult_2()
 
 		//std::string mp1 = text.substr(pos1, pos2 - pos1);
 		//std::string mp2 = text.substr(pos2);
-		W x1 = 0;
+		MYW x1 = 0;
 		for (i = pos1; i < pos2; i++)
 			x1 = x1 * 10 + (text[i] - '0');
 		ret[x1]=text.substr(pos2).c_str();

@@ -96,7 +96,7 @@ std::pair<OPRESULT, std::map<MYSTR, std::vector<MYSTR> > > Author::GetArticles()
 
 OPRESULT Author::GetNumOfArticle() const
 {
-	return articles.size();
+	return (OPRESULT)articles.size();
 }
 
 

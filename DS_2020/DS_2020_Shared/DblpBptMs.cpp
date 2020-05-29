@@ -122,6 +122,25 @@ std::vector<Author> DblpBptMs::getTop100()
 		free(value);
 		if (q.size() > 100) q.pop();
 	}
+	/*int pos = 0; DS_BPlusTree::BPlusTreeNode* leaf = author_bpt.nodes->fetch(author_bpt.leaf_head);
+	for (;;) {
+		if (leaf == nullptr) break;
+		if ((++author_cnt) % 10000 == 0) MyLog::d("%d\n", ++author_cnt);
+		OFF_T off = ((OFF_T*)((char*)(leaf)+author_bpt.p_OFFS))[pos];
+		void* value = nullptr; size_t value_sz = 0;
+		author_bpt.valueFromFileBlock(off, value, value_sz);
+		Author author = Author::deserialize((wchar_t*)value);
+		q.push(author);
+		free(value);
+		if (q.size() > 100) q.pop();
+		
+		++pos;
+		if (pos == leaf->ch_cnt) {
+			author_bpt.nodes->defer(leaf);
+			leaf = author_bpt.nodes->fetch(leaf->next);
+			pos = 0;
+		}
+	}*/
 	std::vector<Author> vec;
 	for (; !q.empty();) {
 		vec.push_back(q.top()); q.pop();

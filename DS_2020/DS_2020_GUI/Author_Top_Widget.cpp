@@ -8,12 +8,11 @@
 #include "config.h"
 #include "test_GUI.h"
 
-#define W int
 Author_Top_Item::Author_Top_Item()
 {
 }
 
-Author_Top_Item::Author_Top_Item(QString& _name, W& _number)
+Author_Top_Item::Author_Top_Item(QString& _name, MYW& _number)
     : name(_name)
     , number(_number)
 {
@@ -130,7 +129,12 @@ void Author_Top_Widget::initData()
 {
 
 #ifndef TEST_DEBUG_TOP
-
+    top_model = new QStandardItemModel(100, 1);
+    auto vec = fsolver.F2_getTop100(DS_wF2);
+    for (int i = 0; i < vec.size(); i++) {
+        auto jt = vec[i].first;
+        top_model->setData(top_model->index(i, 0), QVariant::fromValue(Author_Top_Item(QString((QChar*)(wchar_t*)jt, wcslen(jt)), vec[i].second)), Qt::UserRole);
+    }
 
 #else
     top_model = new QStandardItemModel(100, 1);
@@ -142,5 +146,3 @@ void Author_Top_Widget::initData()
 #endif
     qDebug() << " Hotspot_Detail_Widget" << "\n";
 }
-
-#undef W

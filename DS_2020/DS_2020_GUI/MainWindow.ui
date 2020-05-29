@@ -14,7 +14,7 @@
    <string>DBLP</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">border-image:url(:/DS_2020_GUI/image/astronomy-atmosphere-earth-exploration.jpg)</string>
+   <string notr="true">border-image:url(:/DS_2020_GUI/image/astronomy-clouds-dark-evening.jpg)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGroupBox" name="groupBox">

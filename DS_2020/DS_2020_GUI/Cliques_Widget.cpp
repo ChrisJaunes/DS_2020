@@ -9,13 +9,12 @@
 #include "test_GUI.h"
 
 #define STR QString
-#define W ULONG64
 
 Cliques_Item::Cliques_Item()
 {
 }
 
-Cliques_Item::Cliques_Item(W _order, W _number)
+Cliques_Item::Cliques_Item(MYW _order, MYW _number)
 	: order(_order)
 	, number(_number)
 {
@@ -169,7 +168,7 @@ Cliques_Widget::~Cliques_Widget()
 void Cliques_Widget::initData()
 {
 
-#ifndef TEST_DEBUG_TOP
+#ifdef TEST_DEBUG_TOP
 
 
 #else
@@ -180,7 +179,7 @@ void Cliques_Widget::initData()
 
 	int i = 0;
 	//std::map<W, W> f5_result = fsolver.F5_getResult();
-	std::map<W, MYSTR> f5_result = fsolver.F5_getResult_2();
+	std::map<MYW, MYSTR> f5_result = fsolver.F5_getResult_2();
 
 	//QVector<Cliques_Item> data;
 	for (auto it : f5_result)

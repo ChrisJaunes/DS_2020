@@ -1,5 +1,6 @@
 #pragma once
 #define MYSTR bstr_t
+#define MYW ULONG64
 
 #define DS_BPT_TEST_DB  L"../DS_2020_Test/test_file/test.bpdb" 
 #define DS_BPT_TEST_ALS L"../DS_2020_Test/test.als"
@@ -11,11 +12,13 @@
 #define DS_DBLP_Info    L"../DS_2020_Test/test_file/dblp_info.bpt"
 #define DS_DBLP_Author  L"../DS_2020_Test/test_file/dblp_author.bpt"
 #define DS_F2           "../DS_2020_Test/f2/result.txt"
+#define DS_wF2          L"../DS_2020_Test/f2/res.txt"
 #define DS_F4_HASHTABLE "../DS_2020_Test/f4/hashtable.txt"
 #define DS_F4_HASHTABLE_INFO "../DS_2020_Test/f4/hashtable_info.txt"
 #define DS_F4_INFO_TO_TITLE "../DS_2020_Test/f4/info_to_title.dat"
 #define DS_F4_TITLE "../DS_2020_Test/f4/title.txt"
 #define DS_F5_TEST_OUT L"../DS_2020_Test/f5/result.txt"
+#define DS_HELP_FILE "../DS_2020_Test/help.txt"
 
 // 可以选择的解析对象, 也就是参数parseInfo的值, 其中article和...数量最多
 #ifndef ENUMPARSEINFO
@@ -36,7 +39,7 @@
 //Console 控制宏
 #define TEST_DEBUG_INFO
 #define TEST_DEBUG_AUTHOR
-#define TEST_DEBUG_TOP
+//#define TEST_DEBUG_TOP
 #define TEST_DEBUG_INFO_TITLE
 
 //GUI 控制宏

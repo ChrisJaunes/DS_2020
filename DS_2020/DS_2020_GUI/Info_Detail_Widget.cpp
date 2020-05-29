@@ -81,7 +81,7 @@ void Info_Property_Delegate::paint(QPainter* painter, const QStyleOptionViewItem
 
         //绘制数据位置
         QRect NameRect = QRect(rect.left() + 10, rect.top() + 25, rect.width() - 10, 25);
-        QRect dataRect = QRect(rect.left() + 150, rect.top() + 25, rect.width(), 25);
+        QRect dataRect = QRect(rect.left() + 150, rect.top() + 25, rect.width(), 75);
         
         painter->setPen(QPen(Qt::black));
         painter->setFont(QFont("Consolas", 14, QFont::Bold));
@@ -150,7 +150,13 @@ void Info_Detail_Widget::initData(const QString& parameter) {
     auto info_vec = data.second;
     for (auto info : info_vec) {
         auto tmp_mp = info.GetProperties();
-        QStandardItemModel* info_model = new QStandardItemModel(tmp_mp.size(), 1);
+        int i = 0;
+        for (auto& it : tmp_mp) {
+            for (auto& jt : it.second) {
+                ++i;
+            }
+        }
+        QStandardItemModel* info_model = new QStandardItemModel(i, 1);
         Info_Property_Delegate* info_delegate = new Info_Property_Delegate(this);
         mvc.push_back(std::make_pair(info_model, info_delegate));
         QListView* listView = new QListView();
@@ -165,15 +171,16 @@ void Info_Detail_Widget::initData(const QString& parameter) {
         ui->tabWidget->addTab(listView, QIcon(":/DS_2020_GUI/image/test.png"), parameter);
 
         Info_Property_Item tmp_IPI;
-        int i = 0;
+        i = 0;
         for (auto& it : tmp_mp) {
-            tmp_IPI.setProperty(QString((QChar*)(wchar_t*)it.first, wcslen(it.first)),"");
-            bool fg = 0;
             for (auto& jt : it.second) {
-                if (fg) tmp_IPI.addPropertyData(QString("; ")); else fg = 1;
-                tmp_IPI.addPropertyData(QString((QChar*)(wchar_t*)jt, wcslen(jt)));
+                QString text = QString((QChar*)(wchar_t*)jt, wcslen(jt));
+                if (wcslen(jt) > 30) {
+                    text.insert(30, "\n");
+                }
+                tmp_IPI.setProperty(QString((QChar*)(wchar_t*)it.first, wcslen(it.first)), text);
+                info_model->setData(info_model->index(i++, 0), QVariant::fromValue(tmp_IPI), Qt::UserRole);
             }
-            info_model->setData(info_model->index(i++, 0), QVariant::fromValue(tmp_IPI), Qt::UserRole);
         }
     }
 }
