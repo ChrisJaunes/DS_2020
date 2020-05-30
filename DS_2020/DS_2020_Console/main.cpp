@@ -1,6 +1,7 @@
 #define CRTDBG_MAP_ALLOC  //放在程序最前
 #include <stdlib.h>    
 #include <crtdbg.h>
+#include <fstream>
 
 #include "pch.h"
 #include "config.h"
@@ -22,7 +23,7 @@
 
 int _tmain()
 {
-    CalcTime timer;
+    CalcTime timer; 
     generate_cache(DS_DBLP, XMLPARSETYPE_article);
     /*FST::test_BPT(0);
     FST::test_AUTHOR(0);
@@ -39,6 +40,6 @@ int _tmain()
     //FST::test_AUTHOR0();
     //FST::test_INFO1();
     //FST::test_INFO1
-    _CrtDumpMemoryLeaks();
+    //_CrtDumpMemoryLeaks();
     return 0;
 }

@@ -1,0 +1,200 @@
+Li Li
+343
+Wei Liu
+344
+Michael A. Henning
+344
+MengChu Zhou
+344
+Hui Wang
+344
+Luca Benini
+345
+Rui Zhang
+345
+Jian Zhang
+346
+Norman C. Beaulieu
+346
+Chao Wang
+347
+Thomas S. Huang
+348
+Gilbert Laporte
+350
+Yi Wang
+351
+Ying Wang
+352
+Khaled Ben Letaief
+353
+Peng Wang
+354
+Mihaela van der Schaar
+356
+Elisa Bertino
+356
+Xiang Li
+357
+Dusit Niyato
+357
+Yonina C. Eldar
+357
+Giuseppe Caire
+358
+David Eppstein
+359
+Qi Wang
+359
+Panos M. Pardalos
+361
+Tingwen Huang
+361
+Michele Zorzi
+362
+Xiang-Gen Xia
+364
+Jie Wu 0001
+365
+Zidong Wang
+368
+Rui Zhang 0006
+368
+Shuicheng Yan
+368
+Joel J. P. C. Rodrigues
+371
+Jing Zhang
+372
+Li Wang
+374
+Hsiao-Hwa Chen
+375
+Shlomo Shamai
+380
+Yan Wang
+381
+Yang Li
+384
+Azriel Rosenfeld
+385
+Yang Yang
+386
+Xin Li
+386
+Saharon Shelah
+388
+Yoshua Bengio
+388
+Hui Li
+388
+Shi Jin
+393
+Jun Zhang
+393
+Mrouane Debbah
+397
+Xiaodong Wang 0001
+398
+Wen Gao 0001
+400
+David Zhang 0001
+401
+Yan Zhang
+407
+Yan Li
+407
+Jian Li
+409
+Xuemin Shen
+411
+Albert Y. Zomaya
+412
+Hai Jin 0001
+413
+Jian Wang
+415
+Yi Zhang
+421
+Rajkumar Buyya
+432
+Zeshui Xu
+433
+Kim-Kwang Raymond Choo
+443
+Loet Leydesdorff
+447
+Noga Alon
+448
+Yang Liu
+449
+Jing Li
+460
+Robert W. Heath Jr.
+462
+David J. Evans 0001
+462
+Jing Wang
+467
+Xin Wang
+467
+Yong Wang
+471
+Ronald R. Yager
+472
+Wei Chen
+473
+Lei Zhang
+478
+Francisco Herrera
+489
+Robert Schober
+495
+Li Zhang
+498
+Jun Wang
+500
+Athanasios V. Vasilakos
+504
+Georgios B. Giannakis
+508
+Lei Wang
+516
+Mohsen Guizani
+521
+Peng Shi 0001
+526
+Philip S. Yu
+533
+Guanrong Chen
+541
+Zhu Han
+547
+Yu Zhang
+550
+Xuelong Li
+560
+Jinde Cao
+579
+Wei Li
+587
+Wei Wang
+591
+Licheng Jiao
+597
+Victor C. M. Leung
+627
+Wei Zhang
+629
+Dacheng Tao
+630
+Chin-Chen Chang 0001
+653
+Mohamed-Slim Alouini
+800
+Witold Pedrycz
+803
+Lajos Hanzo
+830
+H. Vincent Poor
+1188

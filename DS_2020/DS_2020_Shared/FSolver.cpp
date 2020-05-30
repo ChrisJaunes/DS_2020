@@ -32,10 +32,11 @@ std::vector<std::pair<MYSTR, MYW> > FSolver::F2_getTop100(const TCHAR* filename)
     std::vector<std::pair<MYSTR, MYW> > result;
     ifs.open(filename, std::ios::in);
     wchar_t buffer[0x200]{ 0 };
-    while (ifs >> buffer) {
+    while (ifs.getline(buffer, 0x200)) {
         MYSTR author(buffer);
         MYW number;
         ifs >> number;
+		ifs.ignore();
 		result.push_back(std::make_pair(author, number));
 	}
     ifs.close();

@@ -1,3 +1,4 @@
+#include <fstream>
 #include "pch.h"
 #include "config.h"
 #include "DblpBptMs.h"
@@ -49,15 +50,19 @@ void generate_bptfile_cache(const wchar_t* xmlfile, const DWORD parseInfo)
 	delete pParser;
 }
 void generate_f2_cache() {
-    FILE* f2 = fopen(DS_F2, "a");
-
+    std::wfstream ofs;
+    ofs.open(DS_F2, std::ios::out);
     DblpBptMs* f = new DblpBptMs(DS_DBLP_Info, DS_DBLP_Author, FILE_Status::EXIST);
     auto vec = f->getTop100();
+    //std::vector<Author> vec;
+    //vec.push_back(Author(L"5421", std::map<MYSTR, std::vector<MYSTR>>()));
+    //vec.push_back(Author(L"52", std::map<MYSTR, std::vector<MYSTR>>()));
+    //vec.push_back(Author(L"5445221", std::map<MYSTR, std::vector<MYSTR>>()));
     for (auto it : vec) {
-        fprintf(f2, "%Ls %d\n", (wchar_t*) it.GetName().second, it.GetNumOfArticle());
+        ofs << (wchar_t*)it.GetName().second << "\n" << it.GetNumOfArticle() << std::endl;
     }
     delete f;
-    fclose(f2);
+    ofs.close();
 }
 void generate_cache(const wchar_t* xmlfile, const DWORD parseInfo) {
     //generate_bptfile_cache(xmlfile, parseInfo);

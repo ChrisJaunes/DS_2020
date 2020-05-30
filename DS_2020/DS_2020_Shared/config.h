@@ -12,7 +12,7 @@
 #define DS_DBLP_Info    L"../DS_2020_Test/test_file/dblp_info.bpt"
 #define DS_DBLP_Author  L"../DS_2020_Test/test_file/dblp_author.bpt"
 #define DS_F2           "../DS_2020_Test/f2/result.txt"
-#define DS_wF2          L"../DS_2020_Test/f2/res.txt"
+#define DS_wF2          L"../DS_2020_Test/f2/result.txt"
 #define DS_F4_HASHTABLE "../DS_2020_Test/f4/hashtable.txt"
 #define DS_F4_HASHTABLE_INFO "../DS_2020_Test/f4/hashtable_info.txt"
 #define DS_F4_INFO_TO_TITLE "../DS_2020_Test/f4/info_to_title.dat"
